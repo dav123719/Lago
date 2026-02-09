@@ -1,0 +1,1 @@
+"use strict";exports.id=514,exports.ids=[514],exports.modules={4514:(r,e,a)=>{a.r(e),a.d(e,{MaterialCardRefactored:()=>t});let t=(0,a(8570).createProxy)(String.raw`/var/www/lago/src/components/ui/MaterialCardRefactored.tsx#MaterialCardRefactored`)}};

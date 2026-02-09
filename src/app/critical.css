@@ -1,0 +1,107 @@
+/* CRITICAL CSS - Above the fold styles only
+ * This CSS is inlined in the <head> to prevent render-blocking
+ * Non-critical styles remain in globals.css and load asynchronously
+ */
+
+:root {
+  --lago-black: #0a0a0a;
+  --lago-dark: #111111;
+  --lago-charcoal: #1a1a1a;
+  --lago-gray: #2a2a2a;
+  --lago-stone: #4a4a4a;
+  --lago-muted: #a0a0a0;
+  --lago-light: #e8e8e8;
+  --lago-white: #ffffff;
+  --lago-gold: #c9a962;
+  --lago-gold-light: #d4bc7d;
+  --lago-gold-dark: #a8893f;
+}
+
+* {
+  box-sizing: border-box;
+  padding: 0;
+  margin: 0;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  font-family: var(--font-body), system-ui, sans-serif;
+  color: var(--lago-light);
+  background: var(--lago-black);
+  line-height: 1.7;
+  font-weight: 400;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+/* Critical typography */
+h1, h2, h3, h4, h5, h6 {
+  font-family: var(--font-heading), Georgia, serif;
+  font-weight: 500;
+  line-height: 1.15;
+  letter-spacing: -0.02em;
+  color: var(--lago-white);
+  text-shadow: 0 2px 10px rgba(0, 0, 0, 0.5);
+}
+
+/* Critical layout utilities */
+.min-h-screen {
+  min-height: 100vh;
+}
+
+.flex {
+  display: flex;
+}
+
+.flex-col {
+  flex-direction: column;
+}
+
+.items-center {
+  align-items: center;
+}
+
+.justify-center {
+  justify-content: center;
+}
+
+.relative {
+  position: relative;
+}
+
+.absolute {
+  position: absolute;
+}
+
+.inset-0 {
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
+}
+
+.overflow-hidden {
+  overflow: hidden;
+}
+
+/* Critical hero section styles */
+.bg-lago-black {
+  background-color: var(--lago-black);
+}
+
+.text-lago-light {
+  color: var(--lago-light);
+}
+
+.text-white {
+  color: var(--lago-white);
+}
+
+.antialiased {
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+

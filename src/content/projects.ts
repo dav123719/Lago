@@ -1,0 +1,1338 @@
+// ===================================
+// Projects Content Data
+// ===================================
+// Portfolio projects with localized content
+//
+// IMPORTANT: This is the SINGLE SOURCE OF TRUTH for all project data.
+// Any changes made here will automatically update throughout the entire website:
+// - Projects page (/projekti)
+// - Material detail pages (shows projects using each material)
+// - Project detail pages
+// - Homepage (if projects are displayed there)
+//
+// To add a new project: Add a new object to the projects array below
+// To edit a project: Modify the existing project object
+// To remove a project: Delete the project object from the array
+//
+// All project information (title, description, location, material, etc.) is
+// centralized here for easy management.
+
+import { Project } from './types'
+
+const placeholder = (name: string) => `/images/projects/${name}.jpg`
+
+export const projects: Project[] = [
+  // Project 1: Modern Kitchen with Silestone
+  {
+    id: 'modern-kitchen-jurmala',
+    slug: {
+      lv: 'moderna-virtuve-jurmala',
+      en: 'modern-kitchen-jurmala',
+      ru: 'sovremennaya-kuhnya-yurmala',
+    },
+    title: {
+      lv: 'Moderna virtuve Jūrmalā',
+      en: 'Modern Kitchen in Jurmala',
+      ru: 'Современная кухня в Юрмале',
+    },
+    subtitle: {
+      lv: 'Kvarca virsma un sienas panelis ar integrētu izlietni',
+      en: 'Quartz countertop and backsplash with integrated stone sink',
+      ru: 'Кварцевая столешница и фартук с интегрированной мойкой',
+    },
+    category: 'stone',
+    material: 'silestone',
+    tags: ['kitchen', 'residential'],
+    installationLocation: ['kitchen'],
+    location: {
+      lv: 'Jūrmala, Latvija',
+      en: 'Jurmala, Latvia',
+      ru: 'Юрмала, Латвия',
+    },
+    summary: {
+      lv: 'Eleganta virtuves virsma no Silestone Eternal Calacatta Gold privātmājā Jūrmalā.',
+      en: 'Elegant kitchen countertop from Silestone Eternal Calacatta Gold in a private house in Jurmala.',
+      ru: 'Элегантная кухонная столешница из Silestone Eternal Calacatta Gold в частном доме в Юрмале.',
+    },
+    body: {
+      lv: `Šis projekts ir lielisks piemērs tam, kā kvalitatīvi materiāli var pārvērst virtuvi par mājas centrālo elementu. Klients vēlējās gaismu un elegantu virtuvi ar marmora izskatu, bet bez dabīgā marmora uzturēšanas grūtībām.
+
+Mēs iesakām Silestone Eternal Calacatta Gold, kas iedvesmots no itāļu Calacatta marmora. Virsmas platība: 8 m², ieskaitot salu un sienas paneli.
+
+Projektā ietverta arī integrēta izlietne ar neredzamu savienojumu un iekšējais logu palodze no tā paša materiāla.`,
+      en: `This project is an excellent example of how quality materials can transform a kitchen into the central element of a home. The client wanted a light and elegant kitchen with a marble look but without the maintenance challenges of natural marble.
+
+We recommended Silestone Eternal Calacatta Gold, inspired by Italian Calacatta marble. Surface area: 8 m², including island and wall panel.
+
+The project also includes an integrated sink with an invisible seam and an interior window sill from the same material.`,
+      ru: `Этот проект — отличный пример того, как качественные материалы могут превратить кухню в центральный элемент дома. Клиент хотел светлую и элегантную кухню с мраморным видом, но без сложностей в уходе за натуральным мрамором.
+
+Мы рекомендовали Silestone Eternal Calacatta Gold, вдохновленный итальянским мрамором Calacatta. Площадь поверхности: 8 м², включая остров и стеновую панель.
+
+Проект также включает интегрированную мойку с невидимым швом и внутренний подоконник из того же материала.`,
+    },
+    heroImage: '/images/projects/project-kitchen-1.webp',
+    galleryImages: [
+      '/images/projects/project-kitchen-1.webp',
+      '/images/projects/project-kitchen-2.webp',
+      '/images/projects/project-kitchen-3.webp',
+      '/images/projects/project-kitchen-4.webp',
+    ],
+    year: 2024,
+    quickFacts: {
+      location: {
+        lv: 'Jūrmala, Latvija',
+        en: 'Jurmala, Latvia',
+        ru: 'Юрмала, Латвия',
+      },
+      area: {
+        lv: '8 m² virtuves virsma',
+        en: '8 m² kitchen surface',
+        ru: '8 м² кухонная поверхность',
+      },
+      type: {
+        lv: 'Virtuve',
+        en: 'Kitchen',
+        ru: 'Кухня',
+      },
+      materials: {
+        lv: 'Silestone Eternal Calacatta Gold',
+        en: 'Silestone Eternal Calacatta Gold',
+        ru: 'Silestone Eternal Calacatta Gold',
+      },
+      completed: 2024,
+      scope: {
+        lv: 'Izgatavošana un uzstādīšana',
+        en: 'Fabrication and installation',
+        ru: 'Изготовление и установка',
+      },
+    },
+    story: {
+      goals: {
+        lv: `Klients vēlējās gaismu un elegantu virtuvi ar dabīgā marmora estētiku, bet ar praktiskāku un vieglāk uzturāmu materiālu. Svarīga bija arī integrēta izlietne un vienots dizains visā virtuvē.`,
+        en: `The client wanted a light and elegant kitchen with natural marble aesthetics but with a more practical and easier-to-maintain material. An integrated sink and unified design throughout the kitchen were also important.`,
+        ru: `Клиент хотел светлую и элегантную кухню с эстетикой натурального мрамора, но с более практичным и простым в уходе материалом. Также важны были интегрированная мойка и единый дизайн по всей кухне.`,
+      },
+      challenges: {
+        lv: `Galvenais izaicinājums bija izvēlēties materiālu, kas atbilst marmora izskatam, bet nodrošina augstu izturību pret traipiem un skrāpējumiem. Tāpat bija nepieciešams nodrošināt nevainojamu integrāciju starp virsmu un izlietni.`,
+        en: `The main challenge was choosing a material that matches the marble look but provides high resistance to stains and scratches. It was also necessary to ensure flawless integration between the surface and sink.`,
+        ru: `Основной вызов заключался в выборе материала, который соответствует мраморному виду, но обеспечивает высокую устойчивость к пятнам и царапинам. Также необходимо было обеспечить безупречную интеграцию между поверхностью и мойкой.`,
+      },
+      solution: {
+        lv: `Mēs izvēlējāmies Silestone Eternal Calacatta Gold - kvarca virsmu, kas iedvesmota no itāļu Calacatta marmora. Šis materiāls nodrošina identisku estētiku dabīgajam marmoram, bet ar ievērojami labākām ekspluatācijas īpašībām. Integrētā izlietne tika izgatavota ar neredzamu savienojumu, radot vienotu un elegantu izskatu.`,
+        en: `We chose Silestone Eternal Calacatta Gold - a quartz surface inspired by Italian Calacatta marble. This material provides identical aesthetics to natural marble but with significantly better performance properties. The integrated sink was manufactured with an invisible seam, creating a unified and elegant appearance.`,
+        ru: `Мы выбрали Silestone Eternal Calacatta Gold - кварцевую поверхность, вдохновленную итальянским мрамором Calacatta. Этот материал обеспечивает идентичную эстетику натуральному мрамору, но с значительно лучшими эксплуатационными свойствами. Интегрированная мойка была изготовлена с невидимым швом, создавая единый и элегантный вид.`,
+      },
+    },
+    materials: [
+      {
+        area: {
+          lv: 'Virtuves virsma',
+          en: 'Kitchen countertop',
+          ru: 'Кухонная столешница',
+        },
+        material: {
+          lv: 'Silestone Eternal Calacatta Gold',
+          en: 'Silestone Eternal Calacatta Gold',
+          ru: 'Silestone Eternal Calacatta Gold',
+        },
+        thickness: {
+          lv: '20 mm',
+          en: '20 mm',
+          ru: '20 мм',
+        },
+        finish: {
+          lv: 'Polīrēts',
+          en: 'Polished',
+          ru: 'Полированный',
+        },
+      },
+      {
+        area: {
+          lv: 'Sienas panelis',
+          en: 'Backsplash',
+          ru: 'Фартук',
+        },
+        material: {
+          lv: 'Silestone Eternal Calacatta Gold',
+          en: 'Silestone Eternal Calacatta Gold',
+          ru: 'Silestone Eternal Calacatta Gold',
+        },
+        thickness: {
+          lv: '20 mm',
+          en: '20 mm',
+          ru: '20 мм',
+        },
+        finish: {
+          lv: 'Pilna augstuma plāksne',
+          en: 'Full-height slab',
+          ru: 'Панель на всю высоту',
+        },
+      },
+      {
+        area: {
+          lv: 'Izlietne',
+          en: 'Sink',
+          ru: 'Мойка',
+        },
+        material: {
+          lv: 'Pielāgota akmens izlietne',
+          en: 'Custom stone sink',
+          ru: 'Индивидуальная каменная мойка',
+        },
+        notes: {
+          lv: 'Integrēta izlietne ar neredzamu savienojumu',
+          en: 'Integrated sink with invisible seam',
+          ru: 'Интегрированная мойка с невидимым швом',
+        },
+      },
+    ],
+    gallery: [
+      {
+        src: '/images/projects/project-kitchen-1.webp',
+        alt: {
+          lv: 'Virtuves virsma ar salu',
+          en: 'Kitchen countertop with island',
+          ru: 'Кухонная столешница с островом',
+        },
+        materials: [
+          {
+            area: {
+              lv: 'Virtuves virsma',
+              en: 'Kitchen countertop',
+              ru: 'Кухонная столешница',
+            },
+            material: {
+              lv: 'Silestone Eternal Calacatta Gold',
+              en: 'Silestone Eternal Calacatta Gold',
+              ru: 'Silestone Eternal Calacatta Gold',
+            },
+            thickness: {
+              lv: '20 mm',
+              en: '20 mm',
+              ru: '20 мм',
+            },
+          },
+        ],
+      },
+      {
+        src: '/images/projects/project-kitchen-2.webp',
+        alt: {
+          lv: 'Sienas panelis un izlietne',
+          en: 'Backsplash and sink',
+          ru: 'Фартук и мойка',
+        },
+        materials: [
+          {
+            area: {
+              lv: 'Sienas panelis',
+              en: 'Backsplash',
+              ru: 'Фартук',
+            },
+            material: {
+              lv: 'Silestone Eternal Calacatta Gold',
+              en: 'Silestone Eternal Calacatta Gold',
+              ru: 'Silestone Eternal Calacatta Gold',
+            },
+            finish: {
+              lv: 'Pilna augstuma plāksne',
+              en: 'Full-height slab',
+              ru: 'Панель на всю высоту',
+            },
+          },
+          {
+            area: {
+              lv: 'Izlietne',
+              en: 'Sink',
+              ru: 'Мойка',
+            },
+            material: {
+              lv: 'Pielāgota akmens izlietne',
+              en: 'Custom stone sink',
+              ru: 'Индивидуальная каменная мойка',
+            },
+          },
+        ],
+      },
+      {
+        src: '/images/projects/project-kitchen-3.webp',
+        alt: {
+          lv: 'Virtuves detaļas',
+          en: 'Kitchen details',
+          ru: 'Детали кухни',
+        },
+      },
+      {
+        src: '/images/projects/project-kitchen-4.webp',
+        alt: {
+          lv: 'Virtuves skats',
+          en: 'Kitchen view',
+          ru: 'Вид кухни',
+        },
+      },
+    ],
+  },
+
+  // Project 2: Hotel Bathroom
+  {
+    id: 'hotel-bathroom-riga',
+    slug: {
+      lv: 'viesnicu-vannasistaba-riga',
+      en: 'hotel-bathroom-riga',
+      ru: 'vannaya-otelya-riga',
+    },
+    title: {
+      lv: 'Viesnīcas vannas istaba Rīgā',
+      en: 'Hotel Bathroom in Riga',
+      ru: 'Ванная отеля в Риге',
+    },
+    category: 'stone',
+    material: 'marble',
+    tags: ['bathroom', 'commercial'],
+    installationLocation: ['bathroom', 'commercial'],
+    location: {
+      lv: 'Rīga, Latvija',
+      en: 'Riga, Latvia',
+      ru: 'Рига, Латвия',
+    },
+    summary: {
+      lv: 'Luksusa vannas istabas apdare no Nero Marquina marmora 5 zvaigžņu viesnīcā.',
+      en: 'Luxury bathroom finish from Nero Marquina marble in a 5-star hotel.',
+      ru: 'Отделка люксовой ванной комнаты из мрамора Nero Marquina в 5-звездочном отеле.',
+    },
+    body: {
+      lv: `Prestižas Rīgas viesnīcas renovācijas ietvaros mēs realizējām 24 luksusa vannas istabas ar Nero Marquina marmora apdari.
+
+Projekta ietvaros tika izgatavoti un uzstādīti:
+• Vannas izlietnes virsmas
+• Dušas sienas paneļi
+• Grīdas plāksnes
+• Sienas apdares elementi
+
+Melnais marmors ar kontrastējošām baltām dzīslām rada izsmalcinātu un atmiņā paliekošu atmosfēru.`,
+      en: `As part of a prestigious Riga hotel renovation, we completed 24 luxury bathrooms with Nero Marquina marble finish.
+
+The project included manufacturing and installation of:
+• Vanity countertops
+• Shower wall panels
+• Floor tiles
+• Wall cladding elements
+
+The black marble with contrasting white veining creates a sophisticated and memorable atmosphere.`,
+      ru: `В рамках реновации престижного рижского отеля мы реализовали 24 люксовые ванные комнаты с отделкой из мрамора Nero Marquina.
+
+В рамках проекта были изготовлены и установлены:
+• Столешницы для умывальников
+• Стеновые панели для душа
+• Напольные плиты
+• Элементы настенной отделки
+
+Черный мрамор с контрастными белыми прожилками создает изысканную и запоминающуюся атмосферу.`,
+    },
+    heroImage: '/images/projects/project-bathroom-1.webp',
+    galleryImages: [
+      '/images/projects/project-bathroom-1.webp',
+      '/images/projects/project-bathroom-2.webp',
+      '/images/projects/project-bathroom-3.webp',
+    ],
+    year: 2023,
+  },
+
+  // Project 3: Custom Kitchen Furniture
+  {
+    id: 'custom-kitchen-mezaparks',
+    slug: {
+      lv: 'individuala-virtuve-mezaparks',
+      en: 'custom-kitchen-mezaparks',
+      ru: 'individualnaya-kuhnya-mezaparks',
+    },
+    title: {
+      lv: 'Individuālā virtuve Mežaparkā',
+      en: 'Custom Kitchen in Mezaparks',
+      ru: 'Индивидуальная кухня в Межапарке',
+    },
+    category: 'furniture',
+    material: 'dekton',
+    tags: ['kitchen', 'residential'],
+    installationLocation: ['kitchen', 'furniture'],
+    location: {
+      lv: 'Mežaparks, Rīga',
+      en: 'Mezaparks, Riga',
+      ru: 'Межапарк, Рига',
+    },
+    summary: {
+      lv: 'Pilnīgi individuāli projektēta virtuve ar integrētām Dekton virsmām.',
+      en: 'Fully custom-designed kitchen with integrated Dekton surfaces.',
+      ru: 'Полностью индивидуально спроектированная кухня с интегрированными поверхностями Dekton.',
+    },
+    body: {
+      lv: `Šis projekts demonstrē mūsu spēju radīt pilnīgi individuālus risinājumus, kas apvieno mēbeles un akmens virsmas vienotā konceptā.
+
+Virtuve tika projektēta L-formā ar lielu salu, kas kalpo gan darba virsmai, gan brokastošanas zonai. Mēbeļu fasādes ir izgatavotas no matēta lakota MDF, bet virsmas – no Dekton Bergen.
+
+Projekta īpatnības:
+• Iebūvētā LED apgaismojuma sistēma
+• Elektriskās atvilktnes ar Blum mehānismiem
+• Integrētā tvaika nosūcēja sistēma
+• Indukcijas plīts ar integrētu ventilāciju`,
+      en: `This project demonstrates our ability to create fully customized solutions that combine furniture and stone surfaces in a unified concept.
+
+The kitchen was designed in an L-shape with a large island serving both as a work surface and breakfast area. The furniture facades are made of matte lacquered MDF, while the surfaces are Dekton Bergen.
+
+Project features:
+• Built-in LED lighting system
+• Electric drawers with Blum mechanisms
+• Integrated hood system
+• Induction cooktop with integrated ventilation`,
+      ru: `Этот проект демонстрирует нашу способность создавать полностью индивидуальные решения, объединяющие мебель и каменные поверхности в единой концепции.
+
+Кухня была спроектирована в форме буквы L с большим островом, служащим как рабочей поверхностью, так и зоной для завтрака. Фасады мебели изготовлены из матового лакированного МДФ, а поверхности — из Dekton Bergen.
+
+Особенности проекта:
+• Встроенная система LED-освещения
+• Электрические ящики с механизмами Blum
+• Интегрированная вытяжная система
+• Индукционная плита с интегрированной вентиляцией`,
+    },
+    heroImage: '/images/projects/project-kitchen-2.webp',
+    galleryImages: [
+      '/images/projects/project-kitchen-2.webp',
+      '/images/projects/project-kitchen-3.webp',
+      '/images/projects/project-kitchen-4.webp',
+      '/images/projects/project-kitchen-5.webp',
+      '/images/projects/project-furniture-1.webp',
+    ],
+    year: 2024,
+  },
+
+  // Project 4: Commercial Reception
+  {
+    id: 'office-reception-riga',
+    slug: {
+      lv: 'biroja-recepcija-riga',
+      en: 'office-reception-riga',
+      ru: 'resepciya-ofisa-riga',
+    },
+    title: {
+      lv: 'Biroja recepcija Rīgā',
+      en: 'Office Reception in Riga',
+      ru: 'Ресепшн офиса в Риге',
+    },
+    category: 'furniture',
+    material: 'dekton',
+    tags: ['commercial'],
+    installationLocation: ['commercial', 'furniture'],
+    location: {
+      lv: 'Rīga, Latvija',
+      en: 'Riga, Latvia',
+      ru: 'Рига, Латвия',
+    },
+    summary: {
+      lv: 'Moderna recepcijas lete ar Dekton virsmu IT uzņēmuma birojā.',
+      en: 'Modern reception desk with Dekton surface in an IT company office.',
+      ru: 'Современная стойка ресепшн с поверхностью Dekton в офисе IT-компании.',
+    },
+    body: {
+      lv: `IT uzņēmuma jaunajam birojam mēs projektējām un izgatavojām iespaidīgu recepcijas leti, kas kalpo par vizītkarti uzņēmuma viesiem.
+
+Lete ir 4 metrus gara ar noapaļotiem stūriem. Virsma ir izgatavota no Dekton Kelya, kas rada elegantu tumšu akcentu gaiši aprīkotajā birojā.
+
+Konstrukcija ietver slēptus vadu kanālus, integrētu apgaismojumu un ergonomiski projektētu darba vietu recepcijas darbiniekam.`,
+      en: `For the IT company's new office, we designed and manufactured an impressive reception desk that serves as a business card for the company's visitors.
+
+The desk is 4 meters long with rounded corners. The surface is made of Dekton Kelya, creating an elegant dark accent in the bright office space.
+
+The construction includes hidden cable channels, integrated lighting, and an ergonomically designed workstation for the receptionist.`,
+      ru: `Для нового офиса IT-компании мы спроектировали и изготовили впечатляющую стойку ресепшн, которая служит визитной карточкой для посетителей компании.
+
+Стойка имеет длину 4 метра с закругленными углами. Поверхность изготовлена из Dekton Kelya, создавая элегантный темный акцент в светлом офисном пространстве.
+
+Конструкция включает скрытые кабельные каналы, интегрированное освещение и эргономично спроектированное рабочее место для администратора.`,
+    },
+    heroImage: '/images/projects/project-furniture-1.webp',
+    galleryImages: [
+      '/images/projects/project-furniture-1.webp',
+      '/images/projects/project-furniture-2.webp',
+      '/images/projects/project-furniture-3.webp',
+    ],
+    year: 2023,
+  },
+
+  // Project 5: Private Bathroom
+  {
+    id: 'private-bathroom-pardaugava',
+    slug: {
+      lv: 'privata-vannasistaba-pardaugava',
+      en: 'private-bathroom-pardaugava',
+      ru: 'chastnaya-vannaya-pardaugava',
+    },
+    title: {
+      lv: 'Privātā vannas istaba Pārdaugavā',
+      en: 'Private Bathroom in Pardaugava',
+      ru: 'Частная ванная в Пардаугаве',
+    },
+    category: 'stone',
+    material: 'marble',
+    tags: ['bathroom', 'residential'],
+    installationLocation: ['bathroom'],
+    location: {
+      lv: 'Pārdaugava, Rīga',
+      en: 'Pardaugava, Riga',
+      ru: 'Пардаугава, Рига',
+    },
+    summary: {
+      lv: 'Luksusa vannas istaba ar Carrara marmora apdari.',
+      en: 'Luxury bathroom with Carrara marble finish.',
+      ru: 'Роскошная ванная с отделкой из мрамора Carrara.',
+    },
+    body: {
+      lv: `Klients vēlējās radīt vannas istabu, kas atgādinātu itāļu viesnīcas SPA atmosfēru. Mēs iesakām klasisko Carrara White marmoru, kas ir ikonisks izvēle šādam interjerim.
+
+Projektā ietilpa:
+• Pilna sienas apdare ar marmora plāksnēm
+• Dubultā izlietnes virsma
+• Vannas apšuvums
+• Dušas zona ar bezrāmja stikla durvīm
+
+Mēs pievērsām īpašu uzmanību dzīslu sakārtojumam, lai radītu harmonisku kopskatu visā telpā.`,
+      en: `The client wanted to create a bathroom reminiscent of an Italian hotel SPA atmosphere. We recommended classic Carrara White marble, which is an iconic choice for such interiors.
+
+The project included:
+• Full wall cladding with marble slabs
+• Double vanity countertop
+• Bathtub surround
+• Shower area with frameless glass doors
+
+We paid special attention to vein matching to create a harmonious overall look throughout the space.`,
+      ru: `Клиент хотел создать ванную комнату, напоминающую атмосферу итальянского отельного СПА. Мы рекомендовали классический мрамор Carrara White, который является культовым выбором для такого интерьера.
+
+Проект включал:
+• Полную облицовку стен мраморными плитами
+• Двойную столешницу для умывальника
+• Облицовку ванны
+• Душевую зону с безрамными стеклянными дверями
+
+Мы уделили особое внимание подбору прожилок для создания гармоничного общего вида во всем пространстве.`,
+    },
+    heroImage: '/images/projects/project-bathroom-2.webp',
+    galleryImages: [
+      '/images/projects/project-bathroom-2.webp',
+      '/images/projects/project-bathroom-3.webp',
+      '/images/projects/project-bathroom-4.webp',
+    ],
+    year: 2024,
+  },
+
+  // Project 6: Built-in Wardrobe
+  {
+    id: 'builtin-wardrobe-teika',
+    slug: {
+      lv: 'iebuvetais-skapis-teika',
+      en: 'builtin-wardrobe-teika',
+      ru: 'vstroennyi-shkaf-teika',
+    },
+    title: {
+      lv: 'Iebūvētais skapis Teikā',
+      en: 'Built-in Wardrobe in Teika',
+      ru: 'Встроенный шкаф в Тейке',
+    },
+    category: 'furniture',
+    tags: ['residential'],
+    installationLocation: ['furniture', 'interior'],
+    location: {
+      lv: 'Teika, Rīga',
+      en: 'Teika, Riga',
+      ru: 'Тейка, Рига',
+    },
+    summary: {
+      lv: 'Garderobes sistēma ar bīdāmām durvīm un LED apgaismojumu.',
+      en: 'Wardrobe system with sliding doors and LED lighting.',
+      ru: 'Гардеробная система с раздвижными дверями и LED-освещением.',
+    },
+    body: {
+      lv: `Šis iebūvētais skapis tika projektēts, lai maksimāli izmantotu guļamistabas nišu ar nestandarta izmēriem.
+
+Risinājums ietver:
+• 4 metrus platas bīdāmās durvis ar spoguļa paneli
+• Pilnīgi individuāli projektētu iekšējo organizāciju
+• Integrētu LED apgaismojumu ar kustības sensoru
+• Apavu plauktus, atvilktnes un apģērbu stangas dažādos augstumos
+
+Matētās baltas fasādes ar spoguļa akcentu vizuāli paplašina telpu.`,
+      en: `This built-in wardrobe was designed to maximize a bedroom niche with non-standard dimensions.
+
+The solution includes:
+• 4-meter-wide sliding doors with mirror panel
+• Fully customized interior organization
+• Integrated LED lighting with motion sensor
+• Shoe shelves, drawers, and clothing rods at various heights
+
+The matte white facades with mirror accent visually expand the space.`,
+      ru: `Этот встроенный шкаф был спроектирован для максимального использования ниши спальни с нестандартными размерами.
+
+Решение включает:
+• Раздвижные двери шириной 4 метра с зеркальной панелью
+• Полностью индивидуальную внутреннюю организацию
+• Интегрированное LED-освещение с датчиком движения
+• Полки для обуви, ящики и штанги для одежды на разной высоте
+
+Матовые белые фасады с зеркальным акцентом визуально расширяют пространство.`,
+    },
+    heroImage: '/images/projects/project-furniture-2.webp',
+    galleryImages: [
+      '/images/projects/project-furniture-2.webp',
+      '/images/projects/project-furniture-3.webp',
+    ],
+    year: 2023,
+  },
+
+  // Project 7: Silestone Kitchen
+  {
+    id: 'silestone-kitchen-centrs',
+    slug: {
+      lv: 'silestone-virtuve-centrs',
+      en: 'silestone-kitchen-centrs',
+      ru: 'silestone-kuhnya-centrs',
+    },
+    title: {
+      lv: 'Silestone virtuve Centrā',
+      en: 'Silestone Kitchen in Centrs',
+      ru: 'Кухня Silestone в Центре',
+    },
+    category: 'stone',
+    material: 'silestone',
+    tags: ['kitchen', 'residential'],
+    installationLocation: ['kitchen'],
+    location: {
+      lv: 'Centrs, Rīga',
+      en: 'Centrs, Riga',
+      ru: 'Центр, Рига',
+    },
+    summary: {
+      lv: 'Mūsdienīga virtuve ar Silestone Blanco Zeus virsmām.',
+      en: 'Modern kitchen with Silestone Blanco Zeus surfaces.',
+      ru: 'Современная кухня с поверхностями Silestone Blanco Zeus.',
+    },
+    body: {
+      lv: 'Eleganta balta virtuve ar Silestone Blanco Zeus virsmām.',
+      en: 'Elegant white kitchen with Silestone Blanco Zeus surfaces.',
+      ru: 'Элегантная белая кухня с поверхностями Silestone Blanco Zeus.',
+    },
+    heroImage: '/images/projects/project-kitchen-5.webp',
+    galleryImages: [
+      '/images/projects/project-kitchen-5.webp',
+      '/images/projects/project-kitchen-1.webp',
+    ],
+    year: 2024,
+  },
+
+  // Project 8: Dekton Outdoor Kitchen
+  {
+    id: 'dekton-outdoor-kitchen',
+    slug: {
+      lv: 'dekton-ara-virtuve',
+      en: 'dekton-outdoor-kitchen',
+      ru: 'dekton-ulichnaya-kuhnya',
+    },
+    title: {
+      lv: 'Āra virtuve ar Dekton',
+      en: 'Outdoor Kitchen with Dekton',
+      ru: 'Уличная кухня с Dekton',
+    },
+    category: 'stone',
+    material: 'dekton',
+    tags: ['kitchen', 'residential'],
+    installationLocation: ['kitchen', 'outdoor'],
+    location: {
+      lv: 'Jūrmala, Latvija',
+      en: 'Jurmala, Latvia',
+      ru: 'Юрмала, Латвия',
+    },
+    summary: {
+      lv: 'Izturīga āra virtuve ar Dekton Laurent virsmām.',
+      en: 'Durable outdoor kitchen with Dekton Laurent surfaces.',
+      ru: 'Прочная уличная кухня с поверхностями Dekton Laurent.',
+    },
+    body: {
+      lv: 'Āra virtuve ar Dekton Laurent virsmām, kas iztur UV starus un laikapstākļus.',
+      en: 'Outdoor kitchen with Dekton Laurent surfaces that withstand UV rays and weather.',
+      ru: 'Уличная кухня с поверхностями Dekton Laurent, устойчивыми к УФ-лучам и погоде.',
+    },
+    heroImage: '/images/projects/project-outdoor-1.webp',
+    galleryImages: [
+      '/images/projects/project-outdoor-1.webp',
+      '/images/projects/project-outdoor-2.webp',
+    ],
+    year: 2024,
+  },
+
+  // Project 9: Granite Kitchen
+  {
+    id: 'granite-kitchen-vecriga',
+    slug: {
+      lv: 'granita-virtuve-vecriga',
+      en: 'granite-kitchen-vecriga',
+      ru: 'granitnaya-kuhnya-vecriga',
+    },
+    title: {
+      lv: 'Granīta virtuve Vecrīgā',
+      en: 'Granite Kitchen in Vecriga',
+      ru: 'Гранитная кухня в Старой Риге',
+    },
+    category: 'stone',
+    material: 'granite',
+    tags: ['kitchen', 'residential'],
+    installationLocation: ['kitchen'],
+    location: {
+      lv: 'Vecrīga, Rīga',
+      en: 'Vecriga, Riga',
+      ru: 'Старая Рига, Рига',
+    },
+    summary: {
+      lv: 'Klasiska granīta virtuve ar dabīgo akmeni.',
+      en: 'Classic granite kitchen with natural stone.',
+      ru: 'Классическая гранитная кухня с натуральным камнем.',
+    },
+    body: {
+      lv: 'Klasiska granīta virtuve ar dabīgo akmeni.',
+      en: 'Classic granite kitchen with natural stone.',
+      ru: 'Классическая гранитная кухня с натуральным камнем.',
+    },
+    heroImage: '/images/projects/project-elements-1.webp',
+    galleryImages: [
+      '/images/projects/project-elements-1.webp',
+      '/images/projects/project-elements-2.webp',
+    ],
+    year: 2023,
+  },
+
+  // Project 10: Marble Bathroom
+  {
+    id: 'marble-bathroom-vecmilgravis',
+    slug: {
+      lv: 'marmora-vannasistaba-vecmilgravis',
+      en: 'marble-bathroom-vecmilgravis',
+      ru: 'mramornaya-vannaya-vecmilgravis',
+    },
+    title: {
+      lv: 'Marmora vannas istaba Vecmīlgrāvī',
+      en: 'Marble Bathroom in Vecmilgravis',
+      ru: 'Мраморная ванная в Вецмилгрависе',
+    },
+    category: 'stone',
+    material: 'marble',
+    tags: ['bathroom', 'residential'],
+    installationLocation: ['bathroom'],
+    location: {
+      lv: 'Vecmīlgrāvis, Rīga',
+      en: 'Vecmilgravis, Riga',
+      ru: 'Вецмилгравис, Рига',
+    },
+    summary: {
+      lv: 'Luksusa marmora vannas istaba.',
+      en: 'Luxury marble bathroom.',
+      ru: 'Роскошная мраморная ванная.',
+    },
+    body: {
+      lv: 'Luksusa marmora vannas istaba ar Carrara White marmoru.',
+      en: 'Luxury marble bathroom with Carrara White marble.',
+      ru: 'Роскошная мраморная ванная с мрамором Carrara White.',
+    },
+    heroImage: '/images/projects/project-bathroom-3.webp',
+    galleryImages: [
+      '/images/projects/project-bathroom-3.webp',
+      '/images/projects/project-bathroom-4.webp',
+      '/images/projects/project-bathroom-5.webp',
+    ],
+    year: 2024,
+  },
+
+  // Project 11: Silestone Commercial
+  {
+    id: 'silestone-commercial-riga',
+    slug: {
+      lv: 'silestone-komercials-riga',
+      en: 'silestone-commercial-riga',
+      ru: 'silestone-kommercheskiy-riga',
+    },
+    title: {
+      lv: 'Komerciāls projekts ar Silestone',
+      en: 'Commercial Project with Silestone',
+      ru: 'Коммерческий проект с Silestone',
+    },
+    category: 'stone',
+    material: 'silestone',
+    tags: ['commercial'],
+    installationLocation: ['commercial'],
+    location: {
+      lv: 'Rīga, Latvija',
+      en: 'Riga, Latvia',
+      ru: 'Рига, Латвия',
+    },
+    summary: {
+      lv: 'Komerciāls projekts ar Silestone virsmām.',
+      en: 'Commercial project with Silestone surfaces.',
+      ru: 'Коммерческий проект с поверхностями Silestone.',
+    },
+    body: {
+      lv: 'Komerciāls projekts ar Silestone virsmām.',
+      en: 'Commercial project with Silestone surfaces.',
+      ru: 'Коммерческий проект с поверхностями Silestone.',
+    },
+    heroImage: '/images/projects/project-kitchen-1.webp',
+    galleryImages: [
+      '/images/projects/project-kitchen-1.webp',
+      '/images/projects/project-kitchen-2.webp',
+    ],
+    year: 2023,
+  },
+
+  // Project 12: Dekton Facade
+  {
+    id: 'dekton-facade-riga',
+    slug: {
+      lv: 'dekton-fasade-riga',
+      en: 'dekton-facade-riga',
+      ru: 'dekton-fasad-riga',
+    },
+    title: {
+      lv: 'Fasāde ar Dekton',
+      en: 'Facade with Dekton',
+      ru: 'Фасад с Dekton',
+    },
+    category: 'stone',
+    material: 'dekton',
+    tags: ['commercial'],
+    installationLocation: ['commercial', 'outdoor'],
+    location: {
+      lv: 'Rīga, Latvija',
+      en: 'Riga, Latvia',
+      ru: 'Рига, Латвия',
+    },
+    summary: {
+      lv: 'Modernas fasādes apdare ar Dekton.',
+      en: 'Modern facade finish with Dekton.',
+      ru: 'Современная отделка фасада с Dekton.',
+    },
+    body: {
+      lv: 'Modernas fasādes apdare ar Dekton.',
+      en: 'Modern facade finish with Dekton.',
+      ru: 'Современная отделка фасада с Dekton.',
+    },
+    heroImage: '/images/projects/project-outdoor-1.webp',
+    galleryImages: [
+      '/images/projects/project-outdoor-1.webp',
+      '/images/projects/project-outdoor-2.webp',
+    ],
+    year: 2024,
+  },
+
+  // Project 13: Granite Countertop
+  {
+    id: 'granite-countertop-riga',
+    slug: {
+      lv: 'granita-virsma-riga',
+      en: 'granite-countertop-riga',
+      ru: 'granitnaya-stoleshnitsa-riga',
+    },
+    title: {
+      lv: 'Granīta virsma Rīgā',
+      en: 'Granite Countertop in Riga',
+      ru: 'Гранитная столешница в Риге',
+    },
+    category: 'stone',
+    material: 'granite',
+    tags: ['kitchen', 'residential'],
+    installationLocation: ['kitchen'],
+    location: {
+      lv: 'Rīga, Latvija',
+      en: 'Riga, Latvia',
+      ru: 'Рига, Латвия',
+    },
+    summary: {
+      lv: 'Dabīga granīta virsma virtuves salam.',
+      en: 'Natural granite surface for kitchen island.',
+      ru: 'Натуральная гранитная поверхность для кухонного острова.',
+    },
+    body: {
+      lv: 'Dabīga granīta virsma virtuves salam.',
+      en: 'Natural granite surface for kitchen island.',
+      ru: 'Натуральная гранитная поверхность для кухонного острова.',
+    },
+    heroImage: '/images/projects/project-elements-1.webp',
+    galleryImages: [
+      '/images/projects/project-elements-1.webp',
+      '/images/projects/project-elements-2.webp',
+    ],
+    year: 2023,
+  },
+
+  // Project 14: Marble Fireplace
+  {
+    id: 'marble-fireplace-riga',
+    slug: {
+      lv: 'marmora-kamins-riga',
+      en: 'marble-fireplace-riga',
+      ru: 'mramornyy-kamin-riga',
+    },
+    title: {
+      lv: 'Marmora kamīns Rīgā',
+      en: 'Marble Fireplace in Riga',
+      ru: 'Мраморный камин в Риге',
+    },
+    category: 'stone',
+    material: 'marble',
+    tags: ['residential'],
+    installationLocation: ['interior'],
+    location: {
+      lv: 'Rīga, Latvija',
+      en: 'Riga, Latvia',
+      ru: 'Рига, Латвия',
+    },
+    summary: {
+      lv: 'Luksusa marmora kamīns.',
+      en: 'Luxury marble fireplace.',
+      ru: 'Роскошный мраморный камин.',
+    },
+    body: {
+      lv: 'Luksusa marmora kamīns ar Calacatta marmoru.',
+      en: 'Luxury marble fireplace with Calacatta marble.',
+      ru: 'Роскошный мраморный камин с мрамором Calacatta.',
+    },
+    heroImage: '/images/projects/project-bathroom-3.webp',
+    galleryImages: [
+      '/images/projects/project-bathroom-3.webp',
+      '/images/projects/project-bathroom-4.webp',
+      '/images/projects/project-bathroom-5.webp',
+    ],
+    year: 2024,
+  },
+
+  // Project 15: Custom Kitchen Furniture
+  {
+    id: 'custom-kitchen-furniture-riga',
+    slug: {
+      lv: 'individuala-virtuve-riga',
+      en: 'custom-kitchen-furniture-riga',
+      ru: 'individualnaya-kuhnya-riga',
+    },
+    title: {
+      lv: 'Individuālā virtuve Rīgā',
+      en: 'Custom Kitchen in Riga',
+      ru: 'Индивидуальная кухня в Риге',
+    },
+    category: 'furniture',
+    material: 'silestone',
+    tags: ['kitchen', 'residential'],
+    installationLocation: ['kitchen', 'furniture'],
+    location: {
+      lv: 'Rīga, Latvija',
+      en: 'Riga, Latvia',
+      ru: 'Рига, Латвия',
+    },
+    summary: {
+      lv: 'Pilnīgi individuāli projektēta virtuve.',
+      en: 'Fully custom-designed kitchen.',
+      ru: 'Полностью индивидуально спроектированная кухня.',
+    },
+    body: {
+      lv: 'Pilnīgi individuāli projektēta virtuve ar Silestone virsmām.',
+      en: 'Fully custom-designed kitchen with Silestone surfaces.',
+      ru: 'Полностью индивидуально спроектированная кухня с поверхностями Silestone.',
+    },
+    heroImage: '/images/projects/project-kitchen-4.webp',
+    galleryImages: [
+      '/images/projects/project-kitchen-4.webp',
+      '/images/projects/project-kitchen-5.webp',
+    ],
+    year: 2024,
+  },
+
+  // Project 16: Built-in Furniture
+  {
+    id: 'builtin-furniture-riga',
+    slug: {
+      lv: 'iebuvetas-mebeles-riga',
+      en: 'builtin-furniture-riga',
+      ru: 'vstroennaya-mebel-riga',
+    },
+    title: {
+      lv: 'Iebūvētas mēbeles Rīgā',
+      en: 'Built-in Furniture in Riga',
+      ru: 'Встроенная мебель в Риге',
+    },
+    category: 'furniture',
+    tags: ['residential'],
+    installationLocation: ['furniture', 'interior'],
+    location: {
+      lv: 'Rīga, Latvija',
+      en: 'Riga, Latvia',
+      ru: 'Рига, Латвия',
+    },
+    summary: {
+      lv: 'Iebūvētas mēbeles dzīvojamai telpai.',
+      en: 'Built-in furniture for living space.',
+      ru: 'Встроенная мебель для жилого пространства.',
+    },
+    body: {
+      lv: 'Iebūvētas mēbeles dzīvojamai telpai.',
+      en: 'Built-in furniture for living space.',
+      ru: 'Встроенная мебель для жилого пространства.',
+    },
+    heroImage: '/images/projects/project-sink-1.webp',
+    galleryImages: [
+      '/images/projects/project-sink-1.webp',
+      '/images/projects/project-sink-2.webp',
+    ],
+    year: 2023,
+  },
+
+  // Project 17: Silestone Bathroom
+  {
+    id: 'silestone-bathroom-riga',
+    slug: {
+      lv: 'silestone-vannasistaba-riga',
+      en: 'silestone-bathroom-riga',
+      ru: 'silestone-vannaya-riga',
+    },
+    title: {
+      lv: 'Silestone vannas istaba Rīgā',
+      en: 'Silestone Bathroom in Riga',
+      ru: 'Ванная Silestone в Риге',
+    },
+    category: 'stone',
+    material: 'silestone',
+    tags: ['bathroom', 'residential'],
+    installationLocation: ['bathroom'],
+    location: {
+      lv: 'Rīga, Latvija',
+      en: 'Riga, Latvia',
+      ru: 'Рига, Латвия',
+    },
+    summary: {
+      lv: 'Modernas vannas istabas apdare ar Silestone.',
+      en: 'Modern bathroom finish with Silestone.',
+      ru: 'Современная отделка ванной с Silestone.',
+    },
+    body: {
+      lv: 'Modernas vannas istabas apdare ar Silestone.',
+      en: 'Modern bathroom finish with Silestone.',
+      ru: 'Современная отделка ванной с Silestone.',
+    },
+    heroImage: '/images/projects/project-bathroom-4.webp',
+    galleryImages: [
+      '/images/projects/project-bathroom-4.webp',
+      '/images/projects/project-bathroom-5.webp',
+    ],
+    year: 2024,
+  },
+
+  // Project 18: Dekton Flooring
+  {
+    id: 'dekton-flooring-riga',
+    slug: {
+      lv: 'dekton-grida-riga',
+      en: 'dekton-flooring-riga',
+      ru: 'dekton-pol-riga',
+    },
+    title: {
+      lv: 'Dekton grīda Rīgā',
+      en: 'Dekton Flooring in Riga',
+      ru: 'Пол Dekton в Риге',
+    },
+    category: 'stone',
+    material: 'dekton',
+    tags: ['commercial'],
+    installationLocation: ['commercial', 'interior'],
+    location: {
+      lv: 'Rīga, Latvija',
+      en: 'Riga, Latvia',
+      ru: 'Рига, Латвия',
+    },
+    summary: {
+      lv: 'Modernas grīdas segums ar Dekton.',
+      en: 'Modern flooring with Dekton.',
+      ru: 'Современное напольное покрытие с Dekton.',
+    },
+    body: {
+      lv: 'Modernas grīdas segums ar Dekton.',
+      en: 'Modern flooring with Dekton.',
+      ru: 'Современное напольное покрытие с Dekton.',
+    },
+    heroImage: '/images/projects/project-outdoor-1.webp',
+    galleryImages: [
+      '/images/projects/project-outdoor-1.webp',
+      '/images/projects/project-outdoor-2.webp',
+    ],
+    year: 2023,
+  },
+
+  // Project 19: Granite Stairs
+  {
+    id: 'granite-stairs-riga',
+    slug: {
+      lv: 'granita-kapnes-riga',
+      en: 'granite-stairs-riga',
+      ru: 'granitnye-lestnitsy-riga',
+    },
+    title: {
+      lv: 'Granīta kāpnes Rīgā',
+      en: 'Granite Stairs in Riga',
+      ru: 'Гранитные лестницы в Риге',
+    },
+    category: 'stone',
+    material: 'granite',
+    tags: ['residential'],
+    installationLocation: ['interior'],
+    location: {
+      lv: 'Rīga, Latvija',
+      en: 'Riga, Latvia',
+      ru: 'Рига, Латвия',
+    },
+    summary: {
+      lv: 'Dabīgas granīta kāpnes.',
+      en: 'Natural granite stairs.',
+      ru: 'Натуральные гранитные лестницы.',
+    },
+    body: {
+      lv: 'Dabīgas granīta kāpnes.',
+      en: 'Natural granite stairs.',
+      ru: 'Натуральные гранитные лестницы.',
+    },
+    heroImage: '/images/projects/project-elements-1.webp',
+    galleryImages: [
+      '/images/projects/project-elements-1.webp',
+      '/images/projects/project-elements-2.webp',
+    ],
+    year: 2024,
+  },
+
+  // Project 20: Marble Kitchen
+  {
+    id: 'marble-kitchen-riga',
+    slug: {
+      lv: 'marmora-virtuve-riga',
+      en: 'marble-kitchen-riga',
+      ru: 'mramornaya-kuhnya-riga',
+    },
+    title: {
+      lv: 'Marmora virtuve Rīgā',
+      en: 'Marble Kitchen in Riga',
+      ru: 'Мраморная кухня в Риге',
+    },
+    category: 'stone',
+    material: 'marble',
+    tags: ['kitchen', 'residential'],
+    installationLocation: ['kitchen'],
+    location: {
+      lv: 'Rīga, Latvija',
+      en: 'Riga, Latvia',
+      ru: 'Рига, Латвия',
+    },
+    summary: {
+      lv: 'Luksusa marmora virtuve.',
+      en: 'Luxury marble kitchen.',
+      ru: 'Роскошная мраморная кухня.',
+    },
+    body: {
+      lv: 'Luksusa marmora virtuve ar Calacatta marmoru.',
+      en: 'Luxury marble kitchen with Calacatta marble.',
+      ru: 'Роскошная мраморная кухня с мрамором Calacatta.',
+    },
+    heroImage: '/images/projects/project-bathroom-3.webp',
+    galleryImages: [
+      '/images/projects/project-bathroom-3.webp',
+      '/images/projects/project-bathroom-4.webp',
+      '/images/projects/project-bathroom-5.webp',
+    ],
+    year: 2023,
+  },
+
+  // Project 21: Silestone Commercial Kitchen
+  {
+    id: 'silestone-commercial-kitchen',
+    slug: {
+      lv: 'silestone-komercials-virtuve',
+      en: 'silestone-commercial-kitchen',
+      ru: 'silestone-kommercheskaya-kuhnya',
+    },
+    title: {
+      lv: 'Komerciāla virtuve ar Silestone',
+      en: 'Commercial Kitchen with Silestone',
+      ru: 'Коммерческая кухня с Silestone',
+    },
+    category: 'stone',
+    material: 'silestone',
+    tags: ['kitchen', 'commercial'],
+    installationLocation: ['kitchen', 'commercial'],
+    location: {
+      lv: 'Rīga, Latvija',
+      en: 'Riga, Latvia',
+      ru: 'Рига, Латвия',
+    },
+    summary: {
+      lv: 'Komerciāla virtuve ar Silestone virsmām.',
+      en: 'Commercial kitchen with Silestone surfaces.',
+      ru: 'Коммерческая кухня с поверхностями Silestone.',
+    },
+    body: {
+      lv: 'Komerciāla virtuve ar Silestone virsmām.',
+      en: 'Commercial kitchen with Silestone surfaces.',
+      ru: 'Коммерческая кухня с поверхностями Silestone.',
+    },
+    heroImage: '/images/projects/project-kitchen-2.webp',
+    galleryImages: [
+      '/images/projects/project-kitchen-2.webp',
+      '/images/projects/project-kitchen-3.webp',
+    ],
+    year: 2024,
+  },
+
+  // Project 22: Dekton Kitchen Island
+  {
+    id: 'dekton-kitchen-island',
+    slug: {
+      lv: 'dekton-virtuves-sala',
+      en: 'dekton-kitchen-island',
+      ru: 'dekton-kukhonnyy-ostrov',
+    },
+    title: {
+      lv: 'Virtuves sala ar Dekton',
+      en: 'Kitchen Island with Dekton',
+      ru: 'Кухонный остров с Dekton',
+    },
+    category: 'stone',
+    material: 'dekton',
+    tags: ['kitchen', 'residential'],
+    installationLocation: ['kitchen'],
+    location: {
+      lv: 'Rīga, Latvija',
+      en: 'Riga, Latvia',
+      ru: 'Рига, Латвия',
+    },
+    summary: {
+      lv: 'Liela virtuves sala ar Dekton virsmu.',
+      en: 'Large kitchen island with Dekton surface.',
+      ru: 'Большой кухонный остров с поверхностью Dekton.',
+    },
+    body: {
+      lv: 'Liela virtuves sala ar Dekton virsmu.',
+      en: 'Large kitchen island with Dekton surface.',
+      ru: 'Большой кухонный остров с поверхностью Dekton.',
+    },
+    heroImage: '/images/projects/project-outdoor-1.webp',
+    galleryImages: [
+      '/images/projects/project-outdoor-1.webp',
+      '/images/projects/project-outdoor-2.webp',
+    ],
+    year: 2024,
+  },
+
+  // Project 23: Granite Window Sill
+  {
+    id: 'granite-window-sill',
+    slug: {
+      lv: 'granita-palodze',
+      en: 'granite-window-sill',
+      ru: 'granitnyy-podokonnik',
+    },
+    title: {
+      lv: 'Granīta palodze',
+      en: 'Granite Window Sill',
+      ru: 'Гранитный подоконник',
+    },
+    category: 'stone',
+    material: 'granite',
+    tags: ['residential'],
+    installationLocation: ['interior'],
+    location: {
+      lv: 'Rīga, Latvija',
+      en: 'Riga, Latvia',
+      ru: 'Рига, Латвия',
+    },
+    summary: {
+      lv: 'Dabīga granīta palodze.',
+      en: 'Natural granite window sill.',
+      ru: 'Натуральный гранитный подоконник.',
+    },
+    body: {
+      lv: 'Dabīga granīta palodze.',
+      en: 'Natural granite window sill.',
+      ru: 'Натуральный гранитный подоконник.',
+    },
+    heroImage: '/images/projects/project-elements-1.webp',
+    galleryImages: [
+      '/images/projects/project-elements-1.webp',
+      '/images/projects/project-elements-2.webp',
+    ],
+    year: 2023,
+  },
+
+  // Project 24: Marble Feature Wall
+  {
+    id: 'marble-feature-wall',
+    slug: {
+      lv: 'marmora-akcentu-siena',
+      en: 'marble-feature-wall',
+      ru: 'mramornaya-aktsentnaya-stena',
+    },
+    title: {
+      lv: 'Marmora akcentu siena',
+      en: 'Marble Feature Wall',
+      ru: 'Мраморная акцентная стена',
+    },
+    category: 'stone',
+    material: 'marble',
+    tags: ['residential'],
+    installationLocation: ['interior'],
+    location: {
+      lv: 'Rīga, Latvija',
+      en: 'Riga, Latvia',
+      ru: 'Рига, Латвия',
+    },
+    summary: {
+      lv: 'Luksusa marmora akcentu siena.',
+      en: 'Luxury marble feature wall.',
+      ru: 'Роскошная мраморная акцентная стена.',
+    },
+    body: {
+      lv: 'Luksusa marmora akcentu siena ar Calacatta marmoru.',
+      en: 'Luxury marble feature wall with Calacatta marble.',
+      ru: 'Роскошная мраморная акцентная стена с мрамором Calacatta.',
+    },
+    heroImage: '/images/projects/project-bathroom-3.webp',
+    galleryImages: [
+      '/images/projects/project-bathroom-3.webp',
+      '/images/projects/project-bathroom-4.webp',
+      '/images/projects/project-bathroom-5.webp',
+    ],
+    year: 2024,
+  },
+]
+
+// Helper functions
+export function getProjectById(id: string): Project | undefined {
+  return projects.find(p => p.id === id)
+}
+
+export function getProjectBySlug(slug: string, locale: 'lv' | 'en' | 'ru'): Project | undefined {
+  return projects.find(p => p.slug[locale] === slug)
+}
+
+export function getProjectSlugs(id: string): Project['slug'] | undefined {
+  const project = getProjectById(id)
+  return project?.slug
+}
+
+export function getProjectsByCategory(category: Project['category']): Project[] {
+  return projects.filter(p => p.category === category)
+}
+
+export function getProjectsByTag(tag: string): Project[] {
+  return projects.filter(p => p.tags.includes(tag as Project['tags'][number]))
+}
+
+export function getAllProjects(): Project[] {
+  return projects
+}
+
