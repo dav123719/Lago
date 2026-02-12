@@ -1,1 +1,0 @@
-"use strict";exports.id=420,exports.ids=[420],exports.modules={6420:(r,s,e)=>{e.r(s),e.d(s,{ProjectsCarousel:()=>o});let o=(0,e(8570).createProxy)(String.raw`/var/www/lago/src/components/ui/ProjectsCarousel.tsx#ProjectsCarousel`)}};

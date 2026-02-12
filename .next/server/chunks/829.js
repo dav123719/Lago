@@ -1,1 +1,0 @@
-"use strict";exports.id=829,exports.ids=[829],exports.modules={1829:(e,r,s)=>{s.r(r),s.d(r,{ViewAllProjectsLink:()=>t});let t=(0,s(8570).createProxy)(String.raw`/var/www/lago/src/components/ui/ViewAllProjectsLink.tsx#ViewAllProjectsLink`)}};

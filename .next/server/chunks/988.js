@@ -1,1 +1,0 @@
-"use strict";exports.id=988,exports.ids=[988],exports.modules={7988:(r,s,t)=>{t.r(s),t.d(s,{CustomFurnitureShowcase:()=>e});let e=(0,t(8570).createProxy)(String.raw`/var/www/lago/src/components/ui/CustomFurnitureShowcase.tsx#CustomFurnitureShowcase`)}};

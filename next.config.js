@@ -1,5 +1,7 @@
 /** @type {import('next').NextConfig} */
 const nextConfig = {
+output: 'export',
+distDir: 'dist',
   // Note: Next.js 14+ with App Router handles i18n differently.
   // We use dynamic route segments [locale] instead of built-in i18n config.
   // The built-in i18n config is for Pages Router only.
@@ -104,4 +106,3 @@ const nextConfig = {
 }
 
 module.exports = nextConfig
-

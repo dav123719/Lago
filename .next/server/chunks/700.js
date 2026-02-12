@@ -1,1 +1,0 @@
-"use strict";exports.id=700,exports.ids=[700],exports.modules={2700:(r,s,t)=>{t.r(s),t.d(s,{CTALink:()=>e});let e=(0,t(8570).createProxy)(String.raw`/var/www/lago/src/components/ui/CTALink.tsx#CTALink`)}};
