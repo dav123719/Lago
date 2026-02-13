@@ -1,38 +1,85 @@
+// ============================================
+// Next.js Middleware
+// ============================================
+// AGENT slave-4 v1.0.1 - Auth system verified
+
 import { NextResponse } from 'next/server'
 import type { NextRequest } from 'next/server'
 import { locales, defaultLocale } from '@/lib/i18n/config'
+import { updateSession } from '@/lib/supabase/middleware'
 
-export function middleware(request: NextRequest) {
-  const { pathname } = request.nextUrl
+export async function middleware(request: NextRequest) {
+  const pathname = request.nextUrl.pathname
 
-  // Check if pathname already has a locale
-  const pathnameHasLocale = locales.some(
-    (locale) => pathname.startsWith(`/${locale}/`) || pathname === `/${locale}`
+  // ============================================
+  // Auth Session Management
+  // ============================================
+  // Update Supabase auth session and get user
+  const { response, user } = await updateSession(request)
+
+  // ============================================
+  // Studio Access Control
+  // ============================================
+  if (pathname.startsWith('/studio')) {
+    // Let the Studio layout handle authentication
+    return response
+  }
+
+  // ============================================
+  // Protected Routes Check
+  // ============================================
+  const protectedPaths = ['/account', '/checkout']
+  const isProtectedPath = protectedPaths.some(path => pathname.includes(path))
+  
+  if (isProtectedPath && !user) {
+    // Redirect to home with error parameter
+    const locale = pathname.split('/')[1]
+    const validLocale = locales.includes(locale as typeof locales[number]) ? locale : defaultLocale
+    return NextResponse.redirect(new URL(`/${validLocale}?error=auth_required`, request.url))
+  }
+
+  // ============================================
+  // Locale Detection & Redirect
+  // ============================================
+  
+  // Check if pathname starts with a valid locale
+  const pathnameIsMissingLocale = locales.every(
+    (locale) => !pathname.startsWith(`/${locale}/`) && pathname !== `/${locale}`
   )
 
-  if (pathnameHasLocale) {
-    return NextResponse.next()
+  if (pathnameIsMissingLocale) {
+    // Check if there's a locale cookie
+    const localeCookie = request.cookies.get('NEXT_LOCALE')
+    const detectedLocale = localeCookie?.value || defaultLocale
+
+    // Redirect to the path with detected locale
+    return NextResponse.redirect(
+      new URL(`/${detectedLocale}${pathname}`, request.url)
+    )
   }
 
-  // Redirect to default locale if no locale in path
-  // Skip for static files and API routes
-  if (
-    pathname.startsWith('/_next') ||
-    pathname.startsWith('/api') ||
-    pathname.startsWith('/images') ||
-    pathname.includes('.') // Files with extensions
-  ) {
-    return NextResponse.next()
+  // ============================================
+  // Preview Mode Cookie
+  // ============================================
+  const previewCookie = request.cookies.get('__next_preview_data')
+  if (previewCookie && pathname.includes('/projects/')) {
+    // Add cache-busting header for preview mode
+    const requestHeaders = new Headers(request.headers)
+    requestHeaders.set('x-preview-mode', 'true')
+    
+    return NextResponse.next({
+      request: {
+        headers: requestHeaders,
+      },
+    })
   }
 
-  // Redirect to default locale
-  const url = request.nextUrl.clone()
-  url.pathname = `/${defaultLocale}${pathname}`
-  return NextResponse.redirect(url)
+  return response
 }
 
 export const config = {
-  // Match all paths except static files
-  matcher: ['/((?!_next/static|_next/image|favicon.ico).*)'],
+  matcher: [
+    // Skip all internal paths (_next, api, static files, favicon)
+    '/((?!_next|api|.*\\..*).*)',
+  ],
 }
-

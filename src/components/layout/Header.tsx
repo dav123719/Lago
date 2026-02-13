@@ -3,10 +3,11 @@
 import { useState, useEffect, useRef } from 'react'
 import Link from 'next/link'
 import Image from 'next/image'
-import { Menu, X, ChevronDown, Phone, Facebook, Instagram } from 'lucide-react'
+import { Menu, X, ChevronDown, Phone, Facebook, Instagram, Store } from 'lucide-react'
 import { Locale } from '@/lib/i18n/config'
 import { translations } from '@/lib/i18n/translations'
 import { LanguageSwitcher } from './LanguageSwitcher'
+import { AuthButton } from '@/components/auth/AuthButton'
 import { NeonButton } from '@/components/ui/NeonButton'
 
 interface HeaderProps {
@@ -14,56 +15,73 @@ interface HeaderProps {
   alternateUrls?: Record<Locale, string>
 }
 
-// Simplified navigation - Stone surfaces now links to homepage materials section
+// Navigation configuration
 const getNavigation = (locale: Locale) => {
   const stoneBase = locale === 'lv' ? 'akmens-virsmas' : locale === 'ru' ? 'kamennye-poverhnosti' : 'stone-surfaces'
+  const storeBase = `/${locale}/store`
+  
   return [
-  {
-    label: translations.nav.furniture[locale],
-    href: `/${locale}/${locale === 'lv' ? 'mebeles' : locale === 'ru' ? 'mebel' : 'furniture'}`,
-  },
-  {
-    label: translations.nav.stoneSurfaces[locale],
-    href: `/${locale}#materials`, // Links to materials section on homepage
-    children: [
-      {
-        label: 'Silestone',
-        href: `/${locale}/${stoneBase}/silestone`,
-      },
-      {
-        label: 'Dekton',
-        href: `/${locale}/${stoneBase}/dekton`,
-      },
-      {
-        label: translations.materials.granite[locale],
-        href: `/${locale}/${stoneBase}/${locale === 'lv' ? 'granits' : locale === 'ru' ? 'granit' : 'granite'}`,
-      },
-      {
-        label: translations.materials.marble[locale],
-        href: `/${locale}/${stoneBase}/${locale === 'lv' ? 'marmors' : locale === 'ru' ? 'mramor' : 'marble'}`,
-      },
-    ],
-  },
-  {
-    label: translations.nav.projects[locale],
-    href: `/${locale}/${locale === 'lv' ? 'projekti' : locale === 'ru' ? 'proekty' : 'projects'}`,
-  },
-  {
-    label: translations.nav.about[locale],
-    href: `/${locale}/${locale === 'lv' ? 'par-mums' : locale === 'ru' ? 'o-nas' : 'about-us'}`,
-  },
-  {
-    label: locale === 'lv' ? 'Kontakti' : locale === 'en' ? 'Contacts' : 'Контакты',
-    href: `/${locale}/${locale === 'lv' ? 'par-mums' : locale === 'ru' ? 'o-nas' : 'about-us'}#contact`,
-  },
-]}
+    {
+      label: locale === 'lv' ? 'Veikals' : locale === 'ru' ? 'Магазин' : 'Store',
+      href: storeBase,
+      icon: Store,
+    },
+    {
+      label: translations.nav.furniture[locale],
+      href: `/${locale}/${locale === 'lv' ? 'mebeles' : locale === 'ru' ? 'mebel' : 'furniture'}`,
+    },
+    {
+      label: translations.nav.stoneSurfaces[locale],
+      href: `/${locale}#materials`,
+      children: [
+        {
+          label: 'Silestone',
+          href: `/${locale}/${stoneBase}/silestone`,
+        },
+        {
+          label: 'Dekton',
+          href: `/${locale}/${stoneBase}/dekton`,
+        },
+        {
+          label: translations.materials.granite[locale],
+          href: `/${locale}/${stoneBase}/${locale === 'lv' ? 'granits' : locale === 'ru' ? 'granit' : 'granite'}`,
+        },
+        {
+          label: translations.materials.marble[locale],
+          href: `/${locale}/${stoneBase}/${locale === 'lv' ? 'marmors' : locale === 'ru' ? 'mramor' : 'marble'}`,
+        },
+      ],
+    },
+    {
+      label: translations.nav.projects[locale],
+      href: `/${locale}/${locale === 'lv' ? 'projekti' : locale === 'ru' ? 'proekty' : 'projects'}`,
+    },
+    {
+      label: translations.nav.about[locale],
+      href: `/${locale}/${locale === 'lv' ? 'par-mums' : locale === 'ru' ? 'o-nas' : 'about-us'}`,
+    },
+    {
+      label: locale === 'lv' ? 'Kontakti' : locale === 'en' ? 'Contacts' : 'Контакты',
+      href: `/${locale}/${locale === 'lv' ? 'par-mums' : locale === 'ru' ? 'o-nas' : 'about-us'}#contact`,
+    },
+  ]
+}
+
+interface NavItemChild {
+  label: string
+  href: string
+  isDivider?: boolean
+}
+
+interface NavItem {
+  label: string
+  href: string
+  icon?: React.ComponentType<{ className?: string }>
+  children?: Array<NavItemChild>
+}
 
 interface NavLinkProps {
-  item: {
-    label: string
-    href: string
-    children?: Array<{ label: string; href: string }>
-  }
+  item: NavItem
   scrolled: boolean
   mobileMenuOpen: boolean
   openDropdown: string | null
@@ -74,6 +92,7 @@ function NavLink({ item, scrolled, mobileMenuOpen, openDropdown, setOpenDropdown
   const linkRef = useRef<HTMLAnchorElement>(null)
   const [mousePosition, setMousePosition] = useState({ x: 50, y: 50 })
   const [isHovered, setIsHovered] = useState(false)
+  const Icon = item.icon
 
   const handleMouseMove = (e: React.MouseEvent<HTMLAnchorElement>) => {
     if (!linkRef.current) return
@@ -139,6 +158,7 @@ function NavLink({ item, scrolled, mobileMenuOpen, openDropdown, setOpenDropdown
           }}
         />
         
+        {Icon && <Icon className="w-4 h-4 mr-1" />}
         <span className="relative z-10">{item.label}</span>
         {item.children && (
           <ChevronDown className={`w-4 h-4 transition-transform duration-300 relative z-10 ${
@@ -149,22 +169,26 @@ function NavLink({ item, scrolled, mobileMenuOpen, openDropdown, setOpenDropdown
       
       {/* Dropdown menu - fully opaque solid background for readability */}
       {item.children && openDropdown === item.href && (
-        <div className="absolute top-full left-0 pt-4 animate-fade-in-down">
+        <div className="absolute top-full left-0 pt-4 animate-fade-in-down z-50">
           <div 
-            className="rounded-lg py-3 min-w-[220px] border border-lago-gold/20"
+            className="rounded-lg py-3 min-w-[240px] border border-lago-gold/20"
             style={{ 
               backgroundColor: '#0a0a0a',
               boxShadow: '0 25px 50px -12px rgba(0, 0, 0, 0.9), 0 0 0 1px rgba(255, 255, 255, 0.05)'
             }}
           >
-            {item.children.map((child) => (
-              <Link
-                key={child.href}
-                href={child.href}
-                className="block px-5 py-3 text-sm font-button text-lago-light hover:text-lago-gold hover:bg-white/5 transition-all duration-200 hover:pl-7"
-              >
-                {child.label}
-              </Link>
+            {item.children.map((child, index) => (
+              child.isDivider ? (
+                <div key={index} className="my-2 border-t border-lago-gray/50" />
+              ) : (
+                <Link
+                  key={child.href}
+                  href={child.href}
+                  className="block px-5 py-3 text-sm font-button text-lago-light hover:text-lago-gold hover:bg-white/5 transition-all duration-200 hover:pl-7"
+                >
+                  {child.label}
+                </Link>
+              )
             ))}
           </div>
         </div>
@@ -239,7 +263,7 @@ export function Header({ locale, alternateUrls }: HeaderProps) {
 
             {/* Desktop Navigation */}
             <div className="hidden lg:flex lg:items-center lg:gap-8 lg:flex-1 lg:justify-center lg:min-w-0 whitespace-nowrap">
-              {navigation.map((item, index) => (
+              {navigation.map((item) => (
                 <NavLink
                   key={item.href}
                   item={item}
@@ -262,6 +286,7 @@ export function Header({ locale, alternateUrls }: HeaderProps) {
                 currentLocale={locale} 
                 alternateUrls={alternateUrls}
               />
+              <AuthButton locale={locale} />
               <div className="flex items-center gap-3">
                 <a
                   href="https://www.facebook.com/LAGO.lv/"
@@ -351,20 +376,22 @@ export function Header({ locale, alternateUrls }: HeaderProps) {
                   </Link>
                   {item.children && (
                     <div className="pl-6 space-y-2 pb-4 border-l-2 border-lago-gold/30 ml-2">
-                      {item.children.map((child, childIndex) => (
-                        <Link
-                          key={child.href}
-                          href={child.href}
-                          className={`block py-2 text-base font-button text-lago-light hover:text-lago-gold transition-all duration-300 ${
-                            mobileMenuOpen 
-                              ? 'translate-x-0 opacity-100' 
-                              : '-translate-x-5 opacity-0'
-                          }`}
-                          style={{ transitionDelay: mobileMenuOpen ? `${(index * 100) + (childIndex * 50) + 100}ms` : '0ms' }}
-                          onClick={() => setMobileMenuOpen(false)}
-                        >
-                          {child.label}
-                        </Link>
+                      {item.children.map((child: NavItemChild, childIndex) => (
+                        child.isDivider ? null : (
+                          <Link
+                            key={child.href}
+                            href={child.href}
+                            className={`block py-2 text-base font-button text-lago-light hover:text-lago-gold transition-all duration-300 ${
+                              mobileMenuOpen 
+                                ? 'translate-x-0 opacity-100' 
+                                : '-translate-x-5 opacity-0'
+                            }`}
+                            style={{ transitionDelay: mobileMenuOpen ? `${(index * 100) + (childIndex * 50) + 100}ms` : '0ms' }}
+                            onClick={() => setMobileMenuOpen(false)}
+                          >
+                            {child.label}
+                          </Link>
+                        )
                       ))}
                     </div>
                   )}
@@ -388,6 +415,18 @@ export function Header({ locale, alternateUrls }: HeaderProps) {
                 currentLocale={locale} 
                 alternateUrls={alternateUrls}
               />
+            </div>
+
+            {/* Auth Button - Mobile */}
+            <div 
+              className={`pt-8 mt-6 border-t border-white/10 transform transition-all duration-500 ${
+                mobileMenuOpen 
+                  ? 'translate-y-0 opacity-100' 
+                  : 'translate-y-5 opacity-0'
+              }`}
+              style={{ transitionDelay: mobileMenuOpen ? '450ms' : '0ms' }}
+            >
+              <AuthButton locale={locale} mobile />
             </div>
 
             {/* Contact CTA */}
@@ -499,4 +538,3 @@ export function Header({ locale, alternateUrls }: HeaderProps) {
     </>
   )
 }
-

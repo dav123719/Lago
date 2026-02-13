@@ -6,24 +6,57 @@
     "dev": "next dev",
     "build": "next build",
     "start": "next start",
-    "lint": "next lint"
+    "lint": "next lint",
+    "test": "npm run test:unit && npm run test:e2e",
+    "test:unit": "vitest run",
+    "test:unit:watch": "vitest",
+    "test:e2e": "playwright test",
+    "test:e2e:ui": "playwright test --ui",
+    "test:e2e:debug": "playwright test --debug",
+    "type-check": "tsc --noEmit",
+    "format": "prettier --write .",
+    "format:check": "prettier --check .",
+    "analyze": "ANALYZE=true next build"
   },
   "dependencies": {
+    "@sanity/client": "^6.24.1",
+    "@sanity/image-url": "^2.0.3",
+    "@sanity/vision": "^5.9.0",
+    "@sanity/webhook": "^4.0.4",
+    "@stripe/stripe-js": "^5.5.0",
+    "@supabase/ssr": "^0.8.0",
+    "@supabase/supabase-js": "^2.95.3",
     "lucide-react": "^0.555.0",
     "next": "^16.1.6",
+    "next-sanity": "^12.1.0",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
-    "sharp": "^0.34.5"
+    "sanity": "^5.9.0",
+    "sharp": "^0.34.5",
+    "sonner": "^2.0.7",
+    "stripe": "^17.5.0",
+    "styled-components": "^6.1.14"
   },
   "devDependencies": {
+    "@playwright/test": "^1.40.0",
+    "@testing-library/jest-dom": "^6.1.5",
+    "@testing-library/react": "^14.1.2",
     "@types/node": "^20.11.0",
     "@types/react": "^18.2.0",
     "@types/react-dom": "^18.2.0",
+    "@vitejs/plugin-react": "^4.2.1",
     "autoprefixer": "^10.4.17",
     "eslint": "^8.56.0",
     "eslint-config-next": "^16.1.6",
+    "jsdom": "^23.0.1",
     "postcss": "^8.4.35",
+    "prettier": "^3.1.1",
     "tailwindcss": "^3.4.1",
-    "typescript": "^5.3.0"
+    "typescript": "^5.3.0",
+    "vitest": "^1.1.0"
+  },
+  "engines": {
+    "node": ">=18.0.0",
+    "npm": ">=9.0.0"
   }
 }

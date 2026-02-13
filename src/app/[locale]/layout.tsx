@@ -3,6 +3,10 @@ import { locales, Locale, localeHtmlLang } from '@/lib/i18n/config'
 import { Header, Footer } from '@/components/layout'
 import { headingFont, bodyFont, buttonFont } from '@/lib/fonts'
 import { AsyncCSSLoader } from '@/components/AsyncCSSLoader'
+import { AuthProvider } from '@/contexts/AuthContext'
+import { CartProvider } from '@/contexts/CartContext'
+import { CartDrawer } from '@/components/cart/CartDrawer'
+import { Toaster } from 'sonner'
 
 interface LocaleLayoutProps {
   children: React.ReactNode
@@ -61,11 +65,26 @@ export default async function LocaleLayout({
       <body className={`min-h-screen flex flex-col bg-lago-black text-lago-light antialiased ${bodyFont.className}`}>
         {/* PERFORMANCE: Load non-critical CSS asynchronously after initial render */}
         <AsyncCSSLoader />
-        <Header locale={validLocale} />
-        <main className="flex-1">
-          {children}
-        </main>
-        <Footer locale={validLocale} />
+        <AuthProvider>
+          <CartProvider>
+            <Header locale={validLocale} />
+            <main className="flex-1">
+              {children}
+            </main>
+            <Footer locale={validLocale} />
+            <CartDrawer locale={validLocale} />
+          </CartProvider>
+        </AuthProvider>
+        <Toaster 
+          position="top-center"
+          toastOptions={{
+            style: {
+              background: '#111111',
+              color: '#e0e0e0',
+              border: '1px solid rgba(201, 169, 98, 0.3)',
+            },
+          }}
+        />
       </body>
     </html>
   )
