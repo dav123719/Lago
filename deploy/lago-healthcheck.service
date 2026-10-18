@@ -1,0 +1,6 @@
+[Unit]
+Description=LAGO local health check
+After=lago.service
+[Service]
+Type=oneshot
+ExecStart=/usr/local/libexec/lago-healthcheck

@@ -1,3 +1,4 @@
+export const dynamic = 'force-dynamic'
 // ============================================
 // Studio Layout
 // ============================================
@@ -20,11 +21,11 @@ export default async function StudioLayout({
   // Check if Sanity is configured
   if (!isSanityConfigured()) {
     return (
-      <html>
-        <body style={{ 
-          display: 'flex', 
-          alignItems: 'center', 
-          justifyContent: 'center', 
+      <>
+        <div style={{
+          display: 'flex',
+          alignItems: 'center',
+          justifyContent: 'center',
           minHeight: '100vh',
           background: '#0a0a0a',
           color: '#e0e0e0',
@@ -34,8 +35,8 @@ export default async function StudioLayout({
             <h1 style={{ color: '#c9a962', marginBottom: '1rem' }}>Sanity Not Configured</h1>
             <p>Please set up your Sanity environment variables.</p>
           </div>
-        </body>
-      </html>
+        </div>
+      </>
     )
   }
 
@@ -44,24 +45,22 @@ export default async function StudioLayout({
   const { data: { user }, error } = await supabase.auth.getUser()
 
   if (error || !user) {
-    redirect('/login?redirect=/studio')
+    redirect('/lv/?login=1')
   }
 
   // Check admin role in user metadata or database
-  const isAdmin = user.user_metadata?.role === 'admin' || 
-                  user.email?.endsWith('@lago.lv') ||
-                  await checkAdminRole(supabase, user.id)
+  const isAdmin = user.app_metadata?.role === 'admin'
 
   if (!isAdmin) {
     redirect('/?error=unauthorized')
   }
 
   return (
-    <html>
-      <body style={{ margin: 0 }}>
+    <>
+      <div style={{ margin: 0 }}>
         {children}
-      </body>
-    </html>
+      </div>
+    </>
   )
 }
 
@@ -73,7 +72,7 @@ async function checkAdminRole(supabase: any, userId: string): Promise<boolean> {
       .eq('user_id', userId)
       .eq('role', 'admin')
       .single()
-    
+
     if (error) return false
     return !!data
   } catch {

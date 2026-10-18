@@ -1,5 +1,7 @@
 'use client'
 
+import { serializeJsonLd } from '@/lib/seo/serialize-json-ld'
+
 // ============================================
 // JSON-LD Script Injector Component
 // ============================================
@@ -23,7 +25,7 @@ interface JsonLdProps {
  */
 export function JsonLd({ schema, id }: JsonLdProps) {
   const schemas = Array.isArray(schema) ? schema : [schema]
-  const jsonLdString = JSON.stringify(schemas.length === 1 ? schemas[0] : schemas)
+  const jsonLdString = serializeJsonLd(schemas.length === 1 ? schemas[0] : schemas)
 
   return (
     <script

@@ -2,7 +2,7 @@
 // Admin Authentication Utilities
 // ===================================
 
-import { createServerClient } from '@/lib/supabase/client'
+import { createClient as createServerClient } from '@/lib/supabase/server'
 import type { Database } from '@/types/database'
 
 export type UserRole = 'admin' | 'manager' | 'customer'
@@ -20,31 +20,16 @@ export interface AdminUser {
  */
 export async function checkAdminRole(): Promise<boolean> {
   try {
-    const supabase = createServerClient()
+    const supabase = await createServerClient()
     
     // Get current session
-    const { data: { session } } = await supabase.auth.getSession()
+    const { data: { user } } = await supabase.auth.getUser()
     
-    if (!session?.user) {
+    if (!user) {
       return false
     }
 
-    // Check if user has admin role in profiles table
-    const { data, error } = await supabase
-      .from('profiles')
-      .select('role')
-      .eq('id', session.user.id)
-      .single() as { data: any, error: any }
-
-    if (error || !data) {
-      console.error('Error fetching user profile:', error)
-      return false
-    }
-
-    const role = (data as { role: string }).role
-
-    // Allow both 'admin' and 'manager' roles for admin panel access
-    return role === 'admin' || role === 'manager'
+    return user.app_metadata?.role === 'admin' || user.app_metadata?.role === 'manager'
   } catch (error) {
     console.error('Error checking admin role:', error)
     return false
@@ -56,18 +41,18 @@ export async function checkAdminRole(): Promise<boolean> {
  */
 export async function getCurrentAdminUser(): Promise<AdminUser | null> {
   try {
-    const supabase = createServerClient()
+    const supabase = await createServerClient()
     
-    const { data: { session } } = await supabase.auth.getSession()
+    const { data: { user } } = await supabase.auth.getUser()
     
-    if (!session?.user) {
+    if (!user) {
       return null
     }
 
     const { data, error } = await supabase
       .from('profiles')
       .select('*')
-      .eq('id', session.user.id)
+      .eq('id', user.id)
       .single() as { data: any, error: any }
 
     if (error || !data) {
@@ -78,7 +63,7 @@ export async function getCurrentAdminUser(): Promise<AdminUser | null> {
     const profile = data as { id: string, email: string, full_name: string | null, first_name?: string | null, last_name?: string | null, role: string }
 
     // Only return if user has admin/manager role
-    if (profile.role !== 'admin' && profile.role !== 'manager') {
+    if (user.app_metadata?.role !== 'admin' && user.app_metadata?.role !== 'manager') {
       return null
     }
 
@@ -92,7 +77,7 @@ export async function getCurrentAdminUser(): Promise<AdminUser | null> {
       id: profile.id,
       email: profile.email,
       full_name: fullName,
-      role: profile.role as UserRole,
+      role: user.app_metadata?.role as UserRole,
     }
   } catch (error) {
     console.error('Error getting current admin user:', error)
@@ -110,25 +95,15 @@ export async function checkPermission(
   requiredRole: 'admin' | 'manager'
 ): Promise<boolean> {
   try {
-    const supabase = createServerClient()
+    const supabase = await createServerClient()
     
-    const { data: { session } } = await supabase.auth.getSession()
+    const { data: { user } } = await supabase.auth.getUser()
     
-    if (!session?.user) {
+    if (!user) {
       return false
     }
 
-    const { data, error } = await supabase
-      .from('profiles')
-      .select('role')
-      .eq('id', session.user.id)
-      .single() as { data: any, error: any }
-
-    if (error || !data) {
-      return false
-    }
-
-    const userRole = (data as { role: string }).role as UserRole
+    const userRole = user.app_metadata?.role as UserRole
 
     // Admin has all permissions
     if (userRole === 'admin') {
@@ -165,7 +140,7 @@ export async function getAdminStats(): Promise<{
   lowStockProducts: number
 }> {
   try {
-    const supabase = createServerClient()
+    const supabase = await createServerClient()
 
     // Get pending orders count
     const { count: pendingCount } = await supabase

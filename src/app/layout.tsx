@@ -3,6 +3,7 @@ import type { Metadata, Viewport } from 'next'
 // PERFORMANCE: CSS is loaded asynchronously via AsyncCSSLoader to prevent render-blocking
 // Critical CSS is inlined in [locale]/layout.tsx
 import './globals.css'
+import { headingFont, bodyFont, buttonFont } from '@/lib/fonts'
 
 export const metadata: Metadata = {
   title: {
@@ -79,6 +80,6 @@ export default function RootLayout({
 }: {
   children: React.ReactNode
 }) {
-  return children
+  return <html lang="lv" className={`dark ${headingFont.variable} ${bodyFont.variable} ${buttonFont.variable}`}><body className={`min-h-screen bg-lago-black text-lago-light antialiased ${bodyFont.className}`}>{children}</body></html>
 }
 

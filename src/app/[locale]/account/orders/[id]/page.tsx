@@ -1,3 +1,4 @@
+import { normalizeOrder } from '@/lib/orders/normalize'
 // AGENT slave-8 v1.0.1 - Final optimization complete
 // ===================================
 // Order Detail Page - Single Order View
@@ -6,7 +7,7 @@
 import { Metadata } from 'next'
 import Link from 'next/link'
 import { ArrowLeft } from 'lucide-react'
-import { createServerClient } from '@/lib/supabase/client'
+import { createClient as createServerClient } from '@/lib/supabase/server'
 import { OrderTimeline } from '@/components/orders/OrderTimeline'
 import { OrderItems } from '@/components/orders/OrderItems'
 import { TrackingInfo } from '@/components/orders/TrackingInfo'
@@ -18,14 +19,6 @@ import { locales } from '@/lib/i18n/config'
 
 // Order detail pages are private (user-specific)
 // For static export, we generate placeholder params
-export function generateStaticParams() {
-  return [
-    { locale: 'lv', id: 'placeholder' },
-    { locale: 'en', id: 'placeholder' },
-    { locale: 'ru', id: 'placeholder' },
-  ]
-}
-
 interface OrderDetailPageProps {
   params: Promise<{ locale: string; id: string }>
 }
@@ -44,7 +37,7 @@ export async function generateMetadata({
 }
 
 async function getOrder(orderId: string, userId: string): Promise<Order | null> {
-  const supabase = createServerClient()
+  const supabase = await createServerClient()
   
   const { data, error } = await supabase
     .from('orders')
@@ -61,7 +54,7 @@ async function getOrder(orderId: string, userId: string): Promise<Order | null> 
     return null
   }
 
-  return data
+  return normalizeOrder(data)
 }
 
 export default async function OrderDetailPage({ params }: OrderDetailPageProps) {
@@ -69,7 +62,9 @@ export default async function OrderDetailPage({ params }: OrderDetailPageProps) 
   const validLocale = locale as Locale
 
   // TODO: Get actual user ID from authentication
-  const userId = 'temp-user-id' // Replace with actual auth
+  const supabase = await createServerClient()
+  const { data: { user } } = await supabase.auth.getUser()
+  const userId = user?.id || ''
   const order = await getOrder(id, userId)
 
   if (!order) {

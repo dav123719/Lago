@@ -48,8 +48,8 @@ export async function createClient() {
     return createMockClient()
   }
 
+  const cookieStore = await cookies()
   try {
-    const cookieStore = await cookies()
 
     return createServerClient<Database>(
       supabaseUrl!,

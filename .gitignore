@@ -2,3 +2,11 @@ node_modules/
 .next/
 out/
 dist/
+
+.env*
+!.env.example
+!.env.local.example
+*.tsbuildinfo
+coverage/
+playwright-report/
+test-results/

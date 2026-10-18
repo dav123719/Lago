@@ -3,8 +3,7 @@ import Link from 'next/link'
 
 export default function NotFound() {
   return (
-    <html lang="lv">
-      <body className="min-h-screen flex flex-col items-center justify-center bg-lago-cream p-4">
+      <main className="min-h-screen flex flex-col items-center justify-center bg-lago-cream p-4">
         <div className="text-center max-w-md">
           <h1 className="text-6xl font-heading font-medium text-lago-charcoal mb-4">
             404
@@ -30,8 +29,7 @@ export default function NotFound() {
             </Link>
           </div>
         </div>
-      </body>
-    </html>
+      </main>
   )
 }
 

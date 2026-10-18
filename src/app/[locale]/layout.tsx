@@ -32,8 +32,8 @@ export default async function LocaleLayout({
   const validLocale = locale as Locale
 
   return (
-    <html lang={localeHtmlLang[validLocale]} className={`dark ${headingFont.variable} ${bodyFont.variable} ${buttonFont.variable}`}>
-      <head>
+    <>
+      <>
         {/* PERFORMANCE: Resource hints for faster font loading */}
         <link rel="preconnect" href="https://fonts.googleapis.com" />
         <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin="anonymous" />
@@ -61,8 +61,8 @@ export default async function LocaleLayout({
           .text-white{color:var(--lago-white)}
           .antialiased{-webkit-font-smoothing:antialiased;-moz-osx-font-smoothing:grayscale}
         `}} />
-      </head>
-      <body className={`min-h-screen flex flex-col bg-lago-black text-lago-light antialiased ${bodyFont.className}`}>
+      </>
+      <div className="min-h-screen flex flex-col">
         {/* PERFORMANCE: Load non-critical CSS asynchronously after initial render */}
         <AsyncCSSLoader />
         <AuthProvider>
@@ -85,7 +85,7 @@ export default async function LocaleLayout({
             },
           }}
         />
-      </body>
-    </html>
+      </div>
+    </>
   )
 }

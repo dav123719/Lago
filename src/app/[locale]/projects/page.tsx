@@ -1,3 +1,5 @@
+import { ProjectsPage as StaticProjectsPage } from '@/components/pages/ProjectsPage'
+export const dynamic = 'force-dynamic'
 // ============================================
 // Projects Page with Sanity Integration
 // ============================================
@@ -47,8 +49,7 @@ async function checkIsAdmin(): Promise<boolean> {
     
     if (!user) return false
     
-    return user.user_metadata?.role === 'admin' || 
-           user.email?.endsWith('@lago.lv') || false
+    return user.app_metadata?.role === 'admin' || false
   } catch {
     return false
   }
@@ -83,6 +84,8 @@ export default async function ProjectsPage({ params }: ProjectsPageProps) {
   } else {
     console.warn('Sanity not configured, projects will not be fetched')
   }
+
+  if (!projects.length && !isPreview) return <StaticProjectsPage locale={validLocale} />
 
   // Check if user is admin for edit functionality
   let isAdmin = false

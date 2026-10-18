@@ -2,7 +2,7 @@
 // Sanity to Supabase Product Sync
 // ============================================
 
-import { createServerClient } from '@/lib/supabase/client'
+import { createAdminClient as createServerClient } from '@/lib/supabase/admin'
 import type { Product, Category, ProductImage } from '@/types/store'
 
 // ============================================

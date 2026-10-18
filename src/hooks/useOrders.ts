@@ -1,4 +1,5 @@
 'use client'
+import { normalizeOrder } from '@/lib/orders/normalize'
 
 // ===================================
 // useOrders Hook - Fetch user's orders
@@ -69,7 +70,7 @@ export function useOrders(
         throw new Error(fetchError.message)
       }
 
-      setOrders(data || [])
+      setOrders((data || []).map(normalizeOrder))
     } catch (err) {
       setError(err instanceof Error ? err : new Error('Failed to fetch orders'))
     } finally {

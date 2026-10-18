@@ -10,7 +10,7 @@ export type Json =
   | { [key: string]: Json | undefined }
   | Json[]
 
-export interface Database {
+interface SchemaDatabase {
   public: {
     Tables: {
       carts: {
@@ -70,6 +70,10 @@ export interface Database {
       }
       products: {
         Row: {
+          material: string | null
+          finish: string | null
+          stock_status: string
+
           id: string
           name: string
           name_en: string | null
@@ -399,5 +403,16 @@ export interface Database {
         Returns: undefined
       }
     }
+  }
+}
+
+// Supabase's GenericSchema requires relationship metadata for typed mutations.
+export type Database = {
+  public: {
+    Tables: { [K in keyof SchemaDatabase['public']['Tables']]: SchemaDatabase['public']['Tables'][K] & { Relationships: [] } }
+    Views: Record<string, never>
+    Functions: SchemaDatabase['public']['Functions']
+    Enums: Record<string, never>
+    CompositeTypes: Record<string, never>
   }
 }

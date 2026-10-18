@@ -1,3 +1,4 @@
+export const dynamicParams = false
 // AGENT slave-8 v1.0.1 - Final optimization complete
 import { Metadata } from 'next'
 import { notFound, redirect } from 'next/navigation'
@@ -57,6 +58,7 @@ export async function generateStaticParams() {
     const aboutBase = locale === 'lv' ? 'par-mums' : locale === 'ru' ? 'o-nas' : 'about-us'
     
     // Individual material pages (overview is now on homepage)
+    paths.push({ locale, slug: [stoneBase] })
     for (const material of materials) {
       paths.push({ locale, slug: [stoneBase, material.slug[locale]] })
     }
@@ -97,22 +99,22 @@ export default async function CatchAllPage({ params }: PageProps) {
     // Redirect stone surfaces overview to homepage (materials section is now there)
     if (slug.length === 1) redirect(`/${l}#materials`)
     const material = materials.find(m => m.slug[l] === slug[1])
-    if (material) return <MaterialDetailPage locale={l} material={material} />
+    if (slug.length === 2 && material) return <MaterialDetailPage locale={l} material={material} />
   }
   
   if (slug[0] === furnitureBase) {
     if (slug.length === 1) return <FurniturePage locale={l} />
     const item = furniture.find(f => f.slug[l] === slug[1])
-    if (item) return <FurnitureDetailPage locale={l} item={item} />
+    if (slug.length === 2 && item) return <FurnitureDetailPage locale={l} item={item} />
   }
   
   if (slug[0] === projectsBase) {
     if (slug.length === 1) return <ProjectsPage locale={l} />
     const project = projects.find(p => p.slug[l] === slug[1])
-    if (project) return <ProjectDetailPage locale={l} project={project} />
+    if (slug.length === 2 && project) return <ProjectDetailPage locale={l} project={project} />
   }
   
-  if (slug[0] === aboutBase) return <AboutPage locale={l} />
+  if (slug.length === 1 && slug[0] === aboutBase) return <AboutPage locale={l} />
   
   notFound()
 }

@@ -1,18 +1,16 @@
 /** @type {import('next').NextConfig} */
 const nextConfig = {
-  output: 'export',
+  output: 'standalone',
   distDir: 'dist',
   trailingSlash: true,
+  // Preserve listener origin for internal rewrites behind Apache HTTPS.
+  skipProxyUrlNormalize: true,
   
-  // TypeScript - allow production builds with type errors (API routes have type issues but work correctly)
+  // Fail production builds on TypeScript errors.
   typescript: {
-    ignoreBuildErrors: true,
+    ignoreBuildErrors: false,
   },
   
-  // ESLint - allow production builds with linting warnings
-  eslint: {
-    ignoreDuringBuilds: true,
-  },
   
   images: {
     unoptimized: true,
