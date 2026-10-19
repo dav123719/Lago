@@ -10,7 +10,7 @@ for (const locale of ['lv', 'en', 'ru']) {
     await expect(page.locator('main')).toBeVisible()
     await expect(page.locator('h1')).toHaveCount(1)
     await expect(page.locator('h1')).toBeVisible()
-    await expect(page.locator('header')).toBeVisible()
+    await expect(page.getByRole('banner')).toBeVisible()
     const image = page.locator('img').first()
     await expect(image).toBeVisible()
     await expect.poll(() => image.evaluate((node: HTMLImageElement) => node.naturalWidth)).toBeGreaterThan(0)
