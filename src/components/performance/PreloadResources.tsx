@@ -164,8 +164,8 @@ export function Prefetch({ urls }: PrefetchProps) {
  */
 export function PreloadCriticalResources() {
   const criticalFonts = [
-    { href: '/_next/static/media/cormorant-garamond-latin-400.woff2', type: 'font/woff2', crossOrigin: true },
-    { href: '/_next/static/media/inter-latin-400.woff2', type: 'font/woff2', crossOrigin: true },
+    { href: '/fonts/cormorant-garamond-latin.woff2', type: 'font/woff2', crossOrigin: true },
+    { href: '/fonts/inter-latin.woff2', type: 'font/woff2', crossOrigin: true },
   ]
 
   return (
@@ -181,8 +181,6 @@ export function PreloadCriticalResources() {
  */
 export function PreconnectExternalServices() {
   const origins = [
-    { href: 'https://fonts.googleapis.com', crossOrigin: true },
-    { href: 'https://fonts.gstatic.com', crossOrigin: true },
     { href: 'https://cdn.sanity.io', crossOrigin: true },
   ]
 

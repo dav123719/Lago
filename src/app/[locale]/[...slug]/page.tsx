@@ -14,8 +14,7 @@ import { projects } from '@/content/projects'
 import { companyInfo } from '@/content/company'
 import { ProjectsPage } from '@/components/pages/ProjectsPage'
 import { MaterialProjectsSection } from '@/components/pages/MaterialProjectsSection'
-import { ContactMap } from '@/components/ui/ContactMap'
-import { AddressCard } from '@/components/ui/AddressCard'
+import { ContactInquiryForm } from '@/components/pages/ContactInquiryForm'
 
 interface PageProps {
   params: Promise<{ locale: string; slug: string[] }>
@@ -900,180 +899,149 @@ function ProjectDetailPage({ locale, project }: { locale: Locale; project: typeo
 
 // ===================== ABOUT PAGE =====================
 function AboutPage({ locale }: { locale: Locale }) {
-  const content = {
-    title: { lv: 'Par mums', en: 'About Us', ru: 'О нас' },
-    subtitle: {
-      lv: 'LAGO Stone & Furniture - premium akmens virsmu un mēbeļu ražotājs Latvijā kopš 2003. gada.',
-      en: 'LAGO Stone & Furniture - premium stone surface and furniture manufacturer in Latvia since 2003.',
-      ru: 'LAGO Stone & Furniture - производитель премиальных каменных поверхностей и мебели с 2003 года.',
+  const copy = {
+    lv: {
+      title: 'Par LAGO', eyebrow: 'Akmens virsmas un individuālas mēbeles',
+      intro: 'LAGO ražo akmens virsmas un individuālas mēbeles Latvijā kopš 2003. gada. Mēs apvienojam materiāla izvēli, izgatavošanu un uzstādīšanu, lai risinājums atbilstu konkrētajai telpai un tās lietojumam.',
+      capabilities: 'No materiāla izvēles līdz gatavam risinājumam',
+      steps: [
+        ['01', 'Izrunājam ieceri', 'Pastāstiet par telpu, vajadzībām un vēlamo rezultātu.'],
+        ['02', 'Izvēlamies materiālu', 'Salīdziniet Silestone, Dekton un dabīgā akmens iespējas.'],
+        ['03', 'Izgatavojam un uzstādām', 'Projektā var ietilpt virsmas, paneļi, izlietnes un mēbeles.'],
+      ],
+      work: 'Darbs, ko var apskatīt', project: 'Moderna virtuve Jūrmalā', projectMeta: 'Silestone Eternal Calacatta Gold · 8 m² · izgatavošana un uzstādīšana', projectCta: 'Apskatīt projektu',
+      contactEyebrow: 'Sāksim ar jūsu projektu', contactTitle: 'Sazinieties ar LAGO',
+      contactIntro: 'Aprakstiet ieceri pa tālruni vai e-pastā. Varat arī apmeklēt mūs Rīgā darba laikā; sestdienās — pēc iepriekšējas pieteikšanās.',
+      address: 'Adrese', phone: 'Tālrunis', email: 'E-pasts', hours: 'Darba laiks', directions: 'Atvērt kartē', call: 'Zvanīt', write: 'Rakstīt e-pastu',
     },
-    story: {
-      lv: 'Mēs esam uzņēmums ar ilggadēju pieredzi akmens virsmu un mēbeļu ražošanā. Mūsu komanda apvieno labākās tradīcijas ar modernām tehnoloģijām, lai radītu produktus, kas ir ne tikai skaisti, bet arī praktiski un izturīgi.',
-      en: 'We are a company with many years of experience in stone surface and furniture manufacturing. Our team combines the best traditions with modern technologies to create products that are not only beautiful but also practical and durable.',
-      ru: 'Мы компания с многолетним опытом производства каменных поверхностей и мебели. Наша команда сочетает лучшие традиции с современными технологиями.',
+    en: {
+      title: 'About LAGO', eyebrow: 'Stone surfaces and custom furniture',
+      intro: 'LAGO has made stone surfaces and custom furniture in Latvia since 2003. We bring material selection, fabrication and installation together so each solution fits its space and how it will be used.',
+      capabilities: 'From material selection to a finished space',
+      steps: [
+        ['01', 'Talk through the idea', 'Tell us about the room, your needs and the result you have in mind.'],
+        ['02', 'Choose a material', 'Compare Silestone, Dekton and natural stone options.'],
+        ['03', 'Fabricate and install', 'A project can include countertops, panels, sinks and furniture.'],
+      ],
+      work: 'A project to explore', project: 'Modern Kitchen in Jurmala', projectMeta: 'Silestone Eternal Calacatta Gold · 8 m² · fabrication and installation', projectCta: 'View the project',
+      contactEyebrow: 'Start with your project', contactTitle: 'Talk to LAGO',
+      contactIntro: 'Tell us about your plans by phone or email. You can also visit us in Riga during business hours; Saturdays are by appointment.',
+      address: 'Address', phone: 'Phone', email: 'Email', hours: 'Opening hours', directions: 'Open directions', call: 'Call', write: 'Send an email',
     },
-  }
-  
+    ru: {
+      title: 'О LAGO', eyebrow: 'Каменные поверхности и мебель на заказ',
+      intro: 'LAGO производит каменные поверхности и мебель на заказ в Латвии с 2003 года. Мы объединяем подбор материала, изготовление и монтаж, чтобы решение подходило конкретному помещению и его использованию.',
+      capabilities: 'От выбора материала до готового решения',
+      steps: [
+        ['01', 'Обсудим идею', 'Расскажите о помещении, потребностях и желаемом результате.'],
+        ['02', 'Выберем материал', 'Сравните Silestone, Dekton и натуральный камень.'],
+        ['03', 'Изготовим и установим', 'Проект может включать столешницы, панели, мойки и мебель.'],
+      ],
+      work: 'Пример проекта', project: 'Современная кухня в Юрмале', projectMeta: 'Silestone Eternal Calacatta Gold · 8 м² · изготовление и установка', projectCta: 'Посмотреть проект',
+      contactEyebrow: 'Обсудим ваш проект', contactTitle: 'Свяжитесь с LAGO',
+      contactIntro: 'Расскажите о планах по телефону или электронной почте. Также можно посетить нас в Риге в рабочее время; по субботам — по предварительной записи.',
+      address: 'Адрес', phone: 'Телефон', email: 'Эл. почта', hours: 'Часы работы', directions: 'Открыть маршрут', call: 'Позвонить', write: 'Написать письмо',
+    },
+  }[locale]
+  const projectPath = `/${locale}/${locale === 'lv' ? 'projekti' : locale === 'ru' ? 'proekty' : 'projects'}/${projects[0].slug[locale]}`
+  const mapQuery = encodeURIComponent(`${companyInfo.address}, ${companyInfo.city}, ${companyInfo.postalCode}, ${companyInfo.country}`)
+
   return (
     <>
-      {/* Hero */}
-      <section className="relative min-h-[50vh] flex items-end overflow-hidden">
+      <section className="relative min-h-[48vh] flex items-end overflow-hidden">
         <div className="absolute inset-0">
           <Image
             src={images.workshop}
-            alt="LAGO workshop"
+            alt={locale === 'lv' ? 'LAGO mēbeļu un akmens virsmu projekts' : locale === 'en' ? 'LAGO furniture and stone surface project' : 'Проект мебели и каменных поверхностей LAGO'}
             fill
-            // PERFORMANCE: Below fold images - lazy load to reduce initial payload
-            priority={false}
-            loading="lazy"
-            sizes="(max-width: 768px) 100vw, 50vw"
+            sizes="100vw"
             quality={85}
-            className="object-cover animate-scale-in"
-            style={{ animationDuration: '1.2s' }}
+            className="object-cover"
           />
-          <div className="absolute inset-0 bg-gradient-to-t from-lago-black via-lago-black/60 to-transparent" />
+          <div className="absolute inset-0 bg-gradient-to-r from-lago-black via-lago-black/75 to-lago-black/25" />
         </div>
-        
-        <div className="relative container-lg pb-16 pt-40">
-          <h1 className="text-5xl md:text-6xl lg:text-7xl font-heading text-white opacity-0 animate-fade-in-up" style={{ animationDelay: '200ms', animationFillMode: 'forwards' }}>
-            {content.title[locale]}
-          </h1>
-        </div>
-      </section>
-
-      {/* Intro */}
-      <section className="py-24 bg-lago-black">
-        <div className="container-lg">
+        <div className="relative container-lg grid md:grid-cols-[minmax(0,1fr)_minmax(16rem,0.7fr)] gap-8 items-end pb-16 pt-40">
           <div className="max-w-3xl">
-            <p className="text-lago-gold text-xl mb-6 opacity-0 animate-fade-in-up" style={{ animationDelay: '300ms', animationFillMode: 'forwards' }}>
-              {content.subtitle[locale]}
-            </p>
-            <p className="text-lago-light/80 text-lg leading-relaxed opacity-0 animate-fade-in-up" style={{ animationDelay: '400ms', animationFillMode: 'forwards' }}>
-              {content.story[locale]}
-            </p>
+            <p className="text-sm uppercase tracking-[0.24em] text-lago-gold mb-4">{copy.eyebrow}</p>
+            <h1 className="text-5xl md:text-6xl lg:text-7xl font-heading text-white">{copy.title}</h1>
+          </div>
+          <p className="max-w-xl text-lg leading-relaxed text-white/80 md:justify-self-end">{copy.intro}</p>
+        </div>
+      </section>
+
+      <section className="py-20 md:py-24 bg-lago-black">
+        <div className="container-lg">
+          <div className="flex flex-col md:flex-row md:items-end justify-between gap-6 mb-10">
+            <div>
+              <p className="text-sm uppercase tracking-[0.2em] text-lago-gold mb-3">LAGO · 2003</p>
+              <h2 className="text-3xl md:text-4xl font-heading text-white max-w-2xl">{copy.capabilities}</h2>
+            </div>
+            <Link href={`/${locale}#materials`} className="inline-flex items-center gap-2 text-lago-gold hover:text-white transition-colors font-medium">
+              {locale === 'lv' ? 'Iepazīt materiālus' : locale === 'en' ? 'Explore materials' : 'Изучить материалы'} <ArrowRight className="w-4 h-4" />
+            </Link>
+          </div>
+          <div className="grid md:grid-cols-3 gap-4">
+            {copy.steps.map(([number, title, description]) => (
+              <article key={number} className="rounded-2xl border border-white/10 bg-lago-charcoal/50 p-6 md:p-7">
+                <p className="text-lago-gold font-heading text-3xl mb-8">{number}</p>
+                <h3 className="text-xl text-white font-medium mb-3">{title}</h3>
+                <p className="text-lago-light/70 leading-relaxed">{description}</p>
+              </article>
+            ))}
           </div>
         </div>
       </section>
 
-      {/* Contact */}
-      <section id="contact" className="py-24 bg-lago-dark relative overflow-hidden">
-        {/* Background decorations */}
-        <div className="absolute inset-0 bg-grid opacity-10" />
-        <div className="absolute top-1/4 right-1/4 w-96 h-96 bg-lago-gold/5 rounded-full blur-3xl animate-breathe" />
-        <div className="absolute bottom-1/4 left-1/4 w-96 h-96 bg-lago-gold/5 rounded-full blur-3xl animate-breathe" style={{ animationDelay: '2s' }} />
-        
-        <div className="container-lg relative z-10">
-          {/* Section Header */}
-          <div className="text-center mb-12 opacity-0 animate-fade-in-up" style={{ animationDelay: '100ms', animationFillMode: 'forwards' }}>
-            <h2 className="text-4xl md:text-5xl lg:text-6xl font-heading text-white mb-6">
-              {locale === 'lv' ? 'Kontakti' : locale === 'en' ? 'Contact Us' : 'Контакты'}
-            </h2>
-            <p className="text-lago-light text-lg max-w-2xl mx-auto">
-              {locale === 'lv' 
-                ? 'Mēs esam gatavi atbildēt uz jūsu jautājumiem un palīdzēt izvēlēties ideālo risinājumu jūsu projektam.'
-                : locale === 'en'
-                ? 'We are ready to answer your questions and help you choose the perfect solution for your project.'
-                : 'Мы готовы ответить на ваши вопросы и помочь выбрать идеальное решение для вашего проекта.'}
-            </p>
-          </div>
-
-          {/* Contact Cards */}
-          <div className="grid md:grid-cols-3 gap-8 mb-16">
-            {/* Address Card - Clickable with popup */}
-            <AddressCard 
-              locale={locale}
-              className="opacity-0 animate-fade-in-up"
-              style={{ animationDelay: '200ms', animationFillMode: 'forwards' }}
-            />
-            
-            {/* Phone Card */}
-            <div 
-              className="group relative p-8 rounded-2xl bg-lago-charcoal/50 backdrop-blur-sm border border-white/10 hover:border-lago-gold/50 transition-all duration-500 hover:shadow-2xl hover:shadow-lago-gold/20 hover:-translate-y-2 opacity-0 animate-fade-in-up overflow-hidden"
-              style={{ animationDelay: '300ms', animationFillMode: 'forwards' }}
-            >
-              {/* Animated background gradient */}
-              <div className="absolute inset-0 bg-gradient-to-br from-lago-gold/20 to-yellow-500/20 opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
-              
-              {/* Icon */}
-              <div className="relative w-16 h-16 rounded-xl bg-lago-gold/10 flex items-center justify-center mb-6 transform transition-all duration-300 group-hover:scale-110 group-hover:rotate-3">
-                <Phone className="w-8 h-8 text-lago-gold" />
-                {/* Glow effect */}
-                <div className="absolute inset-0 rounded-xl bg-lago-gold/10 blur-xl opacity-0 group-hover:opacity-50 transition-opacity duration-300" />
-              </div>
-              
-              {/* Content */}
-              <div className="relative">
-                <h3 className="text-xl font-heading text-white mb-2 group-hover:text-lago-gold transition-colors duration-300">
-                  {locale === 'lv' ? 'Tālrunis' : locale === 'en' ? 'Phone' : 'Телефон'}
-                </h3>
-                <p className="text-lago-muted text-sm mb-3 opacity-0 group-hover:opacity-100 transform translate-y-2 group-hover:translate-y-0 transition-all duration-300">
-                  {locale === 'lv' ? 'Zvaniet mums jebkurā laikā' : locale === 'en' ? 'Call us anytime' : 'Звоните нам в любое время'}
-                </p>
-                <a 
-                  href={`tel:${companyInfo.phone.replace(/[^\d+]/g, '')}`}
-                  className="text-lago-light text-lg font-medium hover:text-lago-gold transition-colors duration-300 inline-flex items-center gap-2 group/link"
-                >
-                  {companyInfo.phone}
-                  <ArrowUpRight className="w-4 h-4 transform group-hover/link:translate-x-1 group-hover/link:-translate-y-1 transition-transform" />
-                </a>
-              </div>
-              
-              {/* Corner accents */}
-              <div className="absolute top-0 left-0 w-8 h-8 border-t-2 border-l-2 border-lago-gold/0 group-hover:border-lago-gold/50 transition-colors duration-300 rounded-tl-2xl" />
-              <div className="absolute bottom-0 right-0 w-8 h-8 border-b-2 border-r-2 border-lago-gold/0 group-hover:border-lago-gold/50 transition-colors duration-300 rounded-br-2xl" />
-              
-              {/* Shimmer effect */}
-              <div className="absolute inset-0 overflow-hidden rounded-2xl opacity-0 group-hover:opacity-100 transition-opacity duration-500 pointer-events-none">
-                <div className="absolute inset-0 -translate-x-full group-hover:translate-x-full transition-transform duration-1000 ease-out bg-gradient-to-r from-transparent via-white/10 to-transparent" />
+      <section id="contact" className="py-20 md:py-24 bg-lago-dark relative scroll-mt-24">
+        <div className="container-lg">
+          <div className="grid lg:grid-cols-[0.8fr_1.2fr] gap-10 lg:gap-16 items-start">
+            <div className="lg:sticky lg:top-28">
+              <p className="text-sm uppercase tracking-[0.2em] text-lago-gold mb-4">{copy.contactEyebrow}</p>
+              <h2 className="text-4xl md:text-5xl font-heading text-white mb-5">{copy.contactTitle}</h2>
+              <p className="text-lago-light/75 leading-relaxed mb-8">{copy.contactIntro}</p>
+              <div className="flex flex-wrap gap-3">
+                <a href={`tel:${companyInfo.phone.replace(/[^\d+]/g, '')}`} className="inline-flex min-h-12 items-center justify-center gap-2 rounded-full bg-lago-gold px-5 text-lago-black font-semibold hover:bg-white transition-colors"><Phone className="w-4 h-4" />{copy.call}</a>
+                <a href={`mailto:${companyInfo.email}`} className="inline-flex min-h-12 items-center justify-center gap-2 rounded-full border border-white/20 px-5 text-white hover:border-lago-gold hover:text-lago-gold transition-colors"><Mail className="w-4 h-4" />{copy.write}</a>
               </div>
             </div>
-
-            {/* Email Card */}
-            <div 
-              className="group relative p-8 rounded-2xl bg-lago-charcoal/50 backdrop-blur-sm border border-white/10 hover:border-lago-gold/50 transition-all duration-500 hover:shadow-2xl hover:shadow-lago-gold/20 hover:-translate-y-2 opacity-0 animate-fade-in-up overflow-hidden"
-              style={{ animationDelay: '400ms', animationFillMode: 'forwards' }}
-            >
-              {/* Animated background gradient */}
-              <div className="absolute inset-0 bg-gradient-to-br from-purple-500/20 to-pink-500/20 opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
-              
-              {/* Icon */}
-              <div className="relative w-16 h-16 rounded-xl bg-purple-500/10 flex items-center justify-center mb-6 transform transition-all duration-300 group-hover:scale-110 group-hover:rotate-3">
-                <Mail className="w-8 h-8 text-purple-400" />
-                {/* Glow effect */}
-                <div className="absolute inset-0 rounded-xl bg-purple-500/10 blur-xl opacity-0 group-hover:opacity-50 transition-opacity duration-300" />
-              </div>
-              
-              {/* Content */}
-              <div className="relative">
-                <h3 className="text-xl font-heading text-white mb-2 group-hover:text-lago-gold transition-colors duration-300">
-                  {locale === 'lv' ? 'E-pasts' : locale === 'en' ? 'Email' : 'Email'}
-                </h3>
-                <p className="text-lago-muted text-sm mb-3 opacity-0 group-hover:opacity-100 transform translate-y-2 group-hover:translate-y-0 transition-all duration-300">
-                  {locale === 'lv' ? 'Rakstiet mums e-pastu' : locale === 'en' ? 'Send us an email' : 'Напишите нам письмо'}
-                </p>
-                <a 
-                  href={`mailto:${companyInfo.email}`}
-                  className="text-lago-light text-lg font-medium hover:text-lago-gold transition-colors duration-300 inline-flex items-center gap-2 group/link"
-                >
-                  {companyInfo.email}
-                  <ArrowUpRight className="w-4 h-4 transform group-hover/link:translate-x-1 group-hover/link:-translate-y-1 transition-transform" />
-                </a>
-              </div>
-              
-              {/* Corner accents */}
-              <div className="absolute top-0 left-0 w-8 h-8 border-t-2 border-l-2 border-lago-gold/0 group-hover:border-lago-gold/50 transition-colors duration-300 rounded-tl-2xl" />
-              <div className="absolute bottom-0 right-0 w-8 h-8 border-b-2 border-r-2 border-lago-gold/0 group-hover:border-lago-gold/50 transition-colors duration-300 rounded-br-2xl" />
-              
-              {/* Shimmer effect */}
-              <div className="absolute inset-0 overflow-hidden rounded-2xl opacity-0 group-hover:opacity-100 transition-opacity duration-500 pointer-events-none">
-                <div className="absolute inset-0 -translate-x-full group-hover:translate-x-full transition-transform duration-1000 ease-out bg-gradient-to-r from-transparent via-white/10 to-transparent" />
-              </div>
+            <div className="grid sm:grid-cols-2 gap-4">
+              <ContactInquiryForm locale={locale} />
+              <article className="rounded-2xl border border-white/10 bg-lago-charcoal/50 p-6">
+                <MapPin className="w-5 h-5 text-lago-gold mb-5" />
+                <h3 className="text-lg font-medium text-white mb-2">{copy.address}</h3>
+                <p className="text-lago-light/80 leading-relaxed">{companyInfo.address}<br />{companyInfo.city}, {companyInfo.postalCode}<br />{companyInfo.country}</p>
+                <a href={`https://www.google.com/maps/search/?api=1&query=${mapQuery}`} target="_blank" rel="noopener noreferrer" className="mt-5 inline-flex items-center gap-2 text-sm text-lago-gold hover:text-white transition-colors">{copy.directions}<ArrowUpRight className="w-4 h-4" /></a>
+              </article>
+              <article className="rounded-2xl border border-white/10 bg-lago-charcoal/50 p-6">
+                <Phone className="w-5 h-5 text-lago-gold mb-5" />
+                <h3 className="text-lg font-medium text-white mb-2">{copy.phone}</h3>
+                <a href={`tel:${companyInfo.phone.replace(/[^\d+]/g, '')}`} className="text-lago-light/80 hover:text-lago-gold transition-colors">{companyInfo.phone}</a>
+                <div className="h-px bg-white/10 my-5" />
+                <h3 className="text-lg font-medium text-white mb-2">{copy.email}</h3>
+                <a href={`mailto:${companyInfo.email}`} className="break-all text-lago-light/80 hover:text-lago-gold transition-colors">{companyInfo.email}</a>
+              </article>
+              <article className="sm:col-span-2 rounded-2xl border border-white/10 bg-lago-charcoal/50 p-6 flex gap-4">
+                <div className="shrink-0 w-10 h-10 rounded-full bg-lago-gold/10 flex items-center justify-center"><span className="text-lago-gold text-sm" aria-hidden="true">09–18</span></div>
+                <div>
+                  <h3 className="text-lg font-medium text-white mb-1">{copy.hours}</h3>
+                  <p className="text-lago-light/75">{companyInfo.workingHours[locale]}</p>
+                </div>
+              </article>
             </div>
           </div>
+        </div>
+      </section>
 
-          {/* Map Section */}
-          <div className="opacity-0 animate-fade-in-up" style={{ animationDelay: '600ms', animationFillMode: 'forwards' }}>
-            <ContactMap locale={locale} />
+      <section className="py-20 bg-lago-black">
+        <div className="container-lg grid md:grid-cols-[minmax(0,1fr)_minmax(0,1fr)] gap-8 items-center rounded-3xl border border-white/10 bg-lago-charcoal/35 p-6 md:p-10">
+          <div className="relative aspect-[4/3] overflow-hidden rounded-2xl">
+            <Image src={projects[0].heroImage} alt={projects[0].title[locale]} fill sizes="(max-width: 768px) 100vw, 50vw" className="object-cover" />
+          </div>
+          <div className="py-2 md:py-6">
+            <p className="text-sm uppercase tracking-[0.2em] text-lago-gold mb-4">{copy.work}</p>
+            <h2 className="text-3xl md:text-4xl font-heading text-white mb-4">{copy.project}</h2>
+            <p className="text-lago-light/70 leading-relaxed mb-7">{copy.projectMeta}</p>
+            <Link href={projectPath} className="inline-flex items-center gap-2 text-lago-gold hover:text-white transition-colors font-medium">{copy.projectCta}<ArrowRight className="w-4 h-4" /></Link>
           </div>
         </div>
       </section>

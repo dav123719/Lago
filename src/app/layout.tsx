@@ -1,7 +1,6 @@
 // AGENT slave-8 v1.0.1 - Final optimization complete
 import type { Metadata, Viewport } from 'next'
-// PERFORMANCE: CSS is loaded asynchronously via AsyncCSSLoader to prevent render-blocking
-// Critical CSS is inlined in [locale]/layout.tsx
+// Next.js serves the compiled stylesheet normally; critical CSS is inlined in [locale]/layout.tsx.
 import './globals.css'
 import { headingFont, bodyFont, buttonFont } from '@/lib/fonts'
 
