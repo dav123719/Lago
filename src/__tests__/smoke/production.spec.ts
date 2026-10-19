@@ -9,7 +9,7 @@ for (const locale of ['lv', 'en', 'ru']) {
     await expect(page.locator('main')).toHaveCount(1)
     await expect(page.locator('main')).toBeVisible()
     await expect(page.locator('h1')).toHaveCount(1)
-    await expect(page.locator('h1')).toBeVisible()
+    await expect(page.locator('h1').first()).toBeVisible()
     await expect(page.getByRole('banner')).toBeVisible()
     const image = page.locator('img').first()
     await expect(image).toBeVisible()
@@ -18,6 +18,25 @@ for (const locale of ['lv', 'en', 'ru']) {
     await expect(page).toHaveURL(new RegExp(`/${locale}/store/?$`))
     await expect(page.locator('main')).toBeVisible()
     expect(errors).toEqual([])
+  })
+
+  test(`${locale} homepage explains and links all four materials`, async ({ page }) => {
+    await page.setViewportSize({ width: 390, height: 844 })
+    await page.goto(`/${locale}/`)
+    const section = page.locator('#materials')
+    await expect(section).toBeVisible()
+    await expect(section.locator('article')).toHaveCount(4)
+    await expect(section.getByRole('heading', { name: 'Silestone' })).toBeVisible()
+    await expect(section.getByRole('heading', { name: 'Dekton' })).toBeVisible()
+    await expect(section.locator('article dl dt')).toHaveCount(12)
+    for (const image of await section.locator('article img').all()) {
+      await image.scrollIntoViewIfNeeded()
+      await expect.poll(() => image.evaluate((node: HTMLImageElement) => node.naturalWidth)).toBeGreaterThan(0)
+    }
+    const sectionWidth = await section.evaluate(element => element.scrollWidth)
+    const viewportWidth = await page.evaluate(() => document.documentElement.clientWidth)
+    expect(sectionWidth).toBeLessThanOrEqual(viewportWidth)
+    await expect(section.getByRole('link', { name: /Silestone/ }).first()).toHaveAttribute('href', new RegExp(`/${locale}/.*silestone/`))
   })
 }
 

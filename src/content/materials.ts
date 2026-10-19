@@ -264,41 +264,41 @@ export const materials: Material[] = [
     },
     type: 'silestone',
     description: {
-      lv: 'Premium kvarca virsmas ar HybriQ+ tehnoloģiju.',
-      en: 'Premium quartz surfaces with HybriQ+ technology.',
-      ru: 'Премиальные кварцевые поверхности с технологией HybriQ+.',
+      lv: 'Cosentino minerālu virsma ar HybriQ+® tehnoloģiju.',
+      en: 'A Cosentino mineral surface made with HybriQ+® technology.',
+      ru: 'Минеральная поверхность Cosentino по технологии HybriQ+®.',
     },
     longDescription: {
-      lv: `Silestone ir pasaulē vadošais kvarca virsmu zīmols, ko ražo Cosentino grupa. Pateicoties inovatīvajai HybriQ+ tehnoloģijai, Silestone virsmas apvieno dabīgā kvarca izturību ar vieglu kopšanu.
+      lv: `Silestone ir Cosentino minerālu virsma, kas izgatavota ar HybriQ+® tehnoloģiju un sastāv no rūpīgi atlasītiem minerāliem un pārstrādātiem materiāliem. Tā nav dabīga akmens plāksne: krāsu un rakstu veido konkrētās kolekcijas sastāvs un dizains.
 
-Silestone virsmas ir ideāli piemērotas virtuvēm un vannas istabām, jo tās ir izturīgas pret skrāpējumiem, triecieniem un karstumu. Plašais krāsu un tekstūru klāsts ļauj atrast ideālo risinājumu jebkuram interjerim.`,
-      en: `Silestone is the world's leading quartz surface brand, manufactured by the Cosentino group. Thanks to the innovative HybriQ+ technology, Silestone surfaces combine the durability of natural quartz with easy maintenance.
+Ražotājs norāda izturību pret ikdienas traipiem, skrāpējumiem un triecieniem, taču īpašības var atšķirties pēc produkta un apdares. Sargājiet virsmu no strauja karstuma trieciena un lietojiet paliktni karstiem traukiem. Precīzai kopšanai sekojiet izvēlētās krāsas ražotāja norādēm.`,
+      en: `Silestone is a Cosentino mineral surface made with HybriQ+® technology from selected minerals and recycled materials. It is not a natural stone slab: the colour and pattern come from the formulation and design of the specific collection.
 
-Silestone surfaces are ideally suited for kitchens and bathrooms as they are resistant to scratches, impacts, and heat. The wide range of colors and textures allows you to find the perfect solution for any interior.`,
-      ru: `Silestone — ведущий мировой бренд кварцевых поверхностей, производимый группой Cosentino. Благодаря инновационной технологии HybriQ+ поверхности Silestone сочетают прочность натурального кварца с легкостью ухода.
+The manufacturer describes resistance to everyday stains, scratches and impacts, although properties can vary by product and finish. Protect the surface from sudden thermal shock and use a trivet for hot cookware. Follow the care guidance for the chosen colour.`,
+      ru: `Silestone — минеральная поверхность Cosentino, изготовленная по технологии HybriQ+® из отобранных минералов и переработанных материалов. Это не плита природного камня: цвет и рисунок зависят от состава и дизайна конкретной коллекции.
 
-Поверхности Silestone идеально подходят для кухонь и ванных комнат, так как устойчивы к царапинам, ударам и высоким температурам. Широкий выбор цветов и текстур позволяет найти идеальное решение для любого интерьера.`,
+Производитель указывает устойчивость к бытовым пятнам, царапинам и ударам, однако свойства различаются в зависимости от продукта и отделки. Защищайте поверхность от резкого перепада температуры и используйте подставку для горячей посуды. Следуйте рекомендациям для выбранного цвета.`,
     },
     features: [
       {
-        lv: 'Izturīgs pret skrāpējumiem',
-        en: 'Scratch resistant',
-        ru: 'Устойчив к царапинам',
+        lv: 'Minerālu virsma ar HybriQ+® tehnoloģiju',
+        en: 'Mineral surface made with HybriQ+® technology',
+        ru: 'Минеральная поверхность по технологии HybriQ+®',
       },
       {
-        lv: 'Higiēnisks – N-Boost tehnoloģija',
-        en: 'Hygienic – N-Boost technology',
-        ru: 'Гигиеничный – технология N-Boost',
+        lv: 'Minerāli un pārstrādāti materiāli',
+        en: 'Minerals and recycled materials',
+        ru: 'Минералы и переработанные материалы',
       },
       {
-        lv: 'Viegla kopšana',
-        en: 'Easy to maintain',
-        ru: 'Легкий уход',
+        lv: 'Ražotājs norāda izturību pret ikdienas traipiem',
+        en: 'Manufacturer describes resistance to everyday stains',
+        ru: 'Производитель указывает устойчивость к бытовым пятнам',
       },
       {
-        lv: '25 gadu garantija',
-        en: '25-year warranty',
-        ru: 'Гарантия 25 лет',
+        lv: 'Kopšana atkarīga no izvēlētā produkta',
+        en: 'Care depends on the selected product',
+        ru: 'Уход зависит от выбранного продукта',
       },
     ],
     colors: silestoneColors,
@@ -325,31 +325,31 @@ Silestone surfaces are ideally suited for kitchens and bathrooms as they are res
       ru: 'Ультракомпактные поверхности для внутреннего и наружного использования.',
     },
     longDescription: {
-      lv: `Dekton ir revolucionārs ultra-kompakts materiāls, kas apvieno stikla, porcelāna un kvarca labākās īpašības. Tas ir ideāls gan iekštelpu, gan āra lietojumam.
+      lv: `Dekton ir Cosentino ultra-kompakta minerālu virsma, ko ražo ar augsta spiediena un daļiņu saķepināšanas procesu. Tās dizaini var atgādināt akmeni, betonu vai citus materiālus.
 
-Dekton ir ārkārtīgi izturīgs – tas iztur UV starojumu, karstumu, aukstumu un ķīmiskās vielas. Tas ir ideāli piemērots virtuves virsmām, fasādēm, grīdām un pat kamīnu apdarei.`,
-      en: `Dekton is a revolutionary ultra-compact material that combines the best properties of glass, porcelain, and quartz. It is ideal for both indoor and outdoor use.
+Ražotājs norāda izturību pret traipiem, skrāpējumiem, karstumu un UV starojumu, tāpēc noteiktas kolekcijas var būt piemērotas arī āra lietojumam. Karsti trauki ilgstošai novietošanai jāliek uz paliktņa, jo īpaši uz plānākām plāksnēm; izvairieties no tiešas liesmas un ļoti augstas temperatūras avotiem.`,
+      en: `Dekton is a Cosentino ultra-compact mineral surface made using high pressure and a mineral particle sintering process. Its designs can evoke stone, concrete and other materials.
 
-Dekton is extremely durable – it withstands UV radiation, heat, cold, and chemicals. It is perfectly suited for kitchen countertops, facades, floors, and even fireplace surrounds.`,
-      ru: `Dekton — революционный ультракомпактный материал, сочетающий лучшие свойства стекла, фарфора и кварца. Он идеален как для внутреннего, так и для наружного использования.
+The manufacturer describes resistance to stains, scratches, heat and UV, so selected collections may also suit outdoor applications. Use a trivet for hot cookware left in place for extended periods, especially on thinner slabs; avoid direct flame and very high-temperature sources.`,
+      ru: `Dekton — ультракомпактная минеральная поверхность Cosentino, изготовленная под высоким давлением с помощью спекания минеральных частиц. Дизайн может напоминать камень, бетон и другие материалы.
 
-Dekton чрезвычайно прочен — он выдерживает УФ-излучение, жару, холод и химические вещества. Он идеально подходит для кухонных столешниц, фасадов, полов и даже облицовки каминов.`,
+Производитель указывает устойчивость к пятнам, царапинам, жару и УФ-излучению, поэтому некоторые коллекции подходят и для улицы. Для горячей посуды при длительном контакте используйте подставку, особенно на тонких плитах; избегайте открытого огня и прямого воздействия очень высоких температур.`,
     },
     features: [
       {
-        lv: 'UV izturīgs – ideāls āra lietojumam',
-        en: 'UV resistant – ideal for outdoor use',
-        ru: 'Устойчив к УФ – идеален для наружного использования',
+        lv: 'Ražotājs norāda UV izturību; pārbaudiet kolekcijas piemērotību āra lietojumam',
+        en: 'Manufacturer describes UV resistance; check outdoor suitability for the collection',
+        ru: 'Производитель указывает устойчивость к УФ; уточните пригодность коллекции для улицы',
       },
       {
-        lv: 'Izturīgs pret karstumu',
-        en: 'Heat resistant',
-        ru: 'Устойчив к высоким температурам',
+        lv: 'Karstiem traukiem ilgstošai novietošanai lietot paliktni',
+        en: 'Use a trivet for cookware left hot on the surface for extended periods',
+        ru: 'Для горячей посуды при длительном контакте использовать подставку',
       },
       {
-        lv: 'Nulles porainība',
-        en: 'Zero porosity',
-        ru: 'Нулевая пористость',
+        lv: 'Ļoti zema ūdens absorbcija (pēc ražotāja datiem)',
+        en: 'Very low water absorption (manufacturer specification)',
+        ru: 'Очень низкое водопоглощение (по данным производителя)',
       },
       {
         lv: 'Liela formāta plāksnes',
@@ -376,20 +376,20 @@ Dekton чрезвычайно прочен — он выдерживает УФ-
     },
     type: 'granite',
     description: {
-      lv: 'Dabīgais granīts – mūžīga klasika un izturība.',
-      en: 'Natural granite – timeless classic and durability.',
-      ru: 'Натуральный гранит – вечная классика и прочность.',
+      lv: 'Dabīgs granīts ar katrai plāksnei atšķirīgu minerālu rakstu.',
+      en: 'Natural granite with mineral patterns that vary from slab to slab.',
+      ru: 'Натуральный гранит с неповторимым рисунком каждой плиты.',
     },
     longDescription: {
-      lv: `Granīts ir viens no izturīgākajiem dabīgajiem akmeņiem, kas pieejams plašā krāsu un rakstu gamā. Katrs granīta gabals ir unikāls, jo dabas radīts.
+      lv: `Granīts ir dabīgs magmatisks akmens, un katras plāksnes minerālu graudi un krāsu variācijas ir atšķirīgas. Tādēļ ir vērts apskatīt tieši to plāksni, no kuras plānots izgatavot virsmu.
 
-Granīta virsmas ir ārkārtīgi izturīgas un piemērotas intensīvai ikdienas lietošanai. Ar pareizu kopšanu granīta virsmas kalpos paaudzēm, nezaudējot savu skaistumu.`,
-      en: `Granite is one of the most durable natural stones available in a wide range of colors and patterns. Each piece of granite is unique as it is created by nature.
+Dažādu granītu uzsūkšana, cietība un kopšanas vajadzības atšķiras. Dažām plāksnēm var būt vajadzīga impregnēšana; piemērotu kopšanu un hermētiķi nosaka pēc konkrētā akmens.`,
+      en: `Granite is a natural igneous stone, and mineral grain and colour vary from slab to slab. It is worth viewing the actual slab intended for your project.
 
-Granite surfaces are extremely durable and suitable for intensive daily use. With proper care, granite surfaces will serve for generations without losing their beauty.`,
-      ru: `Гранит — один из самых прочных натуральных камней, доступный в широкой гамме цветов и рисунков. Каждый кусок гранита уникален, так как создан природой.
+Absorption, hardness and care needs differ among granites. Some slabs may benefit from sealing; choose care and sealer based on the specific stone.`,
+      ru: `Гранит — природная магматическая порода; минеральное зерно и цвет отличаются от плиты к плите. Поэтому стоит посмотреть именно ту плиту, которую планируется использовать.
 
-Гранитные поверхности чрезвычайно прочны и подходят для интенсивного ежедневного использования. При правильном уходе гранитные поверхности прослужат поколениям, не теряя своей красоты.`,
+Впитываемость, твёрдость и требования к уходу у разных гранитов различаются. Некоторым плитам может потребоваться пропитка; уход и герметизацию подбирают для конкретного камня.`,
     },
     features: [
       {
@@ -403,14 +403,14 @@ Granite surfaces are extremely durable and suitable for intensive daily use. Wit
         ru: 'Уникальный рисунок',
       },
       {
-        lv: 'Ārkārtīgi izturīgs',
-        en: 'Extremely durable',
-        ru: 'Чрезвычайно прочный',
+        lv: 'Katras plāksnes raksts ir atšķirīgs',
+        en: 'Every slab has a distinct pattern',
+        ru: 'Рисунок каждой плиты уникален',
       },
       {
-        lv: 'Izturīgs pret karstumu',
-        en: 'Heat resistant',
-        ru: 'Устойчив к высоким температурам',
+        lv: 'Kopšanas vajadzības atšķiras pēc akmens',
+        en: 'Care needs vary by stone',
+        ru: 'Уход зависит от конкретного камня',
       },
     ],
     colors: graniteColors,
@@ -432,26 +432,26 @@ Granite surfaces are extremely durable and suitable for intensive daily use. Wit
     },
     type: 'marble',
     description: {
-      lv: 'Elegants dabīgais marmors ekskluzīvam interjeram.',
-      en: 'Elegant natural marble for exclusive interiors.',
-      ru: 'Элегантный натуральный мрамор для эксклюзивных интерьеров.',
+      lv: 'Dabīgs marmors ar izteiksmīgām dzīslām un dabiskām variācijām.',
+      en: 'Natural marble with distinctive veining and natural variation.',
+      ru: 'Натуральный мрамор с выразительными прожилками и природными вариациями.',
     },
     longDescription: {
-      lv: `Marmors ir gadsimtiem iemīļots materiāls, kas asociējas ar eleganci un greznību. Tā unikālās dzīslas un maigie toņi rada neatkārtojamu atmosfēru jebkurā telpā.
+      lv: `Marmors ir dabīgs metamorfais akmens ar raksturīgām dzīslām un plāksnēm unikālu zīmējumu. Daudzi marmori satur kalcītu, tādēļ skābes, piemēram, citrons vai etiķis, var iegravēt virsmu un padarīt pulējumu matētu.
 
-Lai gan marmors prasa rūpīgāku kopšanu nekā citi materiāli, tā skaistums un prestižs ir neaizstājams. Mēs piedāvājam plašu marmora izvēli no labākajām pasaules atradnēm.`,
-      en: `Marble has been a beloved material for centuries, associated with elegance and luxury. Its unique veining and soft tones create an incomparable atmosphere in any space.
+Tas ir apzināta estētiska izvēle cilvēkiem, kuri novērtē dabiskās variācijas un pieņem saudzīgāku kopšanu un iespējamas lietojuma pēdas. Plāksnes sastāvs un apdare var ietekmēt tās uzvedību, tāpēc pirms izvēles pārrunājiet konkrēto akmeni un kopšanu.`,
+      en: `Marble is a natural metamorphic stone with characteristic veining and a pattern unique to each slab. Many marbles contain calcite, so acids such as lemon or vinegar can etch the surface and dull its polish.
 
-While marble requires more careful maintenance than other materials, its beauty and prestige are irreplaceable. We offer a wide selection of marble from the world's best quarries.`,
-      ru: `Мрамор — веками любимый материал, ассоциирующийся с элегантностью и роскошью. Его уникальные прожилки и мягкие тона создают неповторимую атмосферу в любом пространстве.
+It is a considered aesthetic choice for people who value natural variation and accept gentler care and possible signs of use. Composition and finish affect how a slab behaves, so discuss the specific stone and its care before choosing.`,
+      ru: `Мрамор — природная метаморфическая порода с характерными прожилками и неповторимым рисунком каждой плиты. Многие виды мрамора содержат кальцит, поэтому кислоты, например лимон или уксус, могут оставить травление и сделать полировку матовой.
 
-Хотя мрамор требует более тщательного ухода, чем другие материалы, его красота и престиж незаменимы. Мы предлагаем широкий выбор мрамора из лучших карьеров мира.`,
+Это осознанный эстетический выбор для тех, кто ценит природные вариации и готов к бережному уходу и возможным следам эксплуатации. Состав и отделка влияют на свойства плиты, поэтому перед выбором обсудите конкретный камень и уход за ним.`,
     },
     features: [
       {
-        lv: 'Mūžīga elegance',
-        en: 'Timeless elegance',
-        ru: 'Вечная элегантность',
+        lv: 'Dabīgs metamorfais akmens',
+        en: 'Natural metamorphic stone',
+        ru: 'Природная метаморфическая порода',
       },
       {
         lv: 'Unikālas dzīslas',
@@ -459,14 +459,14 @@ While marble requires more careful maintenance than other materials, its beauty 
         ru: 'Уникальные прожилки',
       },
       {
-        lv: 'Dabīgais vēsums',
-        en: 'Natural coolness',
-        ru: 'Естественная прохлада',
+        lv: 'Skābes var iegravēt kalcītu saturošu virsmu',
+        en: 'Acids can etch calcite-bearing marble',
+        ru: 'Кислоты могут оставить след на мраморе с кальцитом',
       },
       {
-        lv: 'Prestiža materiāls',
-        en: 'Prestigious material',
-        ru: 'Престижный материал',
+        lv: 'Kopšana atkarīga no konkrētā akmens un apdares',
+        en: 'Care depends on the specific stone and finish',
+        ru: 'Уход зависит от конкретного камня и отделки',
       },
     ],
     colors: marbleColors,

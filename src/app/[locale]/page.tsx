@@ -23,9 +23,7 @@ const copy = {
     offeringsEyebrow: 'Ko mēs darām', offeringsTitle: 'Risinājumi, kas sākas ar jūsu telpu',
     stone: 'Akmens virsmas', stoneBody: 'Virtuves un vannas istabas virsmas, sienu paneļi, izlietnes un citi akmens elementi dzīvojamām un komerciālām telpām.',
     furniture: 'Individuālas mēbeles', furnitureBody: 'Pēc pasūtījuma veidotas virtuves un iebūvējamās mēbeles, saskaņotas ar telpu un izvēlētajām virsmām.',
-    explore: 'Uzzināt vairāk', materialsEyebrow: 'Materiāli', materialsTitle: 'Izvēlieties materiālu pēc tā rakstura', materialsBody: 'Iepazīstiet četrus virsmu veidus un apskatiet materiālu piemērus.',
-    silestone: 'Kvarca virsmas dažādām telpām.', dekton: 'Ultra-kompaktas virsmas iekštelpām un ārtelpām.', granite: 'Dabīgais akmens ar katram blokam unikālu rakstu.', marble: 'Dabīgais akmens ar izteiksmīgu dzīslu zīmējumu.',
-    viewMaterial: 'Apskatīt materiālu', workEyebrow: 'LAGO darbi', workTitle: 'Īstenoti projekti', workBody: 'Akmens un mēbeles dažādām telpām — apskatiet, kā materiāli strādā reālos projektos.', allProjects: 'Visi projekti',
+    explore: 'Uzzināt vairāk', workEyebrow: 'LAGO darbi', workTitle: 'Īstenoti projekti', workBody: 'Akmens un mēbeles dažādām telpām — apskatiet, kā materiāli strādā reālos projektos.', allProjects: 'Visi projekti',
     processEyebrow: 'No ieceres līdz uzstādīšanai', processTitle: 'Skaidrs ceļš līdz gatavam risinājumam',
     step1: 'Pārrunājam ieceri', step1Body: 'Noskaidrojam telpas vajadzības un projekta ieceri.',
     step2: 'Izvēlamies materiālu', step2Body: 'Apskatām materiālus un izvēlamies piemērotu risinājumu.',
@@ -42,9 +40,7 @@ const copy = {
     offeringsEyebrow: 'What we make', offeringsTitle: 'Solutions shaped around your space',
     stone: 'Stone surfaces', stoneBody: 'Kitchen and bathroom countertops, wall panels, sinks and other stone elements for residential and commercial spaces.',
     furniture: 'Custom furniture', furnitureBody: 'Made-to-measure kitchens and built-in furniture, planned for the room and coordinated with your chosen surfaces.',
-    explore: 'Explore the service', materialsEyebrow: 'Materials', materialsTitle: 'Choose a material by its character', materialsBody: 'Learn about four surface types and view material examples.',
-    silestone: 'Quartz surfaces for a range of interiors.', dekton: 'Ultra-compact surfaces for indoor and outdoor use.', granite: 'Natural stone with a pattern unique to each piece.', marble: 'Natural stone with expressive veining.',
-    viewMaterial: 'Explore material', workEyebrow: 'LAGO projects', workTitle: 'Made for real spaces', workBody: 'Stone and furniture for a range of interiors. See how the materials come together in completed projects.', allProjects: 'View all projects',
+    explore: 'Explore the service', workEyebrow: 'LAGO projects', workTitle: 'Made for real spaces', workBody: 'Stone and furniture for a range of interiors. See how the materials come together in completed projects.', allProjects: 'View all projects',
     processEyebrow: 'From idea to installation', processTitle: 'A clear path to a finished solution',
     step1: 'Discuss the idea', step1Body: 'We learn what the space needs and what you have in mind.',
     step2: 'Choose the material', step2Body: 'We look at the materials and select a suitable direction.',
@@ -61,9 +57,7 @@ const copy = {
     offeringsEyebrow: 'Что мы создаём', offeringsTitle: 'Решения для вашего пространства',
     stone: 'Каменные поверхности', stoneBody: 'Столешницы для кухни и ванной, стеновые панели, мойки и другие каменные элементы для жилых и коммерческих помещений.',
     furniture: 'Мебель на заказ', furnitureBody: 'Кухни и встроенная мебель по индивидуальным размерам, согласованные с помещением и выбранными поверхностями.',
-    explore: 'Подробнее', materialsEyebrow: 'Материалы', materialsTitle: 'Выберите материал по его характеру', materialsBody: 'Познакомьтесь с четырьмя видами поверхностей и примерами материалов.',
-    silestone: 'Кварцевые поверхности для разных интерьеров.', dekton: 'Ультракомпактные поверхности для помещений и улицы.', granite: 'Натуральный камень с уникальным рисунком каждого слэба.', marble: 'Натуральный камень с выразительными прожилками.',
-    viewMaterial: 'Подробнее о материале', workEyebrow: 'Проекты LAGO', workTitle: 'Решения для реальных пространств', workBody: 'Камень и мебель для разных интерьеров. Посмотрите, как материалы сочетаются в готовых проектах.', allProjects: 'Все проекты',
+    explore: 'Подробнее', workEyebrow: 'Проекты LAGO', workTitle: 'Решения для реальных пространств', workBody: 'Камень и мебель для разных интерьеров. Посмотрите, как материалы сочетаются в готовых проектах.', allProjects: 'Все проекты',
     processEyebrow: 'От идеи до установки', processTitle: 'Понятный путь к готовому решению',
     step1: 'Обсуждаем идею', step1Body: 'Уточняем потребности помещения и ваши пожелания.',
     step2: 'Выбираем материал', step2Body: 'Знакомимся с материалами и выбираем подходящий вариант.',
@@ -72,19 +66,82 @@ const copy = {
   },
 } satisfies Record<Locale, Record<string, string>>
 
-const materialImages = [
-  { id: 'silestone', title: { lv: 'Silestone', en: 'Silestone', ru: 'Silestone' }, image: '/images/materials/silestone/silestone-seaport.jpg' },
-  { id: 'dekton', title: { lv: 'Dekton', en: 'Dekton', ru: 'Dekton' }, image: '/images/materials/dekton/dekton-nolita.jpg' },
-  { id: 'granite', title: { lv: 'Granīts', en: 'Granite', ru: 'Гранит' }, image: '/images/materials/granite/granite-charcoal.jpg' },
-  { id: 'marble', title: { lv: 'Marmors', en: 'Marble', ru: 'Мрамор' }, image: '/images/materials/marble/marble-emperador.jpg' },
-] as const
-
 const materialRoutes: Record<string, Record<Locale, string>> = {
   silestone: { lv: 'silestone', en: 'silestone', ru: 'silestone' },
   dekton: { lv: 'dekton', en: 'dekton', ru: 'dekton' },
   granite: { lv: 'granits', en: 'granite', ru: 'granit' },
   marble: { lv: 'marmors', en: 'marble', ru: 'mramor' },
 }
+
+const materialGuide = {
+  lv: {
+    eyebrow: 'Sāciet ar to, kas svarīgs jums',
+    title: 'Četri materiāli, atšķirīga ikdienas pieredze',
+    intro: 'Svarīgākais nav atrast vienu “labāko” virsmu, bet saprast, kā izskats un kopšana iederēsies jūsu mājās.',
+    type: 'Kas tas ir', look: 'Izskats', consider: 'Ikdienā ņemiet vērā', link: 'Apskatīt materiālu',
+    note: 'Materiāla īpašības atšķiras pēc konkrētās kolekcijas, krāsas, apdares un biezuma. Pirms izvēles pārbaudīsim izvēlētās plāksnes ražotāja kopšanas un lietošanas norādes. Cena ir atkarīga no materiāla un projekta apjoma; to precizēsim individuāli.',
+    sources: 'Informācijas avoti:', sourceCosentino: 'Cosentino par Silestone', sourceDekton: 'Dekton kopšana un lietošana', sourceStone: 'Natural Stone Institute par akmens kopšanu',
+    priorityTitle: 'Kurš raksturs atbilst jūsu iecerei?',
+    priorities: [
+      { label: 'Katrs raksts ir dabas veidots', materials: [{ id: 'granite', label: 'Granīts' }, { id: 'marble', label: 'Marmors' }] },
+      { label: 'Vēlos izvēlēties noteiktu krāsu un rakstu', materials: [{ id: 'silestone', label: 'Silestone' }, { id: 'dekton', label: 'Dekton' }] },
+      { label: 'Virsma būs arī ārā, saulē', materials: [{ id: 'dekton', label: 'Dekton' }] },
+      { label: 'Dzīslas ir galvenais akcents', materials: [{ id: 'marble', label: 'Marmors' }, { id: 'silestone', label: 'Silestone' }] },
+    ],
+    items: [
+      { id: 'silestone', name: 'Silestone', image: '/images/materials/silestone/silestone-seaport.jpg', type: 'Cosentino minerālu virsma ar HybriQ+® tehnoloģiju; sastāvā ir minerāli un pārstrādāti materiāli.', look: 'Plaša dizainu izvēle — no mierīgiem, vienmērīgākiem toņiem līdz izteiksmīgām dzīslām.', consider: 'Ražotājs norāda izturību pret ikdienas traipiem, skrāpējumiem un triecieniem, taču specifika mainās pēc produkta. Sargājiet no strauja karstuma trieciena un ievērojiet konkrētā produkta kopšanas norādes.' },
+      { id: 'dekton', name: 'Dekton', image: '/images/materials/dekton/dekton-nolita.jpg', type: 'Cosentino ultra-kompakta minerālu virsma, ko veido daļiņu saķepināšanas process.', look: 'Dažādi akmens, betona un citi dizaini lielām, vizuāli vienotām virsmām.', consider: 'Ražotājs norāda izturību pret traipiem, skrāpējumiem, karstumu un UV starojumu. Ilgstošai karstu trauku novietošanai ražotājs iesaka paliktni, jo īpaši plānākiem biezumiem.' },
+      { id: 'granite', name: 'Granīts', image: '/images/materials/granite/granite-charcoal.jpg', type: 'Dabīgs magmatisks akmens; katrai plāksnei ir savs minerālu raksts.', look: 'Dabiskas krāsu un graudu variācijas; plāksnes jāizvēlas dzīvē, jo raksts neatkārtojas.', consider: 'Uzsūkšana un vajadzība pēc impregnēšanas atšķiras atkarībā no konkrētā akmens. Kopšanas līdzekļus un blīvēšanu nosaka pēc plāksnes īpašībām.' },
+      { id: 'marble', name: 'Marmors', image: '/images/materials/marble/marble-emperador.jpg', type: 'Dabīgs, parasti kalcītu saturošs metamorfais akmens.', look: 'Izteiksmīgas, dabiskas dzīslas un toņu pārejas; katra plāksne ir atšķirīga.', consider: 'Skābi produkti, piemēram, citrons vai etiķis, var iegravēt (matēt) kalcītu saturošu marmoru. Tas ir piemērots, ja pieņemat saudzīgāku kopšanu un iespējamās lietojuma pēdas.' },
+    ],
+  },
+  en: {
+    eyebrow: 'Start with what matters to you',
+    title: 'Four materials, different everyday trade-offs',
+    intro: 'There is no single “best” surface. The right choice depends on how you want it to look and how it will fit your daily routine.',
+    type: 'What it is', look: 'Appearance', consider: 'In everyday use', link: 'Explore material',
+    note: 'Properties vary by collection, colour, finish and thickness. Before you choose, we can confirm the selected slab’s manufacturer care and use guidance. Price depends on the material and project scope, so we quote it individually.',
+    sources: 'Sources:', sourceCosentino: 'Cosentino on Silestone', sourceDekton: 'Dekton care and use', sourceStone: 'Natural Stone Institute stone care',
+    priorityTitle: 'Which character fits your idea?',
+    priorities: [
+      { label: 'I want nature-made variation', materials: [{ id: 'granite', label: 'Granite' }, { id: 'marble', label: 'Marble' }] },
+      { label: 'I want to select a defined colour and pattern', materials: [{ id: 'silestone', label: 'Silestone' }, { id: 'dekton', label: 'Dekton' }] },
+      { label: 'The surface will be outdoors in sunlight', materials: [{ id: 'dekton', label: 'Dekton' }] },
+      { label: 'Veining should be the main feature', materials: [{ id: 'marble', label: 'Marble' }, { id: 'silestone', label: 'Silestone' }] },
+    ],
+    items: [
+      { id: 'silestone', name: 'Silestone', image: '/images/materials/silestone/silestone-seaport.jpg', type: 'Cosentino mineral surface made with HybriQ+® technology, using minerals and recycled materials.', look: 'A broad design range, from quieter, more consistent tones to expressive veining.', consider: 'The manufacturer describes resistance to everyday stains, scratches and impacts, but details vary by product. Protect it from sudden thermal shock and follow the care guide for the chosen product.' },
+      { id: 'dekton', name: 'Dekton', image: '/images/materials/dekton/dekton-nolita.jpg', type: 'Cosentino ultra-compact mineral surface formed through a mineral particle sintering process.', look: 'A range of stone, concrete and other designs for visually continuous large surfaces.', consider: 'The manufacturer describes resistance to stains, scratches, heat and UV. For hot cookware left for extended periods, it recommends a trivet, especially with thinner slabs.' },
+      { id: 'granite', name: 'Granite', image: '/images/materials/granite/granite-charcoal.jpg', type: 'Natural igneous stone; each slab has its own mineral pattern.', look: 'Natural colour and grain variation. View the actual slab because patterns do not repeat.', consider: 'Absorption and whether sealing is needed depend on the specific stone. Care products and sealing should be chosen for the slab’s properties.' },
+      { id: 'marble', name: 'Marble', image: '/images/materials/marble/marble-emperador.jpg', type: 'Natural metamorphic stone, typically containing calcite.', look: 'Distinctive natural veining and shifts in tone; each slab is different.', consider: 'Acids such as lemon or vinegar can etch (dull) calcite-bearing marble. It suits people comfortable with gentler care and the possibility of signs of use.' },
+    ],
+  },
+  ru: {
+    eyebrow: 'Начните с того, что важно именно вам',
+    title: 'Четыре материала — разные особенности в быту',
+    intro: 'Не существует одной «лучшей» поверхности. Выбор зависит от желаемого вида и того, как материал впишется в повседневную жизнь.',
+    type: 'Что это', look: 'Внешний вид', consider: 'В повседневном использовании', link: 'Подробнее о материале',
+    note: 'Свойства зависят от коллекции, цвета, отделки и толщины. Перед выбором мы уточним рекомендации производителя по уходу и использованию конкретной плиты. Стоимость зависит от материала и объёма проекта и рассчитывается индивидуально.',
+    sources: 'Источники:', sourceCosentino: 'Silestone на сайте Cosentino', sourceDekton: 'Уход и использование Dekton', sourceStone: 'Уход за камнем — Natural Stone Institute',
+    priorityTitle: 'Какой характер ближе вашей идее?',
+    priorities: [
+      { label: 'Хочу природный неповторимый рисунок', materials: [{ id: 'granite', label: 'Гранит' }, { id: 'marble', label: 'Мрамор' }] },
+      { label: 'Хочу выбрать определённый цвет и рисунок', materials: [{ id: 'silestone', label: 'Silestone' }, { id: 'dekton', label: 'Dekton' }] },
+      { label: 'Поверхность будет снаружи, на солнце', materials: [{ id: 'dekton', label: 'Dekton' }] },
+      { label: 'Главным акцентом должны быть прожилки', materials: [{ id: 'marble', label: 'Мрамор' }, { id: 'silestone', label: 'Silestone' }] },
+    ],
+    items: [
+      { id: 'silestone', name: 'Silestone', image: '/images/materials/silestone/silestone-seaport.jpg', type: 'Минеральная поверхность Cosentino по технологии HybriQ+® из минералов и переработанных материалов.', look: 'Широкий выбор дизайнов: от спокойных однородных оттенков до выразительных прожилок.', consider: 'Производитель указывает устойчивость к бытовым пятнам, царапинам и ударам, но свойства зависят от продукта. Избегайте резкого температурного удара и следуйте инструкции для выбранной модели.' },
+      { id: 'dekton', name: 'Dekton', image: '/images/materials/dekton/dekton-nolita.jpg', type: 'Ультракомпактная минеральная поверхность Cosentino, полученная спеканием минеральных частиц.', look: 'Разные дизайны под камень, бетон и другие материалы для визуально цельных больших поверхностей.', consider: 'Производитель заявляет устойчивость к пятнам, царапинам, жару и УФ-излучению. Для горячей посуды при длительном контакте рекомендуется подставка, особенно для тонких плит.' },
+      { id: 'granite', name: 'Гранит', image: '/images/materials/granite/granite-charcoal.jpg', type: 'Природная магматическая порода; рисунок каждой плиты уникален.', look: 'Естественные вариации цвета и зерна. Плиту лучше выбирать вживую — рисунок не повторяется.', consider: 'Впитываемость и необходимость пропитки зависят от конкретного камня. Средства ухода и герметизацию подбирают под свойства плиты.' },
+      { id: 'marble', name: 'Мрамор', image: '/images/materials/marble/marble-emperador.jpg', type: 'Природная метаморфическая порода, обычно содержащая кальцит.', look: 'Выразительные природные прожилки и переходы оттенков; каждая плита отличается.', consider: 'Кислоты, например лимон или уксус, могут оставить матовый след на мраморе с кальцитом. Он подойдёт тем, кто готов к бережному уходу и возможным следам эксплуатации.' },
+    ],
+  },
+} satisfies Record<Locale, {
+  eyebrow: string; title: string; intro: string; type: string; look: string; consider: string; link: string; note: string; priorityTitle: string; sources: string; sourceCosentino: string; sourceDekton: string; sourceStone: string;
+  priorities: { label: string; materials: { id: string; label: string }[] }[];
+  items: { id: string; name: string; image: string; type: string; look: string; consider: string }[];
+}>
 
 const featuredProjects = [projects[0], projects[1], projects[5]]
 
@@ -132,7 +189,7 @@ export default async function HomePage({ params }: HomePageProps) {
           <h1 className="mx-auto max-w-5xl font-heading text-5xl leading-[0.98] text-white sm:text-6xl md:text-7xl lg:text-8xl">{text.heroTitle}</h1>
           <p className="mx-auto mt-7 max-w-2xl text-base leading-7 text-white/85 sm:text-lg sm:leading-8">{text.heroBody}</p>
           <div className="home-hero-actions mt-9">
-            <NeonButton href="#materials" variant="solid" size="lg">{text.heroMaterials}<ArrowDown aria-hidden="true" className="ml-2 h-4 w-4" /></NeonButton>
+            <NeonButton href="#materials" variant="solid" size="lg" className="!bg-[#477c63]/90 hover:!bg-[#56866d] !text-white !border-emerald-100/45 hover:!border-emerald-100/70 hover:!shadow-emerald-900/30">{text.heroMaterials}<ArrowDown aria-hidden="true" className="ml-2 h-4 w-4" /></NeonButton>
             <NeonButton href={`/${l}/${projectsBase}`} variant="light" size="lg">{text.heroProjects}<ArrowRight aria-hidden="true" className="ml-2 h-4 w-4" /></NeonButton>
           </div>
         </div>
@@ -170,31 +227,58 @@ export default async function HomePage({ params }: HomePageProps) {
 
       <section id="materials" className="bg-[#1b1916] px-5 py-20 text-white sm:py-28">
         <div className="container-lg">
-          <div className="mb-10 flex flex-col justify-between gap-5 md:mb-14 md:flex-row md:items-end">
-            <div className="max-w-2xl">
-              <p className="mb-4 text-xs font-semibold uppercase tracking-[0.22em] text-[#d5b777]">{text.materialsEyebrow}</p>
-              <h2 className="font-heading text-4xl leading-tight text-white text-shadow-none sm:text-5xl">{text.materialsTitle}</h2>
-            </div>
-            <p className="max-w-md text-sm leading-6 text-white/65 sm:text-base">{text.materialsBody}</p>
-          </div>
-          <div className="grid grid-cols-2 gap-3 sm:gap-5 lg:grid-cols-4">
-            {materialImages.map((material) => {
-              const name = material.title[l]
-              return (
-                <Link key={material.id} href={`/${l}/${stoneBase}/${materialRoutes[material.id][l]}`} className="group min-w-0 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-[#d5b777]">
-                  <div className="relative aspect-[0.92] overflow-hidden bg-[#302c27] sm:aspect-[0.82]">
-                    <Image src={material.image} alt={name} fill sizes="(max-width: 640px) 46vw, (max-width: 1024px) 45vw, 23vw" className="object-cover transition-transform duration-500 group-hover:scale-[1.035]" />
-                    <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/5 to-transparent" />
-                    <div className="absolute inset-x-0 bottom-0 p-3 sm:p-5">
-                    <h3 className="font-heading text-xl text-white text-shadow-none sm:text-2xl">{name}</h3>
-                      <span className="mt-1 hidden text-sm leading-5 text-white/75 sm:block">{text[material.id as keyof typeof text]}</span>
-                      <span className="mt-3 inline-flex items-center gap-2 text-xs font-medium text-[#e3c98f] sm:text-sm">{text.viewMaterial}<ArrowUpRight aria-hidden="true" className="h-4 w-4 transition-transform group-hover:translate-x-0.5 group-hover:-translate-y-0.5" /></span>
-                    </div>
+          <header className="mb-9 max-w-3xl sm:mb-12">
+            <p className="mb-4 text-xs font-semibold uppercase tracking-[0.22em] text-[#d5b777]">{materialGuide[l].eyebrow}</p>
+            <h2 className="font-heading text-4xl leading-tight text-white text-shadow-none sm:text-5xl">{materialGuide[l].title}</h2>
+            <p className="mt-5 max-w-2xl text-sm leading-6 text-white/70 sm:text-base">{materialGuide[l].intro}</p>
+          </header>
+
+          <div className="mb-12 border-y border-white/15 py-6 sm:mb-14 sm:py-7">
+            <h3 className="mb-4 text-sm font-semibold text-[#e3c98f]">{materialGuide[l].priorityTitle}</h3>
+            <ul className="grid gap-x-8 gap-y-4 sm:grid-cols-2 lg:grid-cols-4">
+              {materialGuide[l].priorities.map((priority) => (
+                <li key={priority.label} className="min-h-16">
+                  <p className="text-sm leading-5 text-white/85">{priority.label}</p>
+                  <div className="mt-1 flex flex-wrap gap-x-3 gap-y-1">
+                    {priority.materials.map((option) => (
+                      <Link key={option.id} href={`/${l}/${stoneBase}/${materialRoutes[option.id][l]}`} className="group inline-flex min-h-8 items-center gap-1 text-xs text-[#e3c98f] underline decoration-[#d5b777]/40 underline-offset-4 hover:decoration-[#d5b777] focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#d5b777]">
+                        {option.label}<ArrowUpRight aria-hidden="true" className="h-3 w-3 transition-transform group-hover:translate-x-0.5 group-hover:-translate-y-0.5" />
+                      </Link>
+                    ))}
                   </div>
-                </Link>
-              )
-            })}
+                </li>
+              ))}
+            </ul>
           </div>
+
+          <div className="grid gap-4 md:grid-cols-2 xl:grid-cols-4">
+            {materialGuide[l].items.map((material, index) => (
+              <article key={material.id} className="min-w-0 border border-white/15 bg-[#24211d]">
+                <div className="relative aspect-[1.6] overflow-hidden bg-[#302c27]">
+                  <Image src={material.image} alt={`${material.name} surface sample`} fill sizes="(max-width: 768px) 100vw, (max-width: 1280px) 50vw, 25vw" className="object-cover" />
+                  <span className="absolute left-3 top-3 bg-[#1b1916]/90 px-2.5 py-1 text-xs tracking-wide text-white">0{index + 1}</span>
+                </div>
+                <div className="p-5 sm:p-6">
+                  <h3 className="font-heading text-2xl text-white text-shadow-none">{material.name}</h3>
+                  <dl className="mt-4 space-y-4 text-sm leading-5">
+                    <div><dt className="mb-1 text-[11px] font-semibold uppercase tracking-[0.14em] text-[#d5b777]">{materialGuide[l].type}</dt><dd className="text-white/75">{material.type}</dd></div>
+                    <div><dt className="mb-1 text-[11px] font-semibold uppercase tracking-[0.14em] text-[#d5b777]">{materialGuide[l].look}</dt><dd className="text-white/75">{material.look}</dd></div>
+                    <div><dt className="mb-1 text-[11px] font-semibold uppercase tracking-[0.14em] text-[#d5b777]">{materialGuide[l].consider}</dt><dd className="text-white/75">{material.consider}</dd></div>
+                  </dl>
+                  <Link href={`/${l}/${stoneBase}/${materialRoutes[material.id][l]}`} className="mt-5 inline-flex min-h-11 items-center gap-2 text-sm font-semibold text-[#e3c98f] underline decoration-[#d5b777]/50 underline-offset-4 hover:decoration-[#d5b777] focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-[#d5b777]">
+                    {materialGuide[l].link}<ArrowRight aria-hidden="true" className="h-4 w-4" />
+                  </Link>
+                </div>
+              </article>
+            ))}
+          </div>
+          <p className="mt-6 max-w-4xl text-xs leading-5 text-white/55">{materialGuide[l].note}</p>
+          <p className="mt-3 flex flex-wrap gap-x-4 gap-y-2 text-xs text-white/60">
+            <span>{materialGuide[l].sources}</span>
+            <a href="https://www.cosentino.com/silestone/" target="_blank" rel="noreferrer" className="underline underline-offset-4 hover:text-white">{materialGuide[l].sourceCosentino}</a>
+            <a href="https://www.cosentino.com/usa/dekton/maintenance/" target="_blank" rel="noreferrer" className="underline underline-offset-4 hover:text-white">{materialGuide[l].sourceDekton}</a>
+            <a href="https://www.naturalstoneinstitute.org/consumers/care/" target="_blank" rel="noreferrer" className="underline underline-offset-4 hover:text-white">{materialGuide[l].sourceStone}</a>
+          </p>
         </div>
       </section>
 

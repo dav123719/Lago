@@ -614,12 +614,33 @@ function StoneSurfacesPage({ locale }: { locale: Locale }) {
 
 // ===================== MATERIAL DETAIL PAGE =====================
 function MaterialDetailPage({ locale, material }: { locale: Locale; material: typeof materials[0] }) {
-  const features = [
-    { lv: 'Augsta izturība pret skrāpējumiem', en: 'High scratch resistance', ru: 'Высокая устойчивость к царапинам' },
-    { lv: 'Izturīgs pret karstumu', en: 'Heat resistant', ru: 'Термостойкость' },
-    { lv: 'Viegli tīrāms', en: 'Easy to clean', ru: 'Легко чистится' },
-    { lv: 'Plašs krāsu klāsts', en: 'Wide color range', ru: 'Широкая цветовая гамма' },
-  ]
+  const featuresByMaterial: Record<typeof material.id, Record<Locale, string>[]> = {
+    silestone: [
+      { lv: 'Minerālu virsma ar HybriQ® tehnoloģiju', en: 'Mineral surface made with HybriQ® technology', ru: 'Минеральная поверхность по технологии HybriQ®' },
+      { lv: 'Sastāvā atlasīti minerāli un pārstrādāti materiāli', en: 'Made with selected minerals and recycled materials', ru: 'В составе — отобранные минералы и переработанные материалы' },
+      { lv: 'Ražotājs norāda izturību pret ikdienas traipiem, skrāpējumiem un triecieniem', en: 'Manufacturer describes resistance to everyday stains, scratches and impacts', ru: 'Производитель указывает устойчивость к бытовым пятнам, царапинам и ударам' },
+      { lv: 'Sargāt no strauja karstuma trieciena; sekot izvēlētā produkta kopšanas norādēm', en: 'Protect from thermal shock; follow care guidance for the selected product', ru: 'Защищать от резкого перепада температуры; следовать инструкции для выбранного продукта' },
+    ],
+    dekton: [
+      { lv: 'Ultra-kompakta minerālu virsma', en: 'Ultra-compact mineral surface', ru: 'Ультракомпактная минеральная поверхность' },
+      { lv: 'Ražotājs norāda izturību pret UV starojumu', en: 'Manufacturer describes UV resistance', ru: 'Производитель указывает устойчивость к УФ-излучению' },
+      { lv: 'Ražotājs norāda izturību pret traipiem, skrāpējumiem un karstumu', en: 'Manufacturer describes resistance to stains, scratches and heat', ru: 'Производитель указывает устойчивость к пятнам, царапинам и жару' },
+      { lv: 'Ilgstošam karstumam izmantot paliktni; izvairīties no tiešas liesmas', en: 'Use a trivet for prolonged heat; avoid direct flame', ru: 'При длительном нагреве использовать подставку; избегать открытого огня' },
+    ],
+    granite: [
+      { lv: 'Dabīgs magmatisks akmens', en: 'Natural igneous stone', ru: 'Природная магматическая порода' },
+      { lv: 'Raksts un minerālu graudi atšķiras katrā plāksnē', en: 'Pattern and mineral grain vary from slab to slab', ru: 'Рисунок и минеральное зерно различаются у каждой плиты' },
+      { lv: 'Uzsūkšana un cietība atšķiras pēc konkrētā akmens', en: 'Absorption and hardness vary by stone', ru: 'Впитываемость и твёрдость зависят от конкретного камня' },
+      { lv: 'Impregnēšanu un kopšanu nosaka pēc izvēlētās plāksnes', en: 'Choose sealing and care for the selected slab', ru: 'Пропитку и уход подбирают для выбранной плиты' },
+    ],
+    marble: [
+      { lv: 'Dabīgs metamorfais akmens ar neatkārtojamām dzīslām', en: 'Natural metamorphic stone with distinctive veining', ru: 'Природная метаморфическая порода с выразительными прожилками' },
+      { lv: 'Daudzi marmori satur kalcītu', en: 'Many marbles contain calcite', ru: 'Многие виды мрамора содержат кальцит' },
+      { lv: 'Skābes var iegravēt kalcītu saturošu virsmu', en: 'Acids can etch calcite-bearing marble', ru: 'Кислоты могут оставить травление на мраморе с кальцитом' },
+      { lv: 'Konkrētā akmens kopšanu pārrunāt pirms izvēles', en: 'Discuss care for the specific stone before choosing', ru: 'Обсудить уход за конкретным камнем до выбора' },
+    ],
+  }
+  const features = featuresByMaterial[material.id]
   
   return (
     <>
