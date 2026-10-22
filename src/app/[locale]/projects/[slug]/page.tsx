@@ -9,7 +9,7 @@ import { Metadata } from 'next'
 import { draftMode } from 'next/headers'
 import { notFound } from 'next/navigation'
 import { Locale, locales } from '@/lib/i18n/config'
-import { getSanityClient } from '@/lib/sanity/client'
+import { getSanityClient, isSanityClientConfigured } from '@/lib/sanity/client'
 import { projectBySlugQuery, allProjectSlugsQuery } from '@/lib/sanity/queries'
 import { SanityProject } from '@/lib/sanity/types'
 import { ProjectDetailContent } from './ProjectDetailContent'
@@ -58,13 +58,46 @@ export async function generateStaticParams() {
 }
 
 export async function generateMetadata({ params }: ProjectDetailPageProps): Promise<Metadata> {
-  const { locale } = await params
-  const titles = {
-    lv: 'Projekti | LAGO',
-    en: 'Projects | LAGO',
-    ru: 'Проекты | LAGO',
+  const { locale, slug } = await params
+  const l = locales.includes(locale as Locale) ? locale as Locale : 'lv'
+  const localProject = localProjects.find((item) => item.slug[l] === slug)
+  let sanityProject: SanityProject | null = null
+  if (!localProject && isSanityClientConfigured()) {
+    try {
+      sanityProject = await getSanityClient().fetch<SanityProject>(projectBySlugQuery, { slug })
+    } catch {
+      // Keep a useful fallback title when the content service is unavailable.
+    }
   }
-  return { title: titles[locale as Locale] || titles.en }
+  const base = l === 'lv' ? 'projekti' : l === 'ru' ? 'proekty' : 'projects'
+  const title = localProject?.title[l] || sanityProject?.title[l] || (l === 'lv' ? 'LAGO projekts' : l === 'ru' ? 'Проект LAGO' : 'LAGO project')
+  const description = localProject?.summary[l] || sanityProject?.summary?.[l] || localProject?.subtitle?.[l] || sanityProject?.subtitle?.[l] || (l === 'lv' ? 'Akmens virsmas un mēbeles LAGO projektā Latvijā.' : l === 'ru' ? 'Каменные поверхности и мебель в проекте LAGO в Латвии.' : 'Stone surfaces and furniture in a LAGO project in Latvia.')
+  const projectSlugs = localProject?.slug || (sanityProject ? {
+    lv: sanityProject.slug.lv.current,
+    en: sanityProject.slug.en.current,
+    ru: sanityProject.slug.ru.current,
+  } : undefined)
+
+  return {
+    title,
+    description,
+    alternates: {
+      canonical: `/${l}/${base}/${slug}/`,
+      languages: projectSlugs ? {
+        lv: `/lv/projekti/${projectSlugs.lv}/`,
+        en: `/en/projects/${projectSlugs.en}/`,
+        ru: `/ru/proekty/${projectSlugs.ru}/`,
+        'x-default': `/lv/projekti/${projectSlugs.lv}/`,
+      } : undefined,
+    },
+    openGraph: {
+      type: 'article',
+      title,
+      description,
+      url: `https://lago.lv/${l}/${base}/${slug}/`,
+      images: localProject?.heroImage ? [{ url: localProject.heroImage, alt: title }] : undefined,
+    },
+  }
 }
 
 export default async function ProjectDetailPage({ params }: ProjectDetailPageProps) {

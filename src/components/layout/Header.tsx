@@ -31,24 +31,24 @@ const getNavigation = (locale: Locale) => {
       href: `/${locale}/${locale === 'lv' ? 'mebeles' : locale === 'ru' ? 'mebel' : 'furniture'}`,
     },
     {
-      label: translations.nav.stoneSurfaces[locale],
-      href: `/${locale}#materials`,
+      label: locale === 'lv' ? 'Virsmas' : locale === 'ru' ? 'Поверхности' : 'Surfaces',
+      href: `/${locale}/${stoneBase}/`,
       children: [
         {
-          label: 'Silestone',
-          href: `/${locale}/${stoneBase}/silestone`,
+          label: locale === 'lv' ? 'Virtuves virsmas' : locale === 'ru' ? 'Кухонные поверхности' : 'Kitchen surfaces',
+          href: `/${locale}/${stoneBase}/#kitchen-worktops`,
         },
         {
-          label: 'Dekton',
-          href: `/${locale}/${stoneBase}/dekton`,
+          label: locale === 'lv' ? 'Vannas istaba' : locale === 'ru' ? 'Ванная комната' : 'Bathrooms',
+          href: `/${locale}/${stoneBase}/#bathroom-surfaces`,
         },
         {
-          label: translations.materials.granite[locale],
-          href: `/${locale}/${stoneBase}/${locale === 'lv' ? 'granits' : locale === 'ru' ? 'granit' : 'granite'}`,
+          label: locale === 'lv' ? 'Sienu paneļi' : locale === 'ru' ? 'Стеновые панели' : 'Wall panels',
+          href: `/${locale}/${stoneBase}/#wall-panels`,
         },
         {
-          label: translations.materials.marble[locale],
-          href: `/${locale}/${stoneBase}/${locale === 'lv' ? 'marmors' : locale === 'ru' ? 'mramor' : 'marble'}`,
+          label: locale === 'lv' ? 'Salīdzināt materiālus' : locale === 'ru' ? 'Сравнить материалы' : 'Compare materials',
+          href: `/${locale}/${stoneBase}/#material-comparison`,
         },
       ],
     },

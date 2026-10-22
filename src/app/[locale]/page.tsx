@@ -19,11 +19,11 @@ const copy = {
     heroEyebrow: 'Akmens virsmas · Individuālas mēbeles',
     heroTitle: 'Akmens virsmas un mēbeles pēc pasūtījuma',
     heroBody: 'Akmens virsmas un mēbeles, kas radītas jūsu virtuvei un interjeram — no materiāla izvēles līdz izgatavošanai un uzstādīšanai.',
-    heroMaterials: 'Apskatīt materiālus', heroProjects: 'Apskatīt darbus',
-    offeringsEyebrow: 'Ko mēs darām', offeringsTitle: 'Risinājumi, kas sākas ar jūsu telpu',
-    stone: 'Akmens virsmas', stoneBody: 'Virtuves un vannas istabas virsmas, sienu paneļi, izlietnes un citi akmens elementi dzīvojamām un komerciālām telpām.',
-    furniture: 'Individuālas mēbeles', furnitureBody: 'Pēc pasūtījuma veidotas virtuves un iebūvējamās mēbeles, saskaņotas ar telpu un izvēlētajām virsmām.',
-    explore: 'Uzzināt vairāk', workEyebrow: 'LAGO darbi', workTitle: 'Īstenoti projekti', workBody: 'Akmens un mēbeles dažādām telpām — apskatiet, kā materiāli strādā reālos projektos.', allProjects: 'Visi projekti',
+    heroMaterials: 'Izvēlēties virsmu', heroProjects: 'Apskatīt darbus',
+    offeringsEyebrow: 'Izvēlieties pēc ieceres', offeringsTitle: 'Kādai telpai meklējat risinājumu?',
+
+    furniture: 'Individuālas mēbeles', furnitureBody: 'Virtuves un iebūvējamās mēbeles tiek pielāgotas telpai un saskaņotas ar izvēlēto virsmu.',
+    explore: 'Skatīt risinājumus', kitchen: 'Virtuves virsmas', kitchenBody: 'Darba virsmas, salas un sienas paneļi — izvēle atkarīga no iecerētā izskata un ikdienas lietošanas.', bathroom: 'Vannas istabas virsmas', bathroomBody: 'Izlietņu virsmas, dušas sienas un citi akmens elementi. Apskatiet piemērus reālos projektos.', panels: 'Sienu paneļi un apdare', panelsBody: 'Sienu paneļi virtuvēm un vannas istabām, pieskaņoti virsmai un konkrētajai telpai.', workEyebrow: 'LAGO darbi', workTitle: 'Īstenoti projekti', workBody: 'Akmens un mēbeles dažādām telpām — apskatiet, kā materiāli strādā reālos projektos.', allProjects: 'Visi projekti',
     processEyebrow: 'No ieceres līdz uzstādīšanai', processTitle: 'Skaidrs ceļš līdz gatavam risinājumam',
     step1: 'Pārrunājam ieceri', step1Body: 'Noskaidrojam telpas vajadzības un projekta ieceri.',
     step2: 'Izvēlamies materiālu', step2Body: 'Apskatām materiālus un izvēlamies piemērotu risinājumu.',
@@ -36,11 +36,11 @@ const copy = {
     heroEyebrow: 'Stone surfaces · Custom furniture',
     heroTitle: 'Stone surfaces and made-to-measure furniture',
     heroBody: 'Stone surfaces and furniture made for your kitchen and interior — from material selection through fabrication and installation.',
-    heroMaterials: 'Explore materials', heroProjects: 'View our work',
-    offeringsEyebrow: 'What we make', offeringsTitle: 'Solutions shaped around your space',
-    stone: 'Stone surfaces', stoneBody: 'Kitchen and bathroom countertops, wall panels, sinks and other stone elements for residential and commercial spaces.',
-    furniture: 'Custom furniture', furnitureBody: 'Made-to-measure kitchens and built-in furniture, planned for the room and coordinated with your chosen surfaces.',
-    explore: 'Explore the service', workEyebrow: 'LAGO projects', workTitle: 'Made for real spaces', workBody: 'Stone and furniture for a range of interiors. See how the materials come together in completed projects.', allProjects: 'View all projects',
+    heroMaterials: 'Find a surface', heroProjects: 'View our work',
+    offeringsEyebrow: 'Choose by project', offeringsTitle: 'What kind of space are you planning?',
+
+    furniture: 'Custom furniture', furnitureBody: 'Kitchens and built-ins are made to fit the room and coordinated with your chosen surface.',
+    explore: 'Explore solutions', kitchen: 'Kitchen worktops', kitchenBody: 'Worktops, islands and wall panels. The right choice depends on the look you want and everyday use.', bathroom: 'Bathroom surfaces', bathroomBody: 'Vanity tops, shower walls and other stone details. See materials in completed projects.', panels: 'Wall panels and cladding', panelsBody: 'Wall panels for kitchens and bathrooms, coordinated with the worktop and the room.', workEyebrow: 'LAGO projects', workTitle: 'Made for real spaces', workBody: 'Stone and furniture for a range of interiors. See how the materials come together in completed projects.', allProjects: 'View all projects',
     processEyebrow: 'From idea to installation', processTitle: 'A clear path to a finished solution',
     step1: 'Discuss the idea', step1Body: 'We learn what the space needs and what you have in mind.',
     step2: 'Choose the material', step2Body: 'We look at the materials and select a suitable direction.',
@@ -53,11 +53,11 @@ const copy = {
     heroEyebrow: 'Каменные поверхности · Мебель на заказ',
     heroTitle: 'Каменные поверхности и мебель на заказ',
     heroBody: 'Каменные поверхности и мебель для вашей кухни и интерьера — от выбора материала до изготовления и установки.',
-    heroMaterials: 'Материалы', heroProjects: 'Наши работы',
-    offeringsEyebrow: 'Что мы создаём', offeringsTitle: 'Решения для вашего пространства',
-    stone: 'Каменные поверхности', stoneBody: 'Столешницы для кухни и ванной, стеновые панели, мойки и другие каменные элементы для жилых и коммерческих помещений.',
-    furniture: 'Мебель на заказ', furnitureBody: 'Кухни и встроенная мебель по индивидуальным размерам, согласованные с помещением и выбранными поверхностями.',
-    explore: 'Подробнее', workEyebrow: 'Проекты LAGO', workTitle: 'Решения для реальных пространств', workBody: 'Камень и мебель для разных интерьеров. Посмотрите, как материалы сочетаются в готовых проектах.', allProjects: 'Все проекты',
+    heroMaterials: 'Выбрать поверхность', heroProjects: 'Наши работы',
+    offeringsEyebrow: 'Выберите по задаче', offeringsTitle: 'Для какого помещения вы ищете решение?',
+
+    furniture: 'Мебель на заказ', furnitureBody: 'Кухни и встроенная мебель изготавливаются по размерам помещения и сочетаются с выбранной поверхностью.',
+    explore: 'Решения для помещений', kitchen: 'Кухонные столешницы', kitchenBody: 'Рабочие поверхности, острова и стеновые панели. Выбор зависит от желаемого вида и повседневного использования.', bathroom: 'Поверхности для ванной', bathroomBody: 'Столешницы для умывальников, стены душевых и другие каменные элементы. Посмотрите примеры проектов.', panels: 'Стеновые панели и отделка', panelsBody: 'Панели для кухонь и ванных комнат, сочетающиеся со столешницей и интерьером.', workEyebrow: 'Проекты LAGO', workTitle: 'Решения для реальных пространств', workBody: 'Камень и мебель для разных интерьеров. Посмотрите, как материалы сочетаются в готовых проектах.', allProjects: 'Все проекты',
     processEyebrow: 'От идеи до установки', processTitle: 'Понятный путь к готовому решению',
     step1: 'Обсуждаем идею', step1Body: 'Уточняем потребности помещения и ваши пожелания.',
     step2: 'Выбираем материал', step2Body: 'Знакомимся с материалами и выбираем подходящий вариант.',
@@ -89,8 +89,8 @@ const materialGuide = {
       { label: 'Dzīslas ir galvenais akcents', materials: [{ id: 'marble', label: 'Marmors' }, { id: 'silestone', label: 'Silestone' }] },
     ],
     items: [
-      { id: 'silestone', name: 'Silestone', image: '/images/materials/silestone/silestone-seaport.jpg', type: 'Cosentino minerālu virsma ar HybriQ+® tehnoloģiju; sastāvā ir minerāli un pārstrādāti materiāli.', look: 'Plaša dizainu izvēle — no mierīgiem, vienmērīgākiem toņiem līdz izteiksmīgām dzīslām.', consider: 'Ražotājs norāda izturību pret ikdienas traipiem, skrāpējumiem un triecieniem, taču specifika mainās pēc produkta. Sargājiet no strauja karstuma trieciena un ievērojiet konkrētā produkta kopšanas norādes.' },
-      { id: 'dekton', name: 'Dekton', image: '/images/materials/dekton/dekton-nolita.jpg', type: 'Cosentino ultra-kompakta minerālu virsma, ko veido daļiņu saķepināšanas process.', look: 'Dažādi akmens, betona un citi dizaini lielām, vizuāli vienotām virsmām.', consider: 'Ražotājs norāda izturību pret traipiem, skrāpējumiem, karstumu un UV starojumu. Ilgstošai karstu trauku novietošanai ražotājs iesaka paliktni, jo īpaši plānākiem biezumiem.' },
+      { id: 'silestone', name: 'Silestone', image: '/images/materials/silestone/silestone-seaport.jpg', type: 'Cosentino minerālu virsma. Sastāvs var atšķirties pēc līnijas un krāsas, tāpēc pārbaudiet konkrētā produkta informāciju.', look: 'Plaša dizainu izvēle — no mierīgiem, vienmērīgākiem toņiem līdz izteiksmīgām dzīslām.', consider: 'Ražotājs norāda izturību pret ikdienas traipiem un skrāpējumiem konkrētās produktu līnijās. Sargājiet no strauja karstuma trieciena un ievērojiet produkta kopšanas norādes.' },
+      { id: 'dekton', name: 'Dekton', image: '/images/materials/dekton/dekton-nolita.jpg', type: 'Cosentino ultra-kompakta minerālu virsma, ko veido minerālu daļiņu saķepināšanas process.', look: 'Dažādi akmens un citu virsmu dizaini.', consider: 'Ražotājs norāda izturību pret traipiem, skrāpējumiem, karstumu un UV; malām var kaitēt trieciens. Ilgstošam karstumam un plānākām plāksnēm izmantojiet paliktni.' },
       { id: 'granite', name: 'Granīts', image: '/images/materials/granite/granite-charcoal.jpg', type: 'Dabīgs magmatisks akmens; katrai plāksnei ir savs minerālu raksts.', look: 'Dabiskas krāsu un graudu variācijas; plāksnes jāizvēlas dzīvē, jo raksts neatkārtojas.', consider: 'Uzsūkšana un vajadzība pēc impregnēšanas atšķiras atkarībā no konkrētā akmens. Kopšanas līdzekļus un blīvēšanu nosaka pēc plāksnes īpašībām.' },
       { id: 'marble', name: 'Marmors', image: '/images/materials/marble/marble-emperador.jpg', type: 'Dabīgs, parasti kalcītu saturošs metamorfais akmens.', look: 'Izteiksmīgas, dabiskas dzīslas un toņu pārejas; katra plāksne ir atšķirīga.', consider: 'Skābi produkti, piemēram, citrons vai etiķis, var iegravēt (matēt) kalcītu saturošu marmoru. Tas ir piemērots, ja pieņemat saudzīgāku kopšanu un iespējamās lietojuma pēdas.' },
     ],
@@ -110,8 +110,8 @@ const materialGuide = {
       { label: 'Veining should be the main feature', materials: [{ id: 'marble', label: 'Marble' }, { id: 'silestone', label: 'Silestone' }] },
     ],
     items: [
-      { id: 'silestone', name: 'Silestone', image: '/images/materials/silestone/silestone-seaport.jpg', type: 'Cosentino mineral surface made with HybriQ+® technology, using minerals and recycled materials.', look: 'A broad design range, from quieter, more consistent tones to expressive veining.', consider: 'The manufacturer describes resistance to everyday stains, scratches and impacts, but details vary by product. Protect it from sudden thermal shock and follow the care guide for the chosen product.' },
-      { id: 'dekton', name: 'Dekton', image: '/images/materials/dekton/dekton-nolita.jpg', type: 'Cosentino ultra-compact mineral surface formed through a mineral particle sintering process.', look: 'A range of stone, concrete and other designs for visually continuous large surfaces.', consider: 'The manufacturer describes resistance to stains, scratches, heat and UV. For hot cookware left for extended periods, it recommends a trivet, especially with thinner slabs.' },
+      { id: 'silestone', name: 'Silestone', image: '/images/materials/silestone/silestone-seaport.jpg', type: 'A Cosentino mineral surface. Composition can vary by product line and colour, so check the selected product information.', look: 'A broad design range, from quieter, more consistent tones to expressive veining.', consider: 'The manufacturer describes resistance to everyday stains and scratches for specific product lines. Protect it from thermal shock and follow the care guide for the chosen product.' },
+      { id: 'dekton', name: 'Dekton', image: '/images/materials/dekton/dekton-nolita.jpg', type: 'A Cosentino ultra-compact mineral surface formed through a mineral particle sintering process.', look: 'A range of stone and other surface designs.', consider: 'The manufacturer describes resistance to stains, scratches, heat and UV; edges can be damaged by impact. Use a trivet for prolonged heat and thinner slabs.' },
       { id: 'granite', name: 'Granite', image: '/images/materials/granite/granite-charcoal.jpg', type: 'Natural igneous stone; each slab has its own mineral pattern.', look: 'Natural colour and grain variation. View the actual slab because patterns do not repeat.', consider: 'Absorption and whether sealing is needed depend on the specific stone. Care products and sealing should be chosen for the slab’s properties.' },
       { id: 'marble', name: 'Marble', image: '/images/materials/marble/marble-emperador.jpg', type: 'Natural metamorphic stone, typically containing calcite.', look: 'Distinctive natural veining and shifts in tone; each slab is different.', consider: 'Acids such as lemon or vinegar can etch (dull) calcite-bearing marble. It suits people comfortable with gentler care and the possibility of signs of use.' },
     ],
@@ -131,8 +131,8 @@ const materialGuide = {
       { label: 'Главным акцентом должны быть прожилки', materials: [{ id: 'marble', label: 'Мрамор' }, { id: 'silestone', label: 'Silestone' }] },
     ],
     items: [
-      { id: 'silestone', name: 'Silestone', image: '/images/materials/silestone/silestone-seaport.jpg', type: 'Минеральная поверхность Cosentino по технологии HybriQ+® из минералов и переработанных материалов.', look: 'Широкий выбор дизайнов: от спокойных однородных оттенков до выразительных прожилок.', consider: 'Производитель указывает устойчивость к бытовым пятнам, царапинам и ударам, но свойства зависят от продукта. Избегайте резкого температурного удара и следуйте инструкции для выбранной модели.' },
-      { id: 'dekton', name: 'Dekton', image: '/images/materials/dekton/dekton-nolita.jpg', type: 'Ультракомпактная минеральная поверхность Cosentino, полученная спеканием минеральных частиц.', look: 'Разные дизайны под камень, бетон и другие материалы для визуально цельных больших поверхностей.', consider: 'Производитель заявляет устойчивость к пятнам, царапинам, жару и УФ-излучению. Для горячей посуды при длительном контакте рекомендуется подставка, особенно для тонких плит.' },
+      { id: 'silestone', name: 'Silestone', image: '/images/materials/silestone/silestone-seaport.jpg', type: 'Минеральная поверхность Cosentino. Состав зависит от линейки и цвета, поэтому проверяйте сведения о выбранном продукте.', look: 'Широкий выбор дизайнов: от спокойных однородных оттенков до выразительных прожилок.', consider: 'Производитель указывает устойчивость к бытовым пятнам и царапинам для отдельных линеек. Защищайте от резкого перепада температуры и следуйте инструкции для выбранного продукта.' },
+      { id: 'dekton', name: 'Dekton', image: '/images/materials/dekton/dekton-nolita.jpg', type: 'Ультракомпактная минеральная поверхность Cosentino, полученная спеканием минеральных частиц.', look: 'Разные дизайны под камень и другие поверхности.', consider: 'Производитель указывает устойчивость к пятнам, царапинам, жару и УФ; края можно повредить ударом. Для длительного нагрева и тонких плит используйте подставку.' },
       { id: 'granite', name: 'Гранит', image: '/images/materials/granite/granite-charcoal.jpg', type: 'Природная магматическая порода; рисунок каждой плиты уникален.', look: 'Естественные вариации цвета и зерна. Плиту лучше выбирать вживую — рисунок не повторяется.', consider: 'Впитываемость и необходимость пропитки зависят от конкретного камня. Средства ухода и герметизацию подбирают под свойства плиты.' },
       { id: 'marble', name: 'Мрамор', image: '/images/materials/marble/marble-emperador.jpg', type: 'Природная метаморфическая порода, обычно содержащая кальцит.', look: 'Выразительные природные прожилки и переходы оттенков; каждая плита отличается.', consider: 'Кислоты, например лимон или уксус, могут оставить матовый след на мраморе с кальцитом. Он подойдёт тем, кто готов к бережному уходу и возможным следам эксплуатации.' },
     ],
@@ -149,8 +149,19 @@ export async function generateMetadata({ params }: HomePageProps): Promise<Metad
   const { locale } = await params
   const l = locale as Locale
   return {
-    title: `LAGO — ${copy[l].title}`,
+    title: copy[l].title,
     description: copy[l].description,
+    alternates: {
+      canonical: `/${l}/`,
+      languages: { lv: '/lv/', en: '/en/', ru: '/ru/', 'x-default': '/lv/' },
+    },
+    openGraph: {
+      type: 'website',
+      locale: l === 'lv' ? 'lv_LV' : l === 'en' ? 'en_US' : 'ru_RU',
+      title: copy[l].title,
+      description: copy[l].description,
+      url: `https://lago.lv/${l}/`,
+    },
   }
 }
 
@@ -166,6 +177,36 @@ export default async function HomePage({ params }: HomePageProps) {
   const furnitureBase = l === 'lv' ? 'mebeles' : l === 'ru' ? 'mebel' : 'furniture'
   const projectsBase = l === 'lv' ? 'projekti' : l === 'ru' ? 'proekty' : 'projects'
   const aboutBase = l === 'lv' ? 'par-mums' : l === 'ru' ? 'o-nas' : 'about-us'
+  const applicationCards = [
+    {
+      title: text.kitchen,
+      body: text.kitchenBody,
+      href: `/${l}/${stoneBase}#kitchen-worktops`,
+      image: '/images/projects/project-kitchen-1.webp',
+      imageAlt: l === 'lv' ? 'Virtuves darba virsma un sala Jūrmalas projektā' : l === 'en' ? 'Kitchen worktop and island in a Jurmala project' : 'Кухонная столешница и остров в проекте в Юрмале',
+    },
+    {
+      title: text.bathroom,
+      body: text.bathroomBody,
+      href: `/${l}/${stoneBase}#bathroom-surfaces`,
+      image: '/images/projects/project-bathroom-1.webp',
+      imageAlt: l === 'lv' ? 'Marmora apdare viesnīcas vannas istabā Rīgā' : l === 'en' ? 'Marble finish in a Riga hotel bathroom' : 'Мраморная отделка ванной комнаты отеля в Риге',
+    },
+    {
+      title: text.panels,
+      body: text.panelsBody,
+      href: `/${l}/${stoneBase}#wall-panels`,
+      image: '/images/projects/project-kitchen-2.webp',
+      imageAlt: l === 'lv' ? 'Virtuves sienas panelis pieskaņots darba virsmai' : l === 'en' ? 'Kitchen wall panel coordinated with the worktop' : 'Кухонная стеновая панель в сочетании со столешницей',
+    },
+    {
+      title: text.furniture,
+      body: text.furnitureBody,
+      href: `/${l}/${furnitureBase}`,
+      image: '/images/projects/project-furniture-2.webp',
+      imageAlt: l === 'lv' ? 'Individuāli izgatavotas iebūvējamās mēbeles' : l === 'en' ? 'Made-to-measure built-in furniture' : 'Встроенная мебель на заказ',
+    },
+  ]
 
   return (
     <>
@@ -189,7 +230,7 @@ export default async function HomePage({ params }: HomePageProps) {
           <h1 className="mx-auto max-w-5xl font-heading text-5xl leading-[0.98] text-white sm:text-6xl md:text-7xl lg:text-8xl">{text.heroTitle}</h1>
           <p className="mx-auto mt-7 max-w-2xl text-base leading-7 text-white/85 sm:text-lg sm:leading-8">{text.heroBody}</p>
           <div className="home-hero-actions mt-9">
-            <NeonButton href="#materials" variant="solid" size="lg" className="!bg-[#477c63]/90 hover:!bg-[#56866d] !text-white !border-emerald-100/45 hover:!border-emerald-100/70 hover:!shadow-emerald-900/30">{text.heroMaterials}<ArrowDown aria-hidden="true" className="ml-2 h-4 w-4" /></NeonButton>
+            <NeonButton href="#offerings" variant="solid" size="lg" className="!bg-[#477c63]/90 hover:!bg-[#56866d] !text-white !border-emerald-100/45 hover:!border-emerald-100/70 hover:!shadow-emerald-900/30">{text.heroMaterials}<ArrowDown aria-hidden="true" className="ml-2 h-4 w-4" /></NeonButton>
             <NeonButton href={`/${l}/${projectsBase}`} variant="light" size="lg">{text.heroProjects}<ArrowRight aria-hidden="true" className="ml-2 h-4 w-4" /></NeonButton>
           </div>
         </div>
@@ -202,25 +243,10 @@ export default async function HomePage({ params }: HomePageProps) {
             <p className="mb-4 text-xs font-semibold uppercase tracking-[0.22em] text-[#947440]">{text.offeringsEyebrow}</p>
             <h2 className="font-heading text-4xl leading-tight text-[#24211d] text-shadow-none sm:text-5xl">{text.offeringsTitle}</h2>
           </header>
-          <div className="grid gap-5 lg:grid-cols-2 lg:gap-8">
-            <OfferingCard
-              image="/images/projects/project-kitchen-1.webp"
-              imageAlt={l === 'lv' ? 'Virtuve ar Silestone akmens virsmu' : l === 'en' ? 'Kitchen with a Silestone stone surface' : 'Кухня с каменной поверхностью Silestone'}
-              index="01"
-              title={text.stone}
-              body={text.stoneBody}
-              href={`/${l}/${stoneBase}`}
-              linkText={text.explore}
-            />
-            <OfferingCard
-              image="/images/projects/project-furniture-2.webp"
-              imageAlt={l === 'lv' ? 'Individuāli veidotas iebūvējamās mēbeles' : l === 'en' ? 'Made-to-measure built-in furniture' : 'Встроенная мебель на заказ'}
-              index="02"
-              title={text.furniture}
-              body={text.furnitureBody}
-              href={`/${l}/${furnitureBase}`}
-              linkText={text.explore}
-            />
+          <div className="grid gap-5 sm:grid-cols-2 xl:grid-cols-4">
+            {applicationCards.map((card, index) => (
+              <ApplicationCard key={card.href} {...card} index={`0${index + 1}`} linkText={text.explore} />
+            ))}
           </div>
         </div>
       </section>
@@ -353,7 +379,7 @@ export default async function HomePage({ params }: HomePageProps) {
   )
 }
 
-function OfferingCard({ image, imageAlt, index, title, body, href, linkText }: {
+function ApplicationCard({ image, imageAlt, index, title, body, href, linkText }: {
   image: string
   imageAlt: string
   index: string
@@ -363,18 +389,20 @@ function OfferingCard({ image, imageAlt, index, title, body, href, linkText }: {
   linkText: string
 }) {
   return (
-    <article className="grid min-h-full overflow-hidden bg-white md:grid-cols-[0.95fr_1.05fr]">
-      <div className="relative min-h-64 md:min-h-80">
-        <Image src={image} alt={imageAlt} fill sizes="(max-width: 768px) 100vw, 24vw" className="object-cover" />
-      </div>
-      <div className="flex flex-col items-start p-6 sm:p-8 lg:p-9">
-        <span className="text-xs tracking-[0.18em] text-[#947440]">{index}</span>
-        <h3 className="mt-4 font-heading text-3xl leading-tight text-[#24211d] text-shadow-none sm:text-4xl">{title}</h3>
-        <p className="mt-4 text-sm leading-6 text-[#625c52] sm:text-base">{body}</p>
-        <Link href={href} className="mt-auto inline-flex items-center gap-2 pt-8 text-sm font-semibold text-[#594725] hover:underline focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-[#947440]">
-          {linkText}<ArrowRight aria-hidden="true" className="h-4 w-4" />
-        </Link>
-      </div>
+    <article className="group flex min-h-full flex-col overflow-hidden border border-[#d9d3c8] bg-white">
+      <Link href={href} className="flex h-full flex-col focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#947440]">
+        <div className="relative aspect-[1.2] overflow-hidden bg-[#ded9cf]">
+          <Image src={image} alt={imageAlt} fill sizes="(max-width: 640px) 100vw, (max-width: 1280px) 50vw, 25vw" className="object-cover transition-transform duration-500 group-hover:scale-[1.03]" />
+          <span className="absolute left-4 top-4 bg-[#f4f1eb] px-3 py-1 text-xs tracking-wide text-[#4b453b]">{index}</span>
+        </div>
+        <div className="flex flex-1 flex-col p-5 sm:p-6">
+          <h3 className="font-heading text-2xl leading-tight text-[#24211d] text-shadow-none">{title}</h3>
+          <p className="mt-3 text-sm leading-6 text-[#625c52]">{body}</p>
+          <span className="mt-auto inline-flex items-center gap-2 pt-6 text-sm font-semibold text-[#594725] underline decoration-[#9d8350]/50 underline-offset-4">
+            {linkText}<ArrowRight aria-hidden="true" className="h-4 w-4 transition-transform group-hover:translate-x-1" />
+          </span>
+        </div>
+      </Link>
     </article>
   )
 }

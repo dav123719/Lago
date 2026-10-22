@@ -127,6 +127,7 @@ export function Footer({ locale }: FooterProps) {
   
   // Simplified footer navigation - removed Kontakti and Pilns Serviss
   const stoneLinks = [
+    { label: locale === 'lv' ? 'Virsmas pēc telpas' : locale === 'ru' ? 'Поверхности по помещениям' : 'Surfaces by room', href: `/${locale}/${locale === 'lv' ? 'akmens-virsmas' : locale === 'ru' ? 'kamennye-poverhnosti' : 'stone-surfaces'}/` },
     { label: 'Silestone', href: `/${locale}/${locale === 'lv' ? 'akmens-virsmas' : locale === 'ru' ? 'kamennye-poverhnosti' : 'stone-surfaces'}/silestone` },
     { label: 'Dekton', href: `/${locale}/${locale === 'lv' ? 'akmens-virsmas' : locale === 'ru' ? 'kamennye-poverhnosti' : 'stone-surfaces'}/dekton` },
     { label: translations.materials.granite[locale], href: `/${locale}/${locale === 'lv' ? 'akmens-virsmas' : locale === 'ru' ? 'kamennye-poverhnosti' : 'stone-surfaces'}/${locale === 'lv' ? 'granits' : locale === 'ru' ? 'granit' : 'granite'}` },

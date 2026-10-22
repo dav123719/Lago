@@ -264,36 +264,36 @@ export const materials: Material[] = [
     },
     type: 'silestone',
     description: {
-      lv: 'Cosentino minerālu virsma ar HybriQ+® tehnoloģiju.',
-      en: 'A Cosentino mineral surface made with HybriQ+® technology.',
-      ru: 'Минеральная поверхность Cosentino по технологии HybriQ+®.',
+      lv: 'Cosentino minerālu virsma; sastāvs atšķiras pēc produktu līnijas.',
+      en: 'A Cosentino mineral surface; composition varies by product line.',
+      ru: 'Минеральная поверхность Cosentino; состав зависит от линейки продукта.',
     },
     longDescription: {
-      lv: `Silestone ir Cosentino minerālu virsma, kas izgatavota ar HybriQ+® tehnoloģiju un sastāv no rūpīgi atlasītiem minerāliem un pārstrādātiem materiāliem. Tā nav dabīga akmens plāksne: krāsu un rakstu veido konkrētās kolekcijas sastāvs un dizains.
+      lv: `Silestone ir Cosentino zīmola minerālu virsmu saime, nevis dabīga akmens plāksne. Sastāvs un ražošanas tehnoloģija atšķiras pēc produktu līnijas, tāpēc pirms izvēles jāpārbauda konkrētās krāsas informācija. Krāsu un rakstu nosaka kolekcijas dizains.
 
-Ražotājs norāda izturību pret ikdienas traipiem, skrāpējumiem un triecieniem, taču īpašības var atšķirties pēc produkta un apdares. Sargājiet virsmu no strauja karstuma trieciena un lietojiet paliktni karstiem traukiem. Precīzai kopšanai sekojiet izvēlētās krāsas ražotāja norādēm.`,
-      en: `Silestone is a Cosentino mineral surface made with HybriQ+® technology from selected minerals and recycled materials. It is not a natural stone slab: the colour and pattern come from the formulation and design of the specific collection.
+Ražotājs norāda izturību pret ikdienas traipiem un skrāpējumiem konkrētās produktu līnijās, taču īpašības var atšķirties pēc produkta un apdares. Sargājiet virsmu no strauja karstuma trieciena un lietojiet paliktni karstiem traukiem. Precīzai kopšanai sekojiet izvēlētā produkta norādēm.`,
+      en: `Silestone is a family of Cosentino-branded mineral surfaces, not a natural stone slab. Composition and manufacturing technology vary by product line, so check the information for the specific colour before choosing. The collection design determines its colour and pattern.
 
-The manufacturer describes resistance to everyday stains, scratches and impacts, although properties can vary by product and finish. Protect the surface from sudden thermal shock and use a trivet for hot cookware. Follow the care guidance for the chosen colour.`,
-      ru: `Silestone — минеральная поверхность Cosentino, изготовленная по технологии HybriQ+® из отобранных минералов и переработанных материалов. Это не плита природного камня: цвет и рисунок зависят от состава и дизайна конкретной коллекции.
+The manufacturer describes resistance to everyday stains and scratches for specific product lines, though properties can vary by product and finish. Protect the surface from thermal shock and use a trivet for hot cookware. Follow the care guide for the selected product.`,
+      ru: `Silestone — семейство минеральных поверхностей под брендом Cosentino, а не плита природного камня. Состав и технология производства зависят от линейки, поэтому перед выбором проверьте информацию о конкретном цвете. Рисунок и оттенок определяются дизайном коллекции.
 
-Производитель указывает устойчивость к бытовым пятнам, царапинам и ударам, однако свойства различаются в зависимости от продукта и отделки. Защищайте поверхность от резкого перепада температуры и используйте подставку для горячей посуды. Следуйте рекомендациям для выбранного цвета.`,
+Производитель указывает устойчивость к бытовым пятнам и царапинам для отдельных линеек, однако свойства различаются в зависимости от продукта и отделки. Защищайте поверхность от резкого перепада температуры и используйте подставку для горячей посуды. Следуйте инструкции для выбранного продукта.`,
     },
     features: [
       {
-        lv: 'Minerālu virsma ar HybriQ+® tehnoloģiju',
-        en: 'Mineral surface made with HybriQ+® technology',
-        ru: 'Минеральная поверхность по технологии HybriQ+®',
+        lv: 'Cosentino zīmola minerālu virsma',
+        en: 'Cosentino-branded mineral surface',
+        ru: 'Минеральная поверхность бренда Cosentino',
       },
       {
-        lv: 'Minerāli un pārstrādāti materiāli',
-        en: 'Minerals and recycled materials',
-        ru: 'Минералы и переработанные материалы',
+        lv: 'Sastāvs atšķiras pēc produktu līnijas',
+        en: 'Composition varies by product line',
+        ru: 'Состав зависит от линейки продукта',
       },
       {
-        lv: 'Ražotājs norāda izturību pret ikdienas traipiem',
-        en: 'Manufacturer describes resistance to everyday stains',
-        ru: 'Производитель указывает устойчивость к бытовым пятнам',
+        lv: 'Ražotāja norādītās īpašības atšķiras pēc produkta',
+        en: 'Manufacturer guidance varies by product',
+        ru: 'Характеристики зависят от продукта',
       },
       {
         lv: 'Kopšana atkarīga no izvēlētā produkta',

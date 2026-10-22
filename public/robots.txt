@@ -1,16 +1,7 @@
-# LAGO Stone & Furniture - robots.txt
-# https://lago.lv
-
 User-agent: *
 Allow: /
-
-# Sitemap location
-Sitemap: https://lago.lv/sitemap.xml
-
-# Disallow admin routes
-Disallow: /_admin/
-Disallow: /_api/
+Disallow: /admin/
+Disallow: /api/
 Disallow: /studio/
 
-# Crawl-delay for rate limiting
-Crawl-delay: 1
+Sitemap: https://lago.lv/sitemap.xml
