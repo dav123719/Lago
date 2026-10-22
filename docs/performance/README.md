@@ -107,6 +107,16 @@ GitHub `dav123719/Lago` is authoritative. Work was done on an isolated local opt
 
 Before activation, build/candidate test; package standalone with public/static, excluding secrets/symlinks; stage `/srv/lago/incoming/COMMIT.tar.gz`; invoke `/usr/local/sbin/lago-release COMMIT SHA256`. Back up only relevant Apache config, `apache2ctl configtest`, graceful reload. Existing virtual hosts preserved. To manually restore a retained release: atomically repoint `/srv/lago/current` to the prior release and restart only `lago`, then check local/public health. Do not roll back the applied security migration to the replay-vulnerable function. Callback URL restoration backup exists under root-only deployment backups; restoring localhost is not an appropriate normal rollback.
 
+## Live release verification
+
+Activated GitHub source commit `a8eb51c89f598e215b24b122f1c86f0ea5a01b57` using the verified archive and existing rollback helper. Its source tree matches local evidence commit `340da21`; application files match measured runtime source `e0c30a3`. Follow-up commits contain operational verification/configuration evidence. Previous release `d04bc9abc3b2102dffe20a64ec0441930204a3bb` remains available for rollback.
+
+The actual **https://lago.lv** path passed **25/25 independent browser smoke checks in40.7s**, without retries. Lead HTTP checks passed18 assertions across public/localized pages, health, canonical HTTPS redirects, private redirects/API denial, trusted-vs-attacker origin and font freshness. Origin TLS verifies normally (curl verification result0). Lago and Apache are active; application process runs as `lago` and systemd startup is enabled. Sample hashed JS/CSS return correct MIME types, gzip, immutable one-year freshness and Cloudflare HIT. Details: [deployment-verification.json](deployment-verification.json).
+
+Standard combined access logs could record callback query codes and referring callback URLs. The Lago-only named access format now records method/path/protocol without query and replaces referrer with a constant. All three Lago vhosts use it; unrelated vhost logging is unchanged. Config was backed up, syntax-tested, gracefully reloaded and independently reviewed. A synthetic origin-TLS probe verified query/referrer omission; old logs were retained. Cloudflare rejected the synthetic query/referrer probe403, so origin TLS isolated the logging test; normal public/browser checks passed. No WAF policy was weakened. [Apache log format reference](https://httpd.apache.org/docs/2.4/mod/mod_log_config.html).
+
+Production3100 now serves the new release. To reproduce the historical comparison, start the retained baseline on an unused loopback port such as3201 and the candidate on3200 using the existing authorized environment, then set `PERF_BASE_URL` or `CPU_ENDPOINTS` explicitly. Do not stop or rebind live3100. Capture metadata records the historical endpoints used during this pass.
+
 ## Remaining findings, by impact/effort
 
 1. High: complete verified commerce schema/ownership/carriers/payments before offering checkout. Requires coordinated product/data migration, not a speed-only patch.

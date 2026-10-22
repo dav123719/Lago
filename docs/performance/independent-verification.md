@@ -24,6 +24,18 @@ Language declarations now live on the server-rendered localized wrapper, and a t
 
 The canonical HTTPS admin PATCH origin now reaches authentication (401 for anonymous requests) through the loopback listener; an attacker origin still gets 403. This verifies the reverse-proxy origin fix without performing an administrator mutation.
 
+## Public deployment verification
+
+After activation of release `a8eb51c89f598e215b24b122f1c86f0ea5a01b57`, the independent specialist reran the complete suite against **https://lago.lv**, through Cloudflare and Apache. **All 25 smoke checks passed in 40.7 seconds**, without retries. Application behavior matches the tested `e0c30a3` candidate. This public run verifies the deployed path separately from loopback-origin checks; it is not a Core Web Vitals benchmark or successful authenticated-account acceptance test.
+
+The public checks verified all three locales and document languages, material/application routes and images, sitemap URL reachability/indexability, real 404 status, readiness, private cache headers, anonymous admin/account denials, canonical-origin admin PATCH reaching authentication, attacker-origin rejection, desktop/mobile store controls and controlled browser interaction behavior. Login, recovery email requests and catalog result fixtures remained intercepted; no accounts, emails, orders, payments or profile mutations were created.
+
+Reproduce the public read-only suite:
+
+```bash
+PLAYWRIGHT_BASE_URL=https://lago.lv npx playwright test --config=playwright.smoke.config.ts
+```
+
 ## Focused regression checks
 
 Independent tests added:

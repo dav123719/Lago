@@ -141,5 +141,19 @@
   "leadFullUnitSuite": {
     "passed": 233,
     "note": "Executed by lead; not repeated by independent reviewer."
+  },
+  "publicDeployment": {
+    "release": "a8eb51c89f598e215b24b122f1c86f0ea5a01b57",
+    "applicationSource": "e0c30a3",
+    "baseURL": "https://lago.lv",
+    "path": "Cloudflare \u2192 Apache \u2192 Next.js",
+    "recordedAt": "2026-10-22T20:08:15.891187+00:00",
+    "passed": 25,
+    "failed": 0,
+    "durationSeconds": 40.7,
+    "workers": 1,
+    "retries": 0,
+    "mutations": "No real account, email, order, payment or profile mutation; sensitive browser endpoint submissions intercepted.",
+    "measurementType": "Functional smoke suite; not a performance benchmark."
   }
 }

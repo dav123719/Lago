@@ -1,0 +1,354 @@
+{
+  "verifiedAt": "2026-10-22T20:07:01.365896+00:00",
+  "deployedRelease": "/srv/lago/releases/a8eb51c89f598e215b24b122f1c86f0ea5a01b57",
+  "runtimeSource": "e0c30a3",
+  "githubReleaseCommit": "a8eb51c89f598e215b24b122f1c86f0ea5a01b57",
+  "priorRelease": "d04bc9abc3b2102dffe20a64ec0441930204a3bb",
+  "artifactSha256": "fd6a0bf8b306115a00b541b5259bd3199a588dda025202b1386d21cf436ab4ab",
+  "services": {
+    "lago": "active",
+    "apache2": "active"
+  },
+  "lagoEnabled": "enabled",
+  "runtimeUser": "lago",
+  "publicChecks": [
+    {
+      "url": "https://lago.lv/",
+      "method": "GET",
+      "status": 307,
+      "cacheControl": null,
+      "cdnCacheControl": null,
+      "contentType": null,
+      "contentEncoding": null,
+      "cfCacheStatus": "DYNAMIC",
+      "server": "cloudflare",
+      "location": "/lv/",
+      "bytes": 4,
+      "body": null
+    },
+    {
+      "url": "https://lago.lv/api/health/",
+      "method": "GET",
+      "status": 200,
+      "cacheControl": "private, no-store",
+      "cdnCacheControl": null,
+      "contentType": "application/json",
+      "contentEncoding": null,
+      "cfCacheStatus": "DYNAMIC",
+      "server": "cloudflare",
+      "location": null,
+      "bytes": 15,
+      "body": {
+        "status": "ok"
+      }
+    },
+    {
+      "url": "https://lago.lv/lv/",
+      "method": "GET",
+      "status": 200,
+      "cacheControl": "s-maxage=31536000",
+      "cdnCacheControl": null,
+      "contentType": "text/html; charset=utf-8",
+      "contentEncoding": null,
+      "cfCacheStatus": "DYNAMIC",
+      "server": "cloudflare",
+      "location": null,
+      "bytes": 164218,
+      "body": null
+    },
+    {
+      "url": "https://lago.lv/en/",
+      "method": "GET",
+      "status": 200,
+      "cacheControl": "s-maxage=31536000",
+      "cdnCacheControl": null,
+      "contentType": "text/html; charset=utf-8",
+      "contentEncoding": null,
+      "cfCacheStatus": "DYNAMIC",
+      "server": "cloudflare",
+      "location": null,
+      "bytes": 162746,
+      "body": null
+    },
+    {
+      "url": "https://lago.lv/ru/",
+      "method": "GET",
+      "status": 200,
+      "cacheControl": "s-maxage=31536000",
+      "cdnCacheControl": null,
+      "contentType": "text/html; charset=utf-8",
+      "contentEncoding": null,
+      "cfCacheStatus": "DYNAMIC",
+      "server": "cloudflare",
+      "location": null,
+      "bytes": 171428,
+      "body": null
+    },
+    {
+      "url": "https://lago.lv/lv/akmens-virsmas/",
+      "method": "GET",
+      "status": 200,
+      "cacheControl": "s-maxage=31536000",
+      "cdnCacheControl": null,
+      "contentType": "text/html; charset=utf-8",
+      "contentEncoding": null,
+      "cfCacheStatus": "DYNAMIC",
+      "server": "cloudflare",
+      "location": null,
+      "bytes": 102624,
+      "body": null
+    },
+    {
+      "url": "https://lago.lv/lv/projekti/",
+      "method": "GET",
+      "status": 200,
+      "cacheControl": "s-maxage=31536000",
+      "cdnCacheControl": null,
+      "contentType": "text/html; charset=utf-8",
+      "contentEncoding": null,
+      "cfCacheStatus": "DYNAMIC",
+      "server": "cloudflare",
+      "location": null,
+      "bytes": 124611,
+      "body": null
+    },
+    {
+      "url": "https://lago.lv/lv/par-mums/",
+      "method": "GET",
+      "status": 200,
+      "cacheControl": "s-maxage=31536000",
+      "cdnCacheControl": null,
+      "contentType": "text/html; charset=utf-8",
+      "contentEncoding": null,
+      "cfCacheStatus": "DYNAMIC",
+      "server": "cloudflare",
+      "location": null,
+      "bytes": 91429,
+      "body": null
+    },
+    {
+      "url": "https://lago.lv/lv/store/",
+      "method": "GET",
+      "status": 200,
+      "cacheControl": "s-maxage=31536000",
+      "cdnCacheControl": null,
+      "contentType": "text/html; charset=utf-8",
+      "contentEncoding": null,
+      "cfCacheStatus": "DYNAMIC",
+      "server": "cloudflare",
+      "location": null,
+      "bytes": 81744,
+      "body": null
+    },
+    {
+      "url": "https://lago.lv/lv/akmens-virsmas/silestone/",
+      "method": "GET",
+      "status": 200,
+      "cacheControl": "s-maxage=31536000",
+      "cdnCacheControl": null,
+      "contentType": "text/html; charset=utf-8",
+      "contentEncoding": null,
+      "cfCacheStatus": "DYNAMIC",
+      "server": "cloudflare",
+      "location": null,
+      "bytes": 114618,
+      "body": null
+    },
+    {
+      "url": "https://lago.lv/lv/account/",
+      "method": "GET",
+      "status": 307,
+      "cacheControl": "private, no-store",
+      "cdnCacheControl": "no-store",
+      "contentType": null,
+      "contentEncoding": null,
+      "cfCacheStatus": "DYNAMIC",
+      "server": "cloudflare",
+      "location": "/lv?error=auth_required",
+      "bytes": 23,
+      "body": null
+    },
+    {
+      "url": "https://lago.lv/admin/profiles/",
+      "method": "GET",
+      "status": 307,
+      "cacheControl": "private, no-store",
+      "cdnCacheControl": "no-store",
+      "contentType": "text/html; charset=utf-8",
+      "contentEncoding": null,
+      "cfCacheStatus": "DYNAMIC",
+      "server": "cloudflare",
+      "location": "/lv/?login=1",
+      "bytes": 11524,
+      "body": null
+    },
+    {
+      "url": "https://lago.lv/api/admin/profiles/",
+      "method": "GET",
+      "status": 401,
+      "cacheControl": "private, no-store",
+      "cdnCacheControl": "no-store",
+      "contentType": "application/json",
+      "contentEncoding": null,
+      "cfCacheStatus": "DYNAMIC",
+      "server": "cloudflare",
+      "location": null,
+      "bytes": 35,
+      "body": {
+        "error": "Authentication required"
+      }
+    },
+    {
+      "url": "https://lago.lv/fonts/inter-latvian.cee074a92976.woff2",
+      "method": "GET",
+      "status": 200,
+      "cacheControl": "public, max-age=31536000, immutable",
+      "cdnCacheControl": null,
+      "contentType": "font/woff2",
+      "contentEncoding": null,
+      "cfCacheStatus": "MISS",
+      "server": "cloudflare",
+      "location": null,
+      "bytes": 6384,
+      "body": null
+    },
+    {
+      "url": "https://www.lago.lv/",
+      "method": "GET",
+      "status": 301,
+      "cacheControl": null,
+      "cdnCacheControl": null,
+      "contentType": "text/html; charset=iso-8859-1",
+      "contentEncoding": null,
+      "cfCacheStatus": "DYNAMIC",
+      "server": "cloudflare",
+      "location": "https://lago.lv/",
+      "bytes": 224,
+      "body": null
+    },
+    {
+      "url": "http://lago.lv/",
+      "method": "GET",
+      "status": 301,
+      "cacheControl": null,
+      "cdnCacheControl": null,
+      "contentType": "text/html; charset=UTF-8",
+      "contentEncoding": null,
+      "cfCacheStatus": null,
+      "server": "cloudflare",
+      "location": "https://lago.lv/",
+      "bytes": 167,
+      "body": null
+    },
+    {
+      "url": "https://lago.lv/api/admin/profiles/",
+      "method": "PATCH",
+      "status": 401,
+      "cacheControl": "private, no-store",
+      "cdnCacheControl": "no-store",
+      "contentType": "application/json",
+      "contentEncoding": null,
+      "cfCacheStatus": "DYNAMIC",
+      "server": "cloudflare",
+      "location": null,
+      "bytes": 35,
+      "body": {
+        "error": "Authentication required"
+      }
+    },
+    {
+      "url": "https://lago.lv/api/admin/profiles/",
+      "method": "PATCH",
+      "status": 403,
+      "cacheControl": "private, no-store",
+      "cdnCacheControl": "no-store",
+      "contentType": "application/json",
+      "contentEncoding": null,
+      "cfCacheStatus": "DYNAMIC",
+      "server": "cloudflare",
+      "location": null,
+      "bytes": 34,
+      "body": {
+        "error": "Invalid request origin"
+      }
+    }
+  ],
+  "limits": [
+    "Public routes work; catalog API data remain unavailable because commerce tables are absent.",
+    "Live successful credentialed account/mail/OAuth flows were not exercised.",
+    "These HTTP checks do not establish Cloudflare-path performance medians or field percentiles."
+  ],
+  "originTls": {
+    "httpsHealthStatus": 200,
+    "curlSslVerifyResult": 0
+  },
+  "privateAccessLogging": {
+    "configTest": "pass",
+    "originTlsSyntheticQueryAndRefererOmitted": true,
+    "matchedProbeRequests": 2,
+    "cloudflareSyntheticProbe": "403; origin TLS probe used to isolate Apache logging",
+    "historicalLogs": "retained; no historical data removed"
+  },
+  "assetDelivery": [
+    {
+      "path": "/_next/static/chunks/0om590q-tq0l9.js",
+      "run": 1,
+      "status": 200,
+      "contentType": "application/javascript; charset=UTF-8",
+      "encoding": "gzip",
+      "cacheControl": "public, max-age=31536000, immutable",
+      "cfCacheStatus": "HIT",
+      "bytes": 3741
+    },
+    {
+      "path": "/_next/static/chunks/0om590q-tq0l9.js",
+      "run": 2,
+      "status": 200,
+      "contentType": "application/javascript; charset=UTF-8",
+      "encoding": "gzip",
+      "cacheControl": "public, max-age=31536000, immutable",
+      "cfCacheStatus": "HIT",
+      "bytes": 3741
+    },
+    {
+      "path": "/_next/static/chunks/42cugw4d0hr5g.css",
+      "run": 1,
+      "status": 200,
+      "contentType": "text/css; charset=UTF-8",
+      "encoding": "gzip",
+      "cacheControl": "public, max-age=31536000, immutable",
+      "cfCacheStatus": "HIT",
+      "bytes": 18285
+    },
+    {
+      "path": "/_next/static/chunks/42cugw4d0hr5g.css",
+      "run": 2,
+      "status": 200,
+      "contentType": "text/css; charset=UTF-8",
+      "encoding": "gzip",
+      "cacheControl": "public, max-age=31536000, immutable",
+      "cfCacheStatus": "HIT",
+      "bytes": 18285
+    }
+  ],
+  "checkedAgainAt": "2026-10-22T20:09:42.105079+00:00",
+  "postActivationLogReview": {
+    "lines": 25,
+    "catalogSchemaErrors": 4,
+    "numericalVitalsEntries": 1,
+    "unexpectedRuntimeErrorCounts": {
+      "ReferenceError": 0,
+      "Cannot find module": 0,
+      "UnhandledPromiseRejection": 0,
+      "ENOENT": 0
+    },
+    "note": "Aggregate counters only; no raw auth/profile/request values exported."
+  },
+  "publicSmoke": {
+    "passed": 25,
+    "failed": 0,
+    "seconds": 40.7,
+    "throughCloudflare": true,
+    "realAuthOrEmailMutations": false
+  }
+}
