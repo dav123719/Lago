@@ -13,6 +13,7 @@ export default function AdminProfilesPage() {
   const [query, setQuery] = useState('')
   const [profiles, setProfiles] = useState<Profile[]>([])
   const [loading, setLoading] = useState(true)
+  const [savingId, setSavingId] = useState<string | null>(null)
   const [message, setMessage] = useState('')
 
   const load = useCallback(async (value = query) => {
@@ -32,20 +33,26 @@ export default function AdminProfilesPage() {
   }, [load])
 
   async function save(event: FormEvent<HTMLFormElement>, profile: Profile) {
-    event.preventDefault(); setMessage('')
+    event.preventDefault(); setMessage(''); setSavingId(profile.id)
     const form = new FormData(event.currentTarget)
-    const response = await fetch('/api/admin/profiles', {
-      method: 'PATCH', headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({
-        id: profile.id, full_name: form.get('full_name'), first_name: form.get('first_name'),
-        last_name: form.get('last_name'), phone: form.get('phone'), bio: form.get('bio'),
-        avatar_url: form.get('avatar_url') || null, preferred_language: form.get('preferred_language'),
-      }),
-    })
-    const result = await response.json()
-    if (!response.ok) { setMessage(result.error || 'Save failed'); return }
-    setMessage(`Saved ${profile.email}`)
-    await load()
+    try {
+      const response = await fetch('/api/admin/profiles/', {
+        method: 'PATCH', headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          id: profile.id, full_name: form.get('full_name'), first_name: form.get('first_name'),
+          last_name: form.get('last_name'), phone: form.get('phone'), bio: form.get('bio'),
+          avatar_url: form.get('avatar_url') || null, preferred_language: form.get('preferred_language'),
+        }),
+      })
+      const result = await response.json()
+      if (!response.ok) { setMessage(result.error || 'Save failed'); return }
+      setMessage(`Saved ${profile.email}`)
+      await load()
+    } catch {
+      setMessage('Could not save profile. Check the connection and try again.')
+    } finally {
+      setSavingId(null)
+    }
   }
 
   return <main className="mx-auto max-w-5xl px-5 py-12 text-white">
@@ -56,7 +63,7 @@ export default function AdminProfilesPage() {
       <input id="profile-search" className="min-w-0 flex-1 rounded border border-white/20 bg-black px-3 py-2" value={query} onChange={event => setQuery(event.target.value)} />
       <button className="inline-flex items-center gap-2 rounded bg-white/10 px-4 py-2" type="submit"><Search size={16}/> Search</button>
     </form>
-    {message && <p role="status" className="mb-4">{message}</p>}
+    {message && <p role="status" aria-live="polite" className="mb-4">{message}</p>}
     {loading ? <Loader2 className="animate-spin" aria-label="Loading profiles"/> : profiles.length === 0 ? <p>No profiles found.</p> :
       <div className="space-y-5">{profiles.map(profile => <form key={profile.id} onSubmit={event => void save(event, profile)} className="grid gap-3 rounded-xl border border-white/15 p-5 md:grid-cols-2">
         <h2 className="md:col-span-2 font-semibold">{profile.email}</h2>
@@ -67,7 +74,7 @@ export default function AdminProfilesPage() {
         <input aria-label="Avatar URL" name="avatar_url" defaultValue={profile.avatar_url || ''} placeholder="Avatar URL (https)" className="rounded border border-white/20 bg-black px-3 py-2" />
         <select aria-label="Preferred language" name="preferred_language" defaultValue={profile.preferred_language} className="rounded border border-white/20 bg-black px-3 py-2"><option value="lv">Latviešu</option><option value="en">English</option><option value="ru">Русский</option></select>
         <textarea aria-label="Bio" name="bio" defaultValue={profile.bio || ''} maxLength={500} placeholder="Bio" className="rounded border border-white/20 bg-black px-3 py-2 md:col-span-2" />
-        <button className="inline-flex items-center justify-center gap-2 rounded bg-lago-gold px-4 py-2 font-semibold text-black md:col-span-2" type="submit"><Save size={16}/> Save profile</button>
+        <button disabled={savingId === profile.id} className="inline-flex items-center justify-center gap-2 rounded bg-lago-gold px-4 py-2 font-semibold text-black disabled:cursor-wait disabled:opacity-60 md:col-span-2" type="submit">{savingId === profile.id ? <Loader2 size={16} className="animate-spin"/> : <Save size={16}/>} {savingId === profile.id ? 'Saving…' : 'Save profile'}</button>
       </form>)}</div>}
   </main>
 }

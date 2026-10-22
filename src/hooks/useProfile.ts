@@ -14,6 +14,7 @@ const messages = {
   lv: {
     addressAdded: 'Adrese pievienota',
     addressUpdated: 'Adrese atjaunināta',
+    profileUpdated: 'Profils atjaunināts',
     addressDeleted: 'Adrese izdzēsta',
     defaultAddressSet: 'Noklusējuma adrese iestatīta',
     error: 'Kļūda. Lūdzu, mēģiniet vēlreiz.',
@@ -21,6 +22,7 @@ const messages = {
   en: {
     addressAdded: 'Address added',
     addressUpdated: 'Address updated',
+    profileUpdated: 'Profile updated',
     addressDeleted: 'Address deleted',
     defaultAddressSet: 'Default address set',
     error: 'Error. Please try again.',
@@ -28,6 +30,7 @@ const messages = {
   ru: {
     addressAdded: 'Адрес добавлен',
     addressUpdated: 'Адрес обновлен',
+    profileUpdated: 'Профиль обновлен',
     addressDeleted: 'Адрес удален',
     defaultAddressSet: 'Адрес по умолчанию установлен',
     error: 'Ошибка. Пожалуйста, попробуйте снова.',
@@ -45,7 +48,7 @@ export function useProfile(locale: Locale = 'lv') {
     try {
       const { error } = await updateProfile(updates)
       if (error) throw error
-      toast.success(messages[locale].addressUpdated)
+      toast.success(messages[locale].profileUpdated)
       return { error: null }
     } catch (error) {
       toast.error(messages[locale].error)
