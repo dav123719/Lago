@@ -55,9 +55,9 @@ export async function PATCH(request: NextRequest) {
     }
 
     // Check admin role
-    const isAdmin = user.app_metadata?.role === 'admin'
+    const { data: isAdmin, error: roleError } = await supabase.rpc('is_current_user_admin')
     
-    if (!isAdmin) {
+    if (roleError || !isAdmin) {
       return NextResponse.json({ error: 'Forbidden' }, { status: 403, headers: corsHeaders })
     }
 
@@ -116,9 +116,9 @@ export async function POST(request: NextRequest) {
     }
 
     // Check admin role
-    const isAdmin = user.app_metadata?.role === 'admin'
+    const { data: isAdmin, error: roleError } = await supabase.rpc('is_current_user_admin')
     
-    if (!isAdmin) {
+    if (roleError || !isAdmin) {
       return NextResponse.json({ error: 'Forbidden' }, { status: 403, headers: corsHeaders })
     }
 

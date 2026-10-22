@@ -9,6 +9,7 @@ import { useRouter, useSearchParams } from 'next/navigation'
 import { createBrowserSupabaseClient } from '@/lib/supabase/client'
 import { Loader2, CheckCircle, XCircle } from 'lucide-react'
 import { Locale, locales, defaultLocale } from '@/lib/i18n/config'
+import { safeInternalRedirect } from '@/lib/auth/redirect'
 
 export function AuthCallbackContent() {
   const router = useRouter()
@@ -19,6 +20,7 @@ export function AuthCallbackContent() {
   useEffect(() => {
     const handleAuthCallback = async () => {
       const code = searchParams.get('code')
+      const flow = searchParams.get('flow') || 'signin'
       const localeParam = searchParams.get('locale') || defaultLocale
       
       // Validate locale
@@ -27,34 +29,50 @@ export function AuthCallbackContent() {
         : defaultLocale
       setLocale(validLocale)
 
+      const failed = searchParams.get('error_description') || searchParams.get('error') || searchParams.get('error_code')
+      const recoveryUrl = `/auth/reset-password?locale=${validLocale}&invalid=1`
+
+      if (failed) {
+        setStatus('error')
+        setTimeout(() => router.replace(flow === 'recovery' ? recoveryUrl : `/${validLocale}/?auth_error=1`), 800)
+        return
+      }
+
       if (code) {
         try {
           const supabase = createBrowserSupabaseClient()
-          const { error } = await supabase.auth.exchangeCodeForSession(code)
+          const { data, error } = await supabase.auth.exchangeCodeForSession(code)
           
           if (error) {
             console.error('Auth error:', error)
             setStatus('error')
             setTimeout(() => {
-              router.push(`/${validLocale}?error=auth_failed`)
+              router.replace(flow === 'recovery' ? recoveryUrl : `/${validLocale}/?auth_error=1`)
             }, 2000)
           } else {
             setStatus('success')
+            const fallback = `/${validLocale}/account`
+            const next = safeInternalRedirect(searchParams.get('next'), fallback)
+            if (flow === 'recovery') {
+              if (data.session) sessionStorage.setItem('lago:password-recovery', '1')
+              setTimeout(() => router.replace(`/auth/reset-password?locale=${validLocale}`), 300)
+              return
+            }
             setTimeout(() => {
-              router.push(`/${validLocale}/account`)
+              router.replace(next)
             }, 1000)
           }
         } catch (err) {
           console.error('Callback error:', err)
           setStatus('error')
-          setTimeout(() => {
-            router.push(`/${validLocale}?error=auth_failed`)
+            setTimeout(() => {
+              router.replace(flow === 'recovery' ? recoveryUrl : `/${validLocale}/?auth_error=1`)
           }, 2000)
         }
       } else {
         setStatus('error')
         setTimeout(() => {
-          router.push(`/${validLocale}?error=no_code`)
+          router.replace(flow === 'recovery' ? recoveryUrl : `/${validLocale}/?auth_error=1`)
         }, 2000)
       }
     }

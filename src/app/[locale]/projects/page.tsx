@@ -22,9 +22,9 @@ interface ProjectsPageProps {
 export async function generateMetadata({ params }: ProjectsPageProps): Promise<Metadata> {
   const { locale } = await params
   const titles: Record<Locale, string> = {
-    lv: 'Projekti | LAGO',
-    en: 'Projects | LAGO',
-    ru: 'Проекты | LAGO',
+    lv: 'LAGO projekti',
+    en: 'LAGO projects',
+    ru: 'Проекты LAGO',
   }
   const descriptions: Record<Locale, string> = {
     lv: 'Apskatiet mūsu realizētos projektus - no privātām virtuvēm līdz komerciālajiem objektiem.',
@@ -35,6 +35,21 @@ export async function generateMetadata({ params }: ProjectsPageProps): Promise<M
   return {
     title: titles[locale as Locale],
     description: descriptions[locale as Locale],
+    alternates: {
+      canonical: `/${locale}/${locale === 'lv' ? 'projekti' : locale === 'ru' ? 'proekty' : 'projects'}/`,
+      languages: {
+        lv: '/lv/projekti/',
+        en: '/en/projects/',
+        ru: '/ru/proekty/',
+        'x-default': '/lv/projekti/',
+      },
+    },
+    openGraph: {
+      type: 'website',
+      title: titles[locale as Locale],
+      description: descriptions[locale as Locale],
+      url: `https://lago.lv/${locale}/${locale === 'lv' ? 'projekti' : locale === 'ru' ? 'proekty' : 'projects'}/`,
+    },
   }
 }
 
@@ -49,7 +64,8 @@ async function checkIsAdmin(): Promise<boolean> {
     
     if (!user) return false
     
-    return user.app_metadata?.role === 'admin' || false
+    const { data, error } = await supabase.rpc('is_current_user_admin')
+    return !error && data === true
   } catch {
     return false
   }

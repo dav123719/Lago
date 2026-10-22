@@ -355,10 +355,11 @@ interface SchemaDatabase {
       profiles: {
         Row: {
           id: string
-          email: string
+          full_name: string | null
           first_name: string | null
           last_name: string | null
           phone: string | null
+          bio: string | null
           preferred_language: string
           avatar_url: string | null
           email_notifications: boolean
@@ -368,10 +369,11 @@ interface SchemaDatabase {
         }
         Insert: {
           id: string
-          email: string
+          full_name?: string | null
           first_name?: string | null
           last_name?: string | null
           phone?: string | null
+          bio?: string | null
           preferred_language?: string
           avatar_url?: string | null
           email_notifications?: boolean
@@ -381,10 +383,11 @@ interface SchemaDatabase {
         }
         Update: {
           id?: string
-          email?: string
+          full_name?: string | null
           first_name?: string | null
           last_name?: string | null
           phone?: string | null
+          bio?: string | null
           preferred_language?: string
           avatar_url?: string | null
           email_notifications?: boolean
@@ -395,6 +398,43 @@ interface SchemaDatabase {
       }
     }
     Functions: {
+      ensure_my_profile: {
+        Args: Record<string, never>
+        Returns: SchemaDatabase['public']['Tables']['profiles']['Row']
+      }
+      is_current_user_admin: {
+        Args: Record<string, never>
+        Returns: boolean
+      }
+      admin_search_profiles: {
+        Args: { p_query?: string | null; p_limit?: number | null }
+        Returns: Array<{
+          id: string
+          email: string
+          full_name: string | null
+          first_name: string | null
+          last_name: string | null
+          phone: string | null
+          avatar_url: string | null
+          bio: string | null
+          preferred_language: string
+          created_at: string
+          updated_at: string
+        }>
+      }
+      admin_update_profile: {
+        Args: {
+          p_user_id: string
+          p_full_name: string | null
+          p_first_name: string | null
+          p_last_name: string | null
+          p_phone: string | null
+          p_avatar_url: string | null
+          p_bio: string | null
+          p_preferred_language: string
+        }
+        Returns: SchemaDatabase['public']['Tables']['profiles']['Row']
+      }
       decrement_stock: {
         Args: {
           p_product_id: string

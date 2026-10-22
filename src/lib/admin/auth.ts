@@ -3,9 +3,7 @@
 // ===================================
 
 import { createClient as createServerClient } from '@/lib/supabase/server'
-import type { Database } from '@/types/database'
-
-export type UserRole = 'admin' | 'manager' | 'customer'
+export type UserRole = 'admin' | 'customer'
 
 export interface AdminUser {
   id: string
@@ -29,7 +27,8 @@ export async function checkAdminRole(): Promise<boolean> {
       return false
     }
 
-    return user.app_metadata?.role === 'admin' || user.app_metadata?.role === 'manager'
+    const { data, error } = await supabase.rpc('is_current_user_admin')
+    return !error && data === true
   } catch (error) {
     console.error('Error checking admin role:', error)
     return false
@@ -51,7 +50,7 @@ export async function getCurrentAdminUser(): Promise<AdminUser | null> {
 
     const { data, error } = await supabase
       .from('profiles')
-      .select('*')
+      .select('id, full_name, first_name, last_name')
       .eq('id', user.id)
       .single() as { data: any, error: any }
 
@@ -60,12 +59,11 @@ export async function getCurrentAdminUser(): Promise<AdminUser | null> {
       return null
     }
 
-    const profile = data as { id: string, email: string, full_name: string | null, first_name?: string | null, last_name?: string | null, role: string }
-
-    // Only return if user has admin/manager role
-    if (user.app_metadata?.role !== 'admin' && user.app_metadata?.role !== 'manager') {
+    const { data: isAdmin, error: roleError } = await supabase.rpc('is_current_user_admin')
+    if (roleError || !isAdmin) {
       return null
     }
+    const profile = data as { id: string, full_name: string | null, first_name?: string | null, last_name?: string | null }
 
     // Use full_name if available, otherwise combine first_name + last_name
     const fullName = profile.full_name || 
@@ -75,9 +73,9 @@ export async function getCurrentAdminUser(): Promise<AdminUser | null> {
 
     return {
       id: profile.id,
-      email: profile.email,
+      email: user.email ?? '',
       full_name: fullName,
-      role: user.app_metadata?.role as UserRole,
+      role: 'admin',
     }
   } catch (error) {
     console.error('Error getting current admin user:', error)
@@ -103,19 +101,11 @@ export async function checkPermission(
       return false
     }
 
-    const userRole = user.app_metadata?.role as UserRole
-
-    // Admin has all permissions
-    if (userRole === 'admin') {
-      return true
-    }
-
-    // Manager has manager permissions
-    if (userRole === 'manager' && requiredRole === 'manager') {
-      return true
-    }
-
-    return false
+    // The current schema intentionally has one privileged role; never trust JWT
+    // metadata or profile fields for authorization.
+    void requiredRole
+    const { data, error } = await supabase.rpc('is_current_user_admin')
+    return !error && data === true
   } catch (error) {
     console.error('Error checking permission:', error)
     return false

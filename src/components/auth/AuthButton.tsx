@@ -13,6 +13,7 @@ import { AuthDropdown } from './AuthDropdown'
 import { ProfileDropdown } from './ProfileDropdown'
 import { LoginModal } from './LoginModal'
 import { SignupModal } from './SignupModal'
+import { ForgotPasswordModal } from './ForgotPasswordModal'
 
 interface AuthButtonProps {
   locale: Locale
@@ -30,6 +31,7 @@ export function AuthButton({ locale, mobile = false }: AuthButtonProps) {
   const [showAuthDropdown, setShowAuthDropdown] = useState(false)
   const [showLoginModal, setShowLoginModal] = useState(false)
   const [showSignupModal, setShowSignupModal] = useState(false)
+  const [showForgotPasswordModal, setShowForgotPasswordModal] = useState(false)
 
   if (isLoading) {
     return (
@@ -99,6 +101,10 @@ export function AuthButton({ locale, mobile = false }: AuthButtonProps) {
         locale={locale}
         isOpen={showLoginModal}
         onClose={() => setShowLoginModal(false)}
+        onForgotPasswordClick={() => {
+          setShowLoginModal(false)
+          setShowForgotPasswordModal(true)
+        }}
         onSignupClick={() => {
           setShowLoginModal(false)
           setShowSignupModal(true)
@@ -111,6 +117,15 @@ export function AuthButton({ locale, mobile = false }: AuthButtonProps) {
         onClose={() => setShowSignupModal(false)}
         onLoginClick={() => {
           setShowSignupModal(false)
+          setShowLoginModal(true)
+        }}
+      />
+      <ForgotPasswordModal
+        locale={locale}
+        isOpen={showForgotPasswordModal}
+        onClose={() => setShowForgotPasswordModal(false)}
+        onBackToLogin={() => {
+          setShowForgotPasswordModal(false)
           setShowLoginModal(true)
         }}
       />

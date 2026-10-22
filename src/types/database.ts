@@ -166,28 +166,43 @@ export interface Database {
       profiles: {
         Row: {
           id: string
-          email: string
           full_name: string | null
+          first_name: string | null
+          last_name: string | null
           phone: string | null
-          role: string
+          avatar_url: string | null
+          bio: string | null
+          preferred_language: string
+          email_notifications: boolean
+          sms_notifications: boolean
           created_at: string
           updated_at: string
         }
         Insert: {
           id: string
-          email: string
           full_name?: string | null
+          first_name?: string | null
+          last_name?: string | null
           phone?: string | null
-          role?: string
+          avatar_url?: string | null
+          bio?: string | null
+          preferred_language?: string
+          email_notifications?: boolean
+          sms_notifications?: boolean
           created_at?: string
           updated_at?: string
         }
         Update: {
           id?: string
-          email?: string
           full_name?: string | null
+          first_name?: string | null
+          last_name?: string | null
           phone?: string | null
-          role?: string
+          avatar_url?: string | null
+          bio?: string | null
+          preferred_language?: string
+          email_notifications?: boolean
+          sms_notifications?: boolean
           created_at?: string
           updated_at?: string
         }
@@ -198,7 +213,7 @@ export interface Database {
     }
     Functions: {
       is_admin: {
-        Args: { user_id: string }
+        Args: Record<string, never>
         Returns: boolean
       }
     }

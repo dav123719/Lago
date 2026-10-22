@@ -1,11 +1,12 @@
 'use client'
 
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 import Link from 'next/link'
 import { User, Mail, Phone, ShoppingBag, MapPin, ChevronRight, Loader2 } from 'lucide-react'
 import { useAuth } from '@/hooks/useAuth'
 import { useProfile } from '@/hooks/useProfile'
 import { Locale } from '@/lib/i18n/config'
+import { AccountSecuritySettings } from '@/components/auth/AccountSecuritySettings'
 
 interface AccountPageProps {
   params: Promise<{ locale: Locale }>
@@ -30,6 +31,8 @@ const labels = {
     noOrders: 'Vēl nav pasūtījumu',
     noAddresses: 'Vēl nav pievienotu adrešu',
     loading: 'Ielāde...',
+    bio: 'Par mani',
+    profileIncomplete: 'Pabeidziet profilu, lai turpmāk to būtu vieglāk izmantot.',
   },
   en: {
     title: 'My Account',
@@ -49,6 +52,8 @@ const labels = {
     noOrders: 'No orders yet',
     noAddresses: 'No addresses added yet',
     loading: 'Loading...',
+    bio: 'About me',
+    profileIncomplete: 'Complete your profile to make future visits easier.',
   },
   ru: {
     title: 'Мой аккаунт',
@@ -68,15 +73,14 @@ const labels = {
     noOrders: 'Пока нет заказов',
     noAddresses: 'Пока нет адресов',
     loading: 'Загрузка...',
+    bio: 'Обо мне',
+    profileIncomplete: 'Заполните профиль, чтобы упростить дальнейшую работу с аккаунтом.',
   },
 }
 
 export default function AccountPage({ params }: AccountPageProps) {
-  // We need to handle params as a Promise per Next.js 15 requirements
   const [locale, setLocale] = useState<Locale>('lv')
-  
-  // Resolve params
-  Promise.resolve(params).then(p => setLocale(p.locale as Locale))
+  useEffect(() => { void params.then(p => setLocale(p.locale)) }, [params])
   
   const { user, profile, isLoading: authLoading } = useAuth()
   const { updateUserProfile, isLoading: profileLoading } = useProfile(locale)
@@ -85,24 +89,29 @@ export default function AccountPage({ params }: AccountPageProps) {
   const [firstName, setFirstName] = useState(profile?.first_name || '')
   const [lastName, setLastName] = useState(profile?.last_name || '')
   const [phone, setPhone] = useState(profile?.phone || '')
+  const [bio, setBio] = useState(profile?.bio || '')
 
   const t = labels[locale]
   const isLoading = authLoading || profileLoading
 
   // Update local state when profile changes
-  useState(() => {
+  useEffect(() => {
     if (profile) {
       setFirstName(profile.first_name || '')
       setLastName(profile.last_name || '')
       setPhone(profile.phone || '')
+      setBio(profile.bio || '')
     }
-  })
+  }, [profile])
 
   const handleSave = async () => {
     const { error } = await updateUserProfile({
+      full_name: `${firstName} ${lastName}`.trim(),
       first_name: firstName,
       last_name: lastName,
       phone: phone,
+      bio,
+      preferred_language: locale,
     })
     if (!error) {
       setIsEditing(false)
@@ -188,6 +197,10 @@ export default function AccountPage({ params }: AccountPageProps) {
                     />
                   </div>
                   <div>
+                    <label htmlFor="profile-bio" className="block text-sm font-medium text-lago-light mb-2">{t.bio}</label>
+                    <textarea id="profile-bio" maxLength={500} rows={3} value={bio} onChange={e => setBio(e.target.value)} className="w-full px-4 py-3 rounded-lg bg-lago-black border border-white/10 text-white focus:border-lago-gold/50 focus:outline-none transition-all" />
+                  </div>
+                  <div>
                     <label className="block text-sm font-medium text-lago-light mb-2">
                       {t.phone}
                     </label>
@@ -213,6 +226,7 @@ export default function AccountPage({ params }: AccountPageProps) {
                         setFirstName(profile?.first_name || '')
                         setLastName(profile?.last_name || '')
                         setPhone(profile?.phone || '')
+                        setBio(profile?.bio || '')
                       }}
                       className="px-6 py-2.5 text-lago-light hover:text-white border border-white/20 hover:border-white/40 rounded-lg transition-all"
                     >
@@ -247,9 +261,13 @@ export default function AccountPage({ params }: AccountPageProps) {
                       <p className="text-white">{profile?.phone || '-'}</p>
                     </div>
                   </div>
+                  {(!profile || !profile.full_name?.trim()) && <p role="status" className="text-sm text-lago-muted">{t.profileIncomplete}</p>}
+                  {profile?.bio && <p className="border-t border-white/5 pt-4 text-sm text-lago-muted">{profile.bio}</p>}
                 </div>
               )}
             </div>
+
+            <AccountSecuritySettings locale={locale} />
 
             {/* Orders Preview */}
             <div className="bg-lago-dark rounded-xl border border-white/10 p-6 md:p-8">

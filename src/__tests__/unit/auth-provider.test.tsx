@@ -45,7 +45,14 @@ describe('auth session lifecycle', () => {
     vi.stubEnv('NEXT_PUBLIC_APP_URL', 'https://lago.lv')
     render(<AuthProvider><Consumer /></AuthProvider>)
     await act(async () => { screen.getByText('signup').click() })
-    expect(state.signup).toHaveBeenCalledWith(expect.objectContaining({ options: expect.objectContaining({ emailRedirectTo: 'https://lago.lv/auth/callback/' }) }))
+    expect(state.signup).toHaveBeenCalledWith(expect.objectContaining({
+      email: 'person@example.com',
+      password: 'Password1',
+      options: expect.objectContaining({
+        emailRedirectTo: 'http://localhost:3000/auth/callback?flow=signup&locale=lv',
+        data: { full_name: 'Person' },
+      }),
+    }))
     expect(state.single).not.toHaveBeenCalled()
     vi.unstubAllEnvs()
   })

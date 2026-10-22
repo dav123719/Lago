@@ -43,6 +43,7 @@ const labels = {
     email: 'E-pastu',
     or: 'vai',
     signup: 'Izveidot kontu',
+    unavailable: 'Pakalpojums vēl nav konfigurēts',
   },
   en: {
     continueWith: 'Continue with',
@@ -51,6 +52,7 @@ const labels = {
     email: 'Email',
     or: 'or',
     signup: 'Sign up',
+    unavailable: 'Not configured yet',
   },
   ru: {
     continueWith: 'Продолжить с',
@@ -59,6 +61,7 @@ const labels = {
     email: 'почтой',
     or: 'или',
     signup: 'Создать аккаунт',
+    unavailable: 'Пока не настроено',
   },
 }
 
@@ -66,6 +69,8 @@ export function AuthDropdown({ locale, mobile, onClose, onEmailClick, onSignupCl
   const { signInWithOAuth } = useAuth()
   const dropdownRef = useRef<HTMLDivElement>(null)
   const t = labels[locale]
+  const googleEnabled = process.env.NEXT_PUBLIC_GOOGLE_OAUTH_ENABLED === 'true'
+  const facebookEnabled = process.env.NEXT_PUBLIC_FACEBOOK_OAUTH_ENABLED === 'true'
 
   // Handle click outside
   useEffect(() => {
@@ -89,18 +94,22 @@ export function AuthDropdown({ locale, mobile, onClose, onEmailClick, onSignupCl
         {/* OAuth Buttons */}
         <button
           onClick={() => handleOAuthSignIn('google')}
-          className="flex items-center gap-3 w-full py-3 px-4 rounded-lg bg-lago-dark border border-white/10 text-white hover:border-lago-gold/50 hover:bg-lago-charcoal transition-all duration-300"
+          disabled={!googleEnabled}
+          title={!googleEnabled ? t.unavailable : undefined}
+          className="flex items-center gap-3 w-full py-3 px-4 rounded-lg bg-lago-dark border border-white/10 text-white hover:border-lago-gold/50 hover:bg-lago-charcoal transition-all duration-300 disabled:cursor-not-allowed disabled:opacity-50"
         >
           <GoogleIcon />
-          <span className="text-sm font-button">{t.continueWith} {t.google}</span>
+          <span className="text-sm font-button">{t.continueWith} {t.google}{!googleEnabled ? ` · ${t.unavailable}` : ''}</span>
         </button>
         
         <button
           onClick={() => handleOAuthSignIn('facebook')}
-          className="flex items-center gap-3 w-full py-3 px-4 rounded-lg bg-lago-dark border border-white/10 text-white hover:border-[#1877F2]/50 hover:bg-lago-charcoal transition-all duration-300"
+          disabled={!facebookEnabled}
+          title={!facebookEnabled ? t.unavailable : undefined}
+          className="flex items-center gap-3 w-full py-3 px-4 rounded-lg bg-lago-dark border border-white/10 text-white hover:border-[#1877F2]/50 hover:bg-lago-charcoal transition-all duration-300 disabled:cursor-not-allowed disabled:opacity-50"
         >
           <span className="text-[#1877F2]"><FacebookIcon /></span>
-          <span className="text-sm font-button">{t.continueWith} {t.facebook}</span>
+          <span className="text-sm font-button">{t.continueWith} {t.facebook}{!facebookEnabled ? ` · ${t.unavailable}` : ''}</span>
         </button>
 
         {/* Divider */}
@@ -148,18 +157,22 @@ export function AuthDropdown({ locale, mobile, onClose, onEmailClick, onSignupCl
         <div className="space-y-2">
           <button
             onClick={() => handleOAuthSignIn('google')}
-            className="flex items-center gap-3 w-full py-2.5 px-4 rounded-lg bg-white text-lago-dark hover:bg-lago-light transition-all duration-300"
+            disabled={!googleEnabled}
+            title={!googleEnabled ? t.unavailable : undefined}
+            className="flex items-center gap-3 w-full py-2.5 px-4 rounded-lg bg-white text-lago-dark hover:bg-lago-light transition-all duration-300 disabled:cursor-not-allowed disabled:opacity-50"
           >
             <GoogleIcon />
-            <span className="text-sm font-button font-medium">{t.continueWith} {t.google}</span>
+            <span className="text-sm font-button font-medium">{t.continueWith} {t.google}{!googleEnabled ? ` · ${t.unavailable}` : ''}</span>
           </button>
           
           <button
             onClick={() => handleOAuthSignIn('facebook')}
-            className="flex items-center gap-3 w-full py-2.5 px-4 rounded-lg bg-[#1877F2] text-white hover:bg-[#166fe5] transition-all duration-300"
+            disabled={!facebookEnabled}
+            title={!facebookEnabled ? t.unavailable : undefined}
+            className="flex items-center gap-3 w-full py-2.5 px-4 rounded-lg bg-[#1877F2] text-white hover:bg-[#166fe5] transition-all duration-300 disabled:cursor-not-allowed disabled:opacity-50"
           >
             <FacebookIcon />
-            <span className="text-sm font-button font-medium">{t.continueWith} {t.facebook}</span>
+            <span className="text-sm font-button font-medium">{t.continueWith} {t.facebook}{!facebookEnabled ? ` · ${t.unavailable}` : ''}</span>
           </button>
         </div>
 

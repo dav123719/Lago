@@ -36,19 +36,16 @@ export function useAdmin(): AdminState {
           return
         }
 
-        // Check admin status
-        const isAdmin = 
-          user.user_metadata?.role === 'admin' ||
-          user.email?.endsWith('@lago.lv') ||
-          false
+        const { data: isAdmin, error: roleError } = await supabase.rpc('is_current_user_admin')
+        const authorized = !roleError && isAdmin === true
 
         setState({
-          isAdmin,
+          isAdmin: authorized,
           isLoading: false,
           user: {
             id: user.id,
             email: user.email,
-            role: user.user_metadata?.role || 'user',
+            role: authorized ? 'admin' : 'user',
           },
         })
       } catch {

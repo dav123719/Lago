@@ -1,7 +1,7 @@
 export const dynamicParams = false
 // AGENT slave-8 v1.0.1 - Final optimization complete
 import { Metadata } from 'next'
-import { notFound, redirect } from 'next/navigation'
+import { notFound } from 'next/navigation'
 import Image from 'next/image'
 import Link from 'next/link'
 import { ArrowRight, ArrowUpRight, ChevronRight, CheckCircle2, Phone, Mail, MapPin } from 'lucide-react'
@@ -56,7 +56,7 @@ export async function generateStaticParams() {
     const projectsBase = locale === 'lv' ? 'projekti' : locale === 'ru' ? 'proekty' : 'projects'
     const aboutBase = locale === 'lv' ? 'par-mums' : locale === 'ru' ? 'o-nas' : 'about-us'
     
-    // Individual material pages (overview is now on homepage)
+    // Keep the overview and individual material pages indexable.
     paths.push({ locale, slug: [stoneBase] })
     for (const material of materials) {
       paths.push({ locale, slug: [stoneBase, material.slug[locale]] })
@@ -80,8 +80,61 @@ export async function generateStaticParams() {
 
 export async function generateMetadata({ params }: PageProps): Promise<Metadata> {
   const { locale, slug } = await params
+  const l = locale as Locale
+  const stoneBase = l === 'lv' ? 'akmens-virsmas' : l === 'ru' ? 'kamennye-poverhnosti' : 'stone-surfaces'
+  const furnitureBase = l === 'lv' ? 'mebeles' : l === 'ru' ? 'mebel' : 'furniture'
+  const aboutBase = l === 'lv' ? 'par-mums' : l === 'ru' ? 'o-nas' : 'about-us'
+  const material = slug[0] === stoneBase && slug.length === 2
+    ? materials.find((item) => item.slug[l] === slug[1])
+    : undefined
+  const furnitureItem = slug[0] === furnitureBase && slug.length === 2
+    ? furniture.find((item) => item.slug[l] === slug[1])
+    : undefined
+
+  const alternatePath = (target: Locale) => {
+    const targetStoneBase = target === 'lv' ? 'akmens-virsmas' : target === 'ru' ? 'kamennye-poverhnosti' : 'stone-surfaces'
+    const targetFurnitureBase = target === 'lv' ? 'mebeles' : target === 'ru' ? 'mebel' : 'furniture'
+    const targetAboutBase = target === 'lv' ? 'par-mums' : target === 'ru' ? 'o-nas' : 'about-us'
+    if (slug[0] === stoneBase) return `/${target}/${targetStoneBase}${material ? `/${material.slug[target]}` : ''}/`
+    if (slug[0] === furnitureBase) return `/${target}/${targetFurnitureBase}${furnitureItem ? `/${furnitureItem.slug[target]}` : ''}/`
+    if (slug[0] === aboutBase) return `/${target}/${targetAboutBase}/`
+    return `/${target}/${slug.join('/')}/`
+  }
+
+  let title = 'Akmens virsmas un mēbeles pēc pasūtījuma'
+  let description = 'LAGO izgatavo un uzstāda akmens virsmas un mēbeles pēc pasūtījuma Latvijā.'
+  if (slug[0] === stoneBase && !material) {
+    const copy = {
+      lv: ['Akmens virsmas virtuvēm un vannas istabām', 'Salīdziniet Silestone, Dekton, granītu un marmoru virtuves virsmām, vannas istabām un sienu paneļiem. LAGO izgatavo un uzstāda risinājumus Latvijā.'],
+      en: ['Stone surfaces for kitchens and bathrooms', 'Compare Silestone, Dekton, granite and marble for kitchen worktops, bathrooms and wall panels. LAGO makes and installs custom solutions in Latvia.'],
+      ru: ['Каменные поверхности для кухни и ванной', 'Сравните Silestone, Dekton, гранит и мрамор для кухни, ванной и стеновых панелей. LAGO изготавливает и устанавливает поверхности в Латвии.'],
+    }[l]
+    ;[title, description] = copy
+  } else if (material) {
+    const materialNames = {
+      silestone: { lv: 'Silestone', en: 'Silestone', ru: 'Silestone' },
+      dekton: { lv: 'Dekton', en: 'Dekton', ru: 'Dekton' },
+      granite: { lv: 'Granīts', en: 'Granite', ru: 'Гранит' },
+      marble: { lv: 'Marmors', en: 'Marble', ru: 'Мрамор' },
+    }[material.id]
+    title = `${materialNames?.[l] || material.name[l]} — ${l === 'lv' ? 'virsmu ceļvedis' : l === 'ru' ? 'гид по поверхностям' : 'surface guide'}`
+    description = material.description[l]
+  } else if (slug[0] === furnitureBase) {
+    title = furnitureItem?.name[l] || (l === 'lv' ? 'Mēbeles pēc pasūtījuma' : l === 'ru' ? 'Мебель на заказ' : 'Custom furniture')
+    description = furnitureItem?.description[l] || (l === 'lv' ? 'Virtuves un iebūvējamās mēbeles pēc pasūtījuma, pielāgotas telpai un saskaņotas ar akmens virsmām.' : l === 'ru' ? 'Кухни и встроенная мебель на заказ, адаптированные к помещению и каменным поверхностям.' : 'Made-to-measure kitchens and built-in furniture, planned for the room and coordinated with stone surfaces.')
+  } else if (slug[0] === aboutBase) {
+    title = l === 'lv' ? 'Par LAGO — akmens virsmas un mēbeles kopš 2003. gada' : l === 'ru' ? 'О LAGO — каменные поверхности и мебель с 2003 года' : 'About LAGO — stone surfaces and furniture since 2003'
+    description = l === 'lv' ? 'Uzziniet par LAGO darbu, akmens virsmu izgatavošanu un individuālām mēbelēm Latvijā.' : l === 'ru' ? 'Узнайте о работе LAGO, изготовлении каменных поверхностей и мебели на заказ в Латвии.' : 'Learn about LAGO, its custom stone surface fabrication and made-to-measure furniture in Latvia.'
+  }
+
   return {
-    title: `${slug?.join(' - ') || 'Page'} | LAGO`,
+    title,
+    description,
+    alternates: {
+      canonical: `/${l}/${slug.join('/')}/`,
+      languages: { lv: alternatePath('lv'), en: alternatePath('en'), ru: alternatePath('ru'), 'x-default': alternatePath('lv') },
+    },
+    openGraph: { type: 'website', title, description, url: `https://lago.lv/${l}/${slug.join('/')}/` },
   }
 }
 
@@ -95,8 +148,7 @@ export default async function CatchAllPage({ params }: PageProps) {
   const aboutBase = l === 'lv' ? 'par-mums' : l === 'ru' ? 'o-nas' : 'about-us'
   
   if (slug[0] === stoneBase) {
-    // Redirect stone surfaces overview to homepage (materials section is now there)
-    if (slug.length === 1) redirect(`/${l}#materials`)
+    if (slug.length === 1) return <StoneSurfacesPage locale={l} />
     const material = materials.find(m => m.slug[l] === slug[1])
     if (slug.length === 2 && material) return <MaterialDetailPage locale={l} material={material} />
   }
@@ -118,494 +170,130 @@ export default async function CatchAllPage({ params }: PageProps) {
   notFound()
 }
 
-// ===================== STONE SURFACES PAGE =====================
+// ===================== APPLICATIONS & MATERIAL GUIDE =====================
 function StoneSurfacesPage({ locale }: { locale: Locale }) {
-  const content = {
-    title: { lv: 'Akmens virsmas', en: 'Stone Surfaces', ru: 'Каменные поверхности' },
-    subtitle: {
-      lv: 'Augstas kvalitātes akmens virsmas virtuvēm, vannas istabām un komerciālajiem objektiem.',
-      en: 'High-quality stone surfaces for kitchens, bathrooms and commercial projects.',
-      ru: 'Высококачественные каменные поверхности для кухонь, ванных комнат и коммерческих объектов.',
-    },
-    intro: {
-      lv: 'Mēs piedāvājam plašu augstas kvalitātes akmens virsmu klāstu no pasaulē atzītiem ražotājiem. Katrs materiāls tiek rūpīgi atlasīts, lai nodrošinātu izturību, estētiku un funkcionalitāti.',
-      en: 'We offer a wide range of high-quality stone surfaces from world-renowned manufacturers. Each material is carefully selected to ensure durability, aesthetics and functionality.',
-      ru: 'Мы предлагаем широкий ассортимент высококачественных каменных поверхностей от всемирно известных производителей.',
-    },
+  const base = locale === 'lv' ? 'akmens-virsmas' : locale === 'ru' ? 'kamennye-poverhnosti' : 'stone-surfaces'
+  const projectBase = locale === 'lv' ? 'projekti' : locale === 'ru' ? 'proekty' : 'projects'
+  const materialPaths: Record<string, string> = {
+    silestone: 'silestone',
+    dekton: 'dekton',
+    granite: locale === 'lv' ? 'granits' : locale === 'ru' ? 'granit' : 'granite',
+    marble: locale === 'lv' ? 'marmors' : locale === 'ru' ? 'mramor' : 'marble',
   }
-  
+  const copy = {
+    lv: {
+      eyebrow: 'Virsmu ceļvedis', title: 'Sāciet ar telpu. Materiālu izvēlieties pēc tam.',
+      intro: 'LAGO izgatavo un uzstāda pēc pasūtījuma veidotas akmens virsmas virtuvēm un interjeriem. Apskatiet, kur virsma tiks izmantota, un salīdziniet materiālu izskatu un kopšanu.',
+      appsTitle: 'Kur virsma tiks izmantota?', kitchen: 'Virtuves darba virsmas', kitchenBody: 'Darba zona, sala un sienas panelis var veidot vienotu risinājumu. Izvēloties, apsveriet ikdienas gatavošanu, vēlamo rakstu un to, kādu kopšanu pieņemat.', bathroom: 'Vannas istabas virsmas', bathroomBody: 'Izlietņu virsmas un sienu apdare ļauj izvēlēties starp dabisku raksta variāciju un vienotāku dizainu. Apsveriet mitrumu, tīrīšanas līdzekļus un izvēlētā akmens kopšanas norādes.', panels: 'Sienu paneļi un apdare', panelsBody: 'Virtuves un vannas istabas sienu paneļus var saskaņot ar darba virsmu. Piemērotība ir atkarīga no konkrētā materiāla, apdares un uzstādījuma.',
+      projects: 'Piemērs no LAGO projekta', seeProject: 'Apskatīt projektu', furnitureTitle: 'Meklējat arī mēbeles?', furnitureBody: 'LAGO izgatavo virtuves un iebūvējamās mēbeles, ko var saskaņot ar akmens virsmu.', furnitureLink: 'Apskatīt mēbeles',
+      compareTitle: 'Kā atšķiras materiāli?', compareIntro: 'Sāciet ar izskatu un ikdienas kopšanu. Izturība un norādes ir atkarīgas no konkrētās kolekcijas, plāksnes, apdares un biezuma.', look: 'Izskats', care: 'Ikdienā ņemiet vērā', silestoneLook: 'Plaša dizainu izvēle — no mierīgiem toņiem līdz izteiktām dzīslām.', silestoneCare: 'Cosentino norāda izturību pret ikdienas traipiem un skrāpējumiem konkrētās produktu līnijās. Sargājiet no strauja karstuma trieciena un ievērojiet produkta kopšanas norādes.', dektonLook: 'Dažādi akmens un citu virsmu dizaini.', dektonCare: 'Ražotājs norāda izturību pret traipiem, karstumu un UV, taču malām var kaitēt trieciens. Ilgstošam karstumam un plānākām plāksnēm izmantojiet paliktni.', graniteLook: 'Dabīgs magmatisks akmens; katras plāksnes minerālu raksts ir atšķirīgs.', graniteCare: 'Uzsūkšana un vajadzība pēc impregnēšanas mainās atkarībā no konkrētā akmens. Izvēlieties un apskatiet pašu plāksni.', marbleLook: 'Dabiskas dzīslas un toņu pārejas; neatkārtojams raksts.', marbleCare: 'Skābi produkti var iegravēt kalcītu saturošu marmoru. Izvēlieties, ja pieņemat saudzīgāku kopšanu un lietojuma pēdas.', details: 'Materiāla informācija', note: 'Šis ir sākumpunkts, nevis garantija par katru plāksni. Pirms pasūtījuma LAGO pārbaudīs izvēlētā produkta un plāksnes ražotāja lietošanas un kopšanas nosacījumus. Cena tiek aprēķināta pēc projekta.', contact: 'Pārrunāt savu projektu', sources: 'Ražotāju un nozares kopšanas informācija:', silestoneSource: 'Cosentino: Silestone', dektonSource: 'Cosentino: Dekton kopšana', stoneSource: 'Natural Stone Institute: akmens kopšana',
+    },
+    en: {
+      eyebrow: 'Surface guide', title: 'Start with the room. Choose the material next.',
+      intro: 'LAGO makes and installs made-to-measure stone surfaces for kitchens and interiors. Start with where the surface will be used, then compare appearance and care.',
+      appsTitle: 'Where will the surface go?', kitchen: 'Kitchen worktops', kitchenBody: 'The work area, island and wall panel can form one coordinated solution. Consider how you cook, the look you want and the level of care you are comfortable with.', bathroom: 'Bathroom surfaces', bathroomBody: 'Vanity tops and wall finishes let you choose between natural variation and a more consistent design. Consider moisture, cleaning products and the care guidance for the selected stone.', panels: 'Wall panels and cladding', panelsBody: 'Kitchen and bathroom wall panels can be coordinated with a worktop. Suitability depends on the specific material, finish and installation.',
+      projects: 'From a LAGO project', seeProject: 'View project', furnitureTitle: 'Planning furniture too?', furnitureBody: 'LAGO makes kitchens and built-ins that can be coordinated with a stone surface.', furnitureLink: 'Explore furniture',
+      compareTitle: 'How do the materials differ?', compareIntro: 'Start with appearance and everyday care. Performance and guidance depend on the specific collection, slab, finish and thickness.', look: 'Appearance', care: 'In everyday use', silestoneLook: 'A broad design range, from quieter tones to expressive veining.', silestoneCare: 'Cosentino describes resistance to everyday stains and scratches for specific product lines. Protect it from thermal shock and follow the product care guide.', dektonLook: 'A range of stone and other surface designs.', dektonCare: 'The manufacturer describes resistance to stains, heat and UV, though edges can be damaged by impact. Use a trivet for prolonged heat and thinner slabs.', graniteLook: 'Natural igneous stone; the mineral pattern varies from slab to slab.', graniteCare: 'Absorption and the need for sealing vary by stone. View and choose the actual slab.', marbleLook: 'Natural veining and shifts in tone; every slab has a distinct pattern.', marbleCare: 'Acids can etch calcite-bearing marble. Choose it if you are comfortable with gentler care and signs of use.', details: 'Material details', note: 'Use this as a starting point, not a guarantee for every slab. Before ordering, LAGO will confirm the use and care guidance for the selected product and slab. Pricing is quoted for each project.', contact: 'Discuss your project', sources: 'Manufacturer and industry care guidance:', silestoneSource: 'Cosentino: Silestone', dektonSource: 'Cosentino: Dekton care', stoneSource: 'Natural Stone Institute: stone care',
+    },
+    ru: {
+      eyebrow: 'Гид по поверхностям', title: 'Начните с помещения. Материал выберете позже.',
+      intro: 'LAGO изготавливает и устанавливает каменные поверхности на заказ для кухонь и интерьеров. Сначала определите назначение поверхности, затем сравните внешний вид и уход.',
+      appsTitle: 'Где будет использоваться поверхность?', kitchen: 'Кухонные столешницы', kitchenBody: 'Рабочая зона, остров и стеновая панель могут стать единым решением. Учитывайте повседневную готовку, желаемый рисунок и приемлемый для вас уход.', bathroom: 'Поверхности для ванной', bathroomBody: 'Столешницы для умывальников и отделка стен позволяют выбрать природный рисунок или более однородный дизайн. Учитывайте влажность, средства для уборки и рекомендации для выбранного камня.', panels: 'Стеновые панели и отделка', panelsBody: 'Панели для кухни и ванной можно сочетать со столешницей. Подходящий вариант зависит от материала, отделки и способа монтажа.',
+      projects: 'Пример проекта LAGO', seeProject: 'Посмотреть проект', furnitureTitle: 'Также нужна мебель?', furnitureBody: 'LAGO изготавливает кухни и встроенную мебель, которые можно сочетать с каменной поверхностью.', furnitureLink: 'Мебель на заказ',
+      compareTitle: 'Чем отличаются материалы?', compareIntro: 'Начните с внешнего вида и повседневного ухода. Свойства зависят от коллекции, плиты, отделки и толщины.', look: 'Внешний вид', care: 'В повседневном использовании', silestoneLook: 'Широкий выбор дизайнов: от спокойных оттенков до выразительных прожилок.', silestoneCare: 'Cosentino указывает устойчивость к бытовым пятнам и царапинам для отдельных линеек. Избегайте резкого перепада температуры и следуйте инструкции по уходу.', dektonLook: 'Разные дизайны под камень и другие поверхности.', dektonCare: 'Производитель указывает устойчивость к пятнам, жару и УФ, однако края можно повредить ударом. Для длительного нагрева и тонких плит используйте подставку.', graniteLook: 'Природная магматическая порода; рисунок каждой плиты отличается.', graniteCare: 'Впитываемость и необходимость пропитки зависят от конкретного камня. Выбирайте и осматривайте саму плиту.', marbleLook: 'Природные прожилки и переходы оттенков; каждая плита уникальна.', marbleCare: 'Кислоты могут оставить матовый след на мраморе с кальцитом. Выбирайте его, если готовы к бережному уходу и следам использования.', details: 'Подробнее о материале', note: 'Это отправная точка, а не гарантия для каждой плиты. Перед заказом LAGO уточнит рекомендации по использованию и уходу для выбранного продукта и плиты. Стоимость рассчитывается для каждого проекта.', contact: 'Обсудить проект', sources: 'Рекомендации производителей и отрасли по уходу:', silestoneSource: 'Cosentino: Silestone', dektonSource: 'Cosentino: уход за Dekton', stoneSource: 'Natural Stone Institute: уход за камнем',
+    },
+  }[locale]
+
+  const applications = [
+    { id: 'kitchen-worktops', title: copy.kitchen, body: copy.kitchenBody, projectId: 'modern-kitchen-jurmala', image: '/images/projects/project-kitchen-1.webp' },
+    { id: 'bathroom-surfaces', title: copy.bathroom, body: copy.bathroomBody, projectId: 'hotel-bathroom-riga', image: '/images/projects/project-bathroom-1.webp' },
+    { id: 'wall-panels', title: copy.panels, body: copy.panelsBody, projectId: 'private-bathroom-pardaugava', image: '/images/projects/project-bathroom-2.webp' },
+  ]
+  const comparison = [
+    { id: 'silestone', title: 'Silestone', look: copy.silestoneLook, care: copy.silestoneCare },
+    { id: 'dekton', title: 'Dekton', look: copy.dektonLook, care: copy.dektonCare },
+    { id: 'granite', title: locale === 'lv' ? 'Granīts' : locale === 'ru' ? 'Гранит' : 'Granite', look: copy.graniteLook, care: copy.graniteCare },
+    { id: 'marble', title: locale === 'lv' ? 'Marmors' : locale === 'ru' ? 'Мрамор' : 'Marble', look: copy.marbleLook, care: copy.marbleCare },
+  ]
+
   return (
     <>
-      {/* Hero Section with animation */}
-      <section className="relative pt-32 pb-20 bg-lago-dark overflow-hidden">
-        <div className="absolute inset-0 bg-grid opacity-30" />
+      <section className="relative overflow-hidden bg-lago-dark px-5 pb-14 pt-32 sm:pb-20">
         <div className="container-lg relative z-10">
-          <span className="text-lago-gold text-sm font-medium uppercase tracking-widest opacity-0 animate-fade-in-up" style={{ animationDelay: '100ms', animationFillMode: 'forwards' }}>
-            {translations.nav.stoneSurfaces[locale]}
-          </span>
-          <h1 className="text-5xl md:text-6xl lg:text-7xl font-heading text-white mt-4 mb-6 opacity-0 animate-fade-in-up" style={{ animationDelay: '200ms', animationFillMode: 'forwards' }}>
-            {content.title[locale]}
-          </h1>
-          <p className="text-lago-muted text-lg max-w-2xl opacity-0 animate-fade-in-up" style={{ animationDelay: '300ms', animationFillMode: 'forwards' }}>
-            {content.subtitle[locale]}
-          </p>
-          
-          {/* Decorative line */}
-          <div className="mt-10 w-24 h-[2px] bg-gradient-to-r from-lago-gold to-transparent animate-line-grow" style={{ animationDelay: '500ms' }} />
+          <Link href={`/${locale}`} className="text-sm text-lago-gold underline underline-offset-4">LAGO</Link>
+          <p className="mt-8 text-xs font-semibold uppercase tracking-[0.2em] text-lago-gold">{copy.eyebrow}</p>
+          <h1 className="mt-4 max-w-4xl font-heading text-4xl leading-tight text-white sm:text-6xl">{copy.title}</h1>
+          <p className="mt-6 max-w-2xl text-base leading-7 text-lago-light/75 sm:text-lg">{copy.intro}</p>
+          <a href="#applications" className="mt-8 inline-flex min-h-12 items-center gap-2 bg-lago-gold px-5 font-semibold text-lago-black transition-colors hover:bg-white focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-lago-gold">
+            {copy.appsTitle}<ArrowRight aria-hidden="true" className="h-4 w-4" />
+          </a>
         </div>
       </section>
 
-      {/* Intro */}
-      <section className="py-16 bg-lago-black">
+      <section id="applications" className="scroll-mt-24 bg-[#f4f1eb] px-5 py-16 text-[#24211d] sm:py-24">
         <div className="container-lg">
-          <p className="text-lago-light/80 text-lg md:text-xl leading-relaxed max-w-4xl mx-auto text-center opacity-0 animate-fade-in-up" style={{ animationDelay: '400ms', animationFillMode: 'forwards' }}>
-            {content.intro[locale]}
+          <h2 className="font-heading text-3xl text-[#24211d] text-shadow-none sm:text-4xl">{copy.appsTitle}</h2>
+          <div className="mt-8 grid gap-6 lg:gap-10">
+            {applications.map((application) => {
+              const project = projects.find((item) => item.id === application.projectId)
+              if (!project) return null
+              return (
+                <article id={application.id} key={application.id} className="scroll-mt-28 grid overflow-hidden border border-[#d9d3c8] bg-white md:grid-cols-[0.9fr_1.1fr]">
+                  <div className="relative min-h-64 bg-[#ddd7cc] md:min-h-96">
+                    <Image src={application.image} alt={`${project.title[locale]}: ${application.title}`} fill sizes="(max-width: 768px) 100vw, 42vw" className="object-cover" />
+                  </div>
+                  <div className="flex flex-col items-start p-6 sm:p-9">
+                    <h3 className="font-heading text-3xl text-[#24211d] text-shadow-none">{application.title}</h3>
+                    <p className="mt-4 max-w-2xl leading-7 text-[#625c52]">{application.body}</p>
+                    <div className="mt-6 border-l-2 border-[#b89b62] pl-4">
+                      <p className="text-xs font-semibold uppercase tracking-[0.14em] text-[#80683d]">{copy.projects}</p>
+                      <p className="mt-2 font-medium text-[#24211d]">{project.title[locale]}</p>
+                      <p className="mt-1 text-sm leading-6 text-[#625c52]">{project.summary[locale]}</p>
+                      <Link href={`/${locale}/${projectBase}/${project.slug[locale]}`} className="mt-3 inline-flex min-h-10 items-center gap-2 text-sm font-semibold text-[#594725] underline underline-offset-4">
+                        {copy.seeProject}<ArrowRight aria-hidden="true" className="h-4 w-4" />
+                      </Link>
+                    </div>
+                  </div>
+                </article>
+              )
+            })}
+          </div>
+          <div className="mt-8 flex flex-col items-start gap-4 border-t border-[#d5cec1] pt-7 sm:flex-row sm:items-center sm:justify-between">
+            <div><h3 className="font-heading text-2xl text-[#24211d] text-shadow-none">{copy.furnitureTitle}</h3><p className="mt-2 max-w-2xl text-sm leading-6 text-[#625c52]">{copy.furnitureBody}</p></div>
+            <Link href={`/${locale}/${locale === 'lv' ? 'mebeles' : locale === 'ru' ? 'mebel' : 'furniture'}`} className="inline-flex min-h-11 shrink-0 items-center gap-2 font-semibold text-[#594725] underline underline-offset-4">{copy.furnitureLink}<ArrowRight aria-hidden="true" className="h-4 w-4" /></Link>
+          </div>
+        </div>
+      </section>
+
+      <section id="material-comparison" className="scroll-mt-24 bg-[#1b1916] px-5 py-16 text-white sm:py-24">
+        <div className="container-lg">
+          <p className="text-xs font-semibold uppercase tracking-[0.2em] text-[#d5b777]">{copy.eyebrow}</p>
+          <h2 className="mt-3 max-w-3xl font-heading text-3xl text-white text-shadow-none sm:text-4xl">{copy.compareTitle}</h2>
+          <p className="mt-4 max-w-3xl leading-7 text-white/70">{copy.compareIntro}</p>
+          <div className="mt-8 grid gap-4 md:grid-cols-2 xl:grid-cols-4">
+            {comparison.map((material) => (
+              <article key={material.id} className="flex flex-col border border-white/15 bg-[#24211d] p-5 sm:p-6">
+                <h3 className="font-heading text-2xl text-white text-shadow-none">{material.title}</h3>
+                <dl className="mt-4 space-y-4 text-sm leading-6">
+                  <div><dt className="mb-1 text-xs font-semibold uppercase tracking-wide text-[#d5b777]">{copy.look}</dt><dd className="text-white/75">{material.look}</dd></div>
+                  <div><dt className="mb-1 text-xs font-semibold uppercase tracking-wide text-[#d5b777]">{copy.care}</dt><dd className="text-white/75">{material.care}</dd></div>
+                </dl>
+                <Link href={`/${locale}/${base}/${materialPaths[material.id]}`} className="mt-auto inline-flex min-h-11 items-center gap-2 pt-5 text-sm font-semibold text-[#e3c98f] underline underline-offset-4">
+                  {copy.details}<ArrowRight aria-hidden="true" className="h-4 w-4" />
+                </Link>
+              </article>
+            ))}
+          </div>
+          <p className="mt-6 max-w-4xl text-xs leading-5 text-white/60">{copy.note}</p>
+          <p className="mt-4 flex flex-wrap gap-x-4 gap-y-2 text-xs text-white/65">
+            <span>{copy.sources}</span>
+            <a href="https://www.cosentino.com/silestone/" target="_blank" rel="noreferrer" className="underline underline-offset-4 hover:text-white">{copy.silestoneSource}</a>
+            <a href="https://www.cosentino.com/en-gb/dekton/maintenance/" target="_blank" rel="noreferrer" className="underline underline-offset-4 hover:text-white">{copy.dektonSource}</a>
+            <a href="https://www.naturalstoneinstitute.org/consumers/care/" target="_blank" rel="noreferrer" className="underline underline-offset-4 hover:text-white">{copy.stoneSource}</a>
           </p>
-        </div>
-      </section>
-
-      {/* Combined Material Selection Section */}
-      <section className="py-24 bg-gradient-to-b from-lago-charcoal via-lago-dark to-lago-black relative overflow-hidden">
-        {/* Background decorations */}
-        <div className="absolute inset-0 bg-grid opacity-10" />
-        <div className="absolute top-0 left-1/4 w-96 h-96 bg-lago-gold/5 rounded-full blur-3xl" />
-        <div className="absolute bottom-0 right-1/4 w-96 h-96 bg-lago-gold/5 rounded-full blur-3xl" />
-        
-        <div className="container-lg relative z-10">
-          {/* Section Header */}
-          <div className="text-center mb-20 opacity-0 animate-fade-in-up" style={{ animationDelay: '100ms', animationFillMode: 'forwards' }}>
-            <span className="inline-block px-4 py-2 bg-lago-gold/10 text-lago-gold text-sm font-medium uppercase tracking-widest rounded-full mb-6">
-              {locale === 'lv' ? 'Materiālu ceļvedis' : locale === 'en' ? 'Material Guide' : 'Руководство по материалам'}
-            </span>
-            <h2 className="text-4xl md:text-5xl lg:text-6xl font-heading text-white mb-6">
-              {locale === 'lv' ? 'Izvēlieties ideālo materiālu' : locale === 'en' ? 'Choose Your Perfect Material' : 'Выберите идеальный материал'}
-            </h2>
-            <p className="text-lago-light text-lg max-w-2xl mx-auto">
-              {locale === 'lv' ? 'Noklikšķiniet uz jebkura materiāla, lai uzzinātu vairāk un apskatītu krāsu opcijas' : locale === 'en' ? 'Click on any material to learn more and explore color options' : 'Нажмите на любой материал, чтобы узнать больше и увидеть варианты цветов'}
-            </p>
-          </div>
-
-          {/* Material Cards - Interactive Grid */}
-          <div className="grid lg:grid-cols-2 gap-8 mb-20">
-            {/* Silestone Card */}
-            <Link
-              href={`/${locale}/${locale === 'lv' ? 'akmens-virsmas' : locale === 'ru' ? 'kamennye-poverhnosti' : 'stone-surfaces'}/silestone`}
-              className="group relative bg-lago-dark/50 backdrop-blur-sm rounded-2xl overflow-hidden border border-white/5 hover:border-lago-gold/50 transition-all duration-500 hover:shadow-2xl hover:shadow-lago-gold/10 opacity-0 animate-fade-in-up"
-              style={{ animationDelay: '200ms', animationFillMode: 'forwards' }}
-            >
-              {/* Image Section */}
-              <div className="relative h-56 overflow-hidden">
-                <Image
-                  src={getMaterialImage('silestone')}
-                  alt="Silestone"
-                  fill
-                  className="object-cover transition-transform duration-700 group-hover:scale-110"
-                  // PERFORMANCE: Material detail pages - lazy load images below fold
-                  loading="lazy"
-                  sizes="(max-width: 768px) 100vw, 50vw"
-                  quality={75} // PERFORMANCE: Reduced quality to save bandwidth
-                />
-                <div className="absolute inset-0 bg-gradient-to-t from-lago-dark via-lago-dark/50 to-transparent" />
-                
-                {/* Floating Badge */}
-                <div className="absolute top-4 right-4 px-3 py-1.5 bg-lago-gold text-lago-black text-xs font-bold rounded-full animate-pulse-glow">
-                  {locale === 'lv' ? 'POPULĀRĀKAIS' : locale === 'en' ? 'MOST POPULAR' : 'ПОПУЛЯРНЫЙ'}
-                </div>
-                
-                {/* Rating Stars */}
-                <div className="absolute bottom-4 left-4 flex items-center gap-2">
-                  <div className="flex text-lago-gold text-sm">★★★★★</div>
-                  <span className="text-white/80 text-xs">{locale === 'lv' ? 'Vērtējums' : locale === 'en' ? 'Rating' : 'Рейтинг'}</span>
-                </div>
-              </div>
-              
-              {/* Content Section */}
-              <div className="p-8">
-                <div className="flex items-center justify-between mb-4">
-                  <h3 className="text-3xl font-heading text-white group-hover:text-lago-gold transition-colors duration-300">
-                    Silestone
-                  </h3>
-                  <div className="w-10 h-10 rounded-full bg-lago-gold/10 flex items-center justify-center group-hover:bg-lago-gold group-hover:text-lago-black transition-all duration-300">
-                    <ArrowUpRight className="w-5 h-5 text-lago-gold group-hover:text-lago-black transform group-hover:translate-x-0.5 group-hover:-translate-y-0.5 transition-all" />
-                  </div>
-                </div>
-                
-                <p className="text-lago-light/80 mb-6 leading-relaxed">
-                  {locale === 'lv' ? 'Kvarca virsmas ar revolucionāro HybriQ+ tehnoloģiju. Ideāli piemērots ikdienas lietošanai ar augstu izturību pret traipu un skrāpējumiem.' : locale === 'en' ? 'Quartz surfaces with revolutionary HybriQ+ technology. Perfect for everyday use with high stain and scratch resistance.' : 'Кварцевые поверхности с революционной технологией HybriQ+. Идеально для повседневного использования.'}
-                </p>
-                
-                {/* Best For Section */}
-                <div className="mb-6">
-                  <span className="text-lago-gold text-xs font-medium uppercase tracking-wider mb-3 block">
-                    {locale === 'lv' ? 'Ideāli piemērots:' : locale === 'en' ? 'Best for:' : 'Идеально для:'}
-                  </span>
-                  <div className="flex flex-wrap gap-2">
-                    <span className="inline-flex items-center gap-1.5 px-3 py-1.5 bg-white/5 text-white text-sm rounded-lg">
-                      <CheckCircle2 className="w-4 h-4 text-lago-gold" />
-                      {locale === 'lv' ? 'Virtuves' : locale === 'en' ? 'Kitchens' : 'Кухни'}
-                    </span>
-                    <span className="inline-flex items-center gap-1.5 px-3 py-1.5 bg-white/5 text-white text-sm rounded-lg">
-                      <CheckCircle2 className="w-4 h-4 text-lago-gold" />
-                      {locale === 'lv' ? 'Vannas istabas' : locale === 'en' ? 'Bathrooms' : 'Ванные'}
-                    </span>
-                    <span className="inline-flex items-center gap-1.5 px-3 py-1.5 bg-white/5 text-white text-sm rounded-lg">
-                      <CheckCircle2 className="w-4 h-4 text-lago-gold" />
-                      {locale === 'lv' ? 'Bāra letes' : locale === 'en' ? 'Bar counters' : 'Барные стойки'}
-                    </span>
-                  </div>
-                </div>
-                
-                {/* Feature Tags */}
-                <div className="flex flex-wrap gap-2 pt-4 border-t border-white/10">
-                  <span className="px-3 py-1 bg-lago-gold/10 text-lago-gold text-xs rounded-full font-medium">{locale === 'lv' ? 'Antibakteriāls' : locale === 'en' ? 'Antibacterial' : 'Антибактериальный'}</span>
-                  <span className="px-3 py-1 bg-lago-gold/10 text-lago-gold text-xs rounded-full font-medium">{locale === 'lv' ? '25 gadu garantija' : locale === 'en' ? '25yr warranty' : '25 лет гарантии'}</span>
-                  <span className="px-3 py-1 bg-lago-gold/10 text-lago-gold text-xs rounded-full font-medium">{locale === 'lv' ? 'Izturīgs pret traipiem' : locale === 'en' ? 'Stain resistant' : 'Устойчив к пятнам'}</span>
-                </div>
-              </div>
-              
-              {/* Hover Glow Effect */}
-              <div className="absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-500 pointer-events-none">
-                <div className="absolute inset-0 bg-gradient-to-t from-lago-gold/5 to-transparent" />
-              </div>
-            </Link>
-
-            {/* Dekton Card */}
-            <Link
-              href={`/${locale}/${locale === 'lv' ? 'akmens-virsmas' : locale === 'ru' ? 'kamennye-poverhnosti' : 'stone-surfaces'}/dekton`}
-              className="group relative bg-lago-dark/50 backdrop-blur-sm rounded-2xl overflow-hidden border border-white/5 hover:border-lago-gold/50 transition-all duration-500 hover:shadow-2xl hover:shadow-lago-gold/10 opacity-0 animate-fade-in-up"
-              style={{ animationDelay: '300ms', animationFillMode: 'forwards' }}
-            >
-              {/* Image Section */}
-              <div className="relative h-56 overflow-hidden">
-                <Image
-                  src={getMaterialImage('dekton')}
-                  alt="Dekton"
-                  fill
-                  className="object-cover transition-transform duration-700 group-hover:scale-110"
-                  loading="lazy"
-                  sizes="(max-width: 768px) 100vw, 50vw"
-                  quality={75} // PERFORMANCE: Reduced quality to save bandwidth
-                />
-                <div className="absolute inset-0 bg-gradient-to-t from-lago-dark via-lago-dark/50 to-transparent" />
-                
-                {/* Floating Badge */}
-                <div className="absolute top-4 right-4 px-3 py-1.5 bg-white/20 backdrop-blur text-white text-xs font-bold rounded-full border border-white/30">
-                  {locale === 'lv' ? 'ĀRAI + IEKŠTELPĀM' : locale === 'en' ? 'INDOOR + OUTDOOR' : 'ДЛЯ УЛИЦЫ'}
-                </div>
-                
-                {/* Rating Stars */}
-                <div className="absolute bottom-4 left-4 flex items-center gap-2">
-                  <div className="flex text-lago-gold text-sm">★★★★★</div>
-                  <span className="text-white/80 text-xs">{locale === 'lv' ? 'Vērtējums' : locale === 'en' ? 'Rating' : 'Рейтинг'}</span>
-                </div>
-              </div>
-              
-              {/* Content Section */}
-              <div className="p-8">
-                <div className="flex items-center justify-between mb-4">
-                  <h3 className="text-3xl font-heading text-white group-hover:text-lago-gold transition-colors duration-300">
-                    Dekton
-                  </h3>
-                  <div className="w-10 h-10 rounded-full bg-lago-gold/10 flex items-center justify-center group-hover:bg-lago-gold group-hover:text-lago-black transition-all duration-300">
-                    <ArrowUpRight className="w-5 h-5 text-lago-gold group-hover:text-lago-black transform group-hover:translate-x-0.5 group-hover:-translate-y-0.5 transition-all" />
-                  </div>
-                </div>
-                
-                <p className="text-lago-light/80 mb-6 leading-relaxed">
-                  {locale === 'lv' ? 'Ultra-kompaktas virsmas āra un iekštelpu lietojumam. Maksimāla izturība pret UV stariem, karstumu un skrāpējumiem.' : locale === 'en' ? 'Ultra-compact surfaces for indoor and outdoor use. Maximum UV, heat and scratch resistance.' : 'Ультракомпактные поверхности для внутреннего и наружного использования.'}
-                </p>
-                
-                {/* Best For Section */}
-                <div className="mb-6">
-                  <span className="text-lago-gold text-xs font-medium uppercase tracking-wider mb-3 block">
-                    {locale === 'lv' ? 'Ideāli piemērots:' : locale === 'en' ? 'Best for:' : 'Идеально для:'}
-                  </span>
-                  <div className="flex flex-wrap gap-2">
-                    <span className="inline-flex items-center gap-1.5 px-3 py-1.5 bg-white/5 text-white text-sm rounded-lg">
-                      <CheckCircle2 className="w-4 h-4 text-lago-gold" />
-                      {locale === 'lv' ? 'Āra virtuves' : locale === 'en' ? 'Outdoor kitchens' : 'Уличные кухни'}
-                    </span>
-                    <span className="inline-flex items-center gap-1.5 px-3 py-1.5 bg-white/5 text-white text-sm rounded-lg">
-                      <CheckCircle2 className="w-4 h-4 text-lago-gold" />
-                      {locale === 'lv' ? 'Fasādes' : locale === 'en' ? 'Facades' : 'Фасады'}
-                    </span>
-                    <span className="inline-flex items-center gap-1.5 px-3 py-1.5 bg-white/5 text-white text-sm rounded-lg">
-                      <CheckCircle2 className="w-4 h-4 text-lago-gold" />
-                      {locale === 'lv' ? 'Grīdas' : locale === 'en' ? 'Flooring' : 'Полы'}
-                    </span>
-                  </div>
-                </div>
-                
-                {/* Feature Tags */}
-                <div className="flex flex-wrap gap-2 pt-4 border-t border-white/10">
-                  <span className="px-3 py-1 bg-lago-gold/10 text-lago-gold text-xs rounded-full font-medium">{locale === 'lv' ? 'UV izturīgs' : locale === 'en' ? 'UV resistant' : 'Устойчив к УФ'}</span>
-                  <span className="px-3 py-1 bg-lago-gold/10 text-lago-gold text-xs rounded-full font-medium">{locale === 'lv' ? 'Karstumizturīgs' : locale === 'en' ? 'Heat proof' : 'Термостойкий'}</span>
-                  <span className="px-3 py-1 bg-lago-gold/10 text-lago-gold text-xs rounded-full font-medium">{locale === 'lv' ? 'Ultra-kompakts' : locale === 'en' ? 'Ultra-compact' : 'Ультракомпактный'}</span>
-                </div>
-              </div>
-              
-              {/* Hover Glow Effect */}
-              <div className="absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-500 pointer-events-none">
-                <div className="absolute inset-0 bg-gradient-to-t from-lago-gold/5 to-transparent" />
-              </div>
-            </Link>
-
-            {/* Granite Card */}
-            <Link
-              href={`/${locale}/${locale === 'lv' ? 'akmens-virsmas' : locale === 'ru' ? 'kamennye-poverhnosti' : 'stone-surfaces'}/${locale === 'lv' ? 'granits' : locale === 'ru' ? 'granit' : 'granite'}`}
-              className="group relative bg-lago-dark/50 backdrop-blur-sm rounded-2xl overflow-hidden border border-white/5 hover:border-lago-gold/50 transition-all duration-500 hover:shadow-2xl hover:shadow-lago-gold/10 opacity-0 animate-fade-in-up"
-              style={{ animationDelay: '400ms', animationFillMode: 'forwards' }}
-            >
-              {/* Image Section */}
-              <div className="relative h-56 overflow-hidden">
-                <Image
-                  src={getMaterialImage('granite')}
-                  alt={locale === 'lv' ? 'Granīts' : locale === 'en' ? 'Granite' : 'Гранит'}
-                  fill
-                  className="object-cover transition-transform duration-700 group-hover:scale-110"
-                  loading="lazy"
-                  sizes="(max-width: 768px) 100vw, 50vw"
-                  quality={75} // PERFORMANCE: Reduced quality to save bandwidth
-                />
-                <div className="absolute inset-0 bg-gradient-to-t from-lago-dark via-lago-dark/50 to-transparent" />
-                
-                {/* Floating Badge */}
-                <div className="absolute top-4 right-4 px-3 py-1.5 bg-white/20 backdrop-blur text-white text-xs font-bold rounded-full border border-white/30">
-                  {locale === 'lv' ? 'DABĪGS AKMENS' : locale === 'en' ? 'NATURAL STONE' : 'НАТУРАЛЬНЫЙ'}
-                </div>
-                
-                {/* Rating Stars */}
-                <div className="absolute bottom-4 left-4 flex items-center gap-2">
-                  <div className="flex text-lago-gold text-sm">★★★★☆</div>
-                  <span className="text-white/80 text-xs">{locale === 'lv' ? 'Vērtējums' : locale === 'en' ? 'Rating' : 'Рейтинг'}</span>
-                </div>
-              </div>
-              
-              {/* Content Section */}
-              <div className="p-8">
-                <div className="flex items-center justify-between mb-4">
-                  <h3 className="text-3xl font-heading text-white group-hover:text-lago-gold transition-colors duration-300">
-                    {locale === 'lv' ? 'Granīts' : locale === 'en' ? 'Granite' : 'Гранит'}
-                  </h3>
-                  <div className="w-10 h-10 rounded-full bg-lago-gold/10 flex items-center justify-center group-hover:bg-lago-gold group-hover:text-lago-black transition-all duration-300">
-                    <ArrowUpRight className="w-5 h-5 text-lago-gold group-hover:text-lago-black transform group-hover:translate-x-0.5 group-hover:-translate-y-0.5 transition-all" />
-                  </div>
-                </div>
-                
-                <p className="text-lago-light/80 mb-6 leading-relaxed">
-                  {locale === 'lv' ? 'Dabīgais akmens ar unikālu rakstu. Mūžīga klasika, kas piešķir interjeram eleganci un dabisko skaistumu.' : locale === 'en' ? 'Natural stone with unique patterns. Timeless classic that adds elegance and natural beauty to any interior.' : 'Натуральный камень с уникальным рисунком. Вечная классика.'}
-                </p>
-                
-                {/* Best For Section */}
-                <div className="mb-6">
-                  <span className="text-lago-gold text-xs font-medium uppercase tracking-wider mb-3 block">
-                    {locale === 'lv' ? 'Ideāli piemērots:' : locale === 'en' ? 'Best for:' : 'Идеально для:'}
-                  </span>
-                  <div className="flex flex-wrap gap-2">
-                    <span className="inline-flex items-center gap-1.5 px-3 py-1.5 bg-white/5 text-white text-sm rounded-lg">
-                      <CheckCircle2 className="w-4 h-4 text-lago-gold" />
-                      {locale === 'lv' ? 'Klasiskās virtuves' : locale === 'en' ? 'Classic kitchens' : 'Классические кухни'}
-                    </span>
-                    <span className="inline-flex items-center gap-1.5 px-3 py-1.5 bg-white/5 text-white text-sm rounded-lg">
-                      <CheckCircle2 className="w-4 h-4 text-lago-gold" />
-                      {locale === 'lv' ? 'Palodzes' : locale === 'en' ? 'Window sills' : 'Подоконники'}
-                    </span>
-                    <span className="inline-flex items-center gap-1.5 px-3 py-1.5 bg-white/5 text-white text-sm rounded-lg">
-                      <CheckCircle2 className="w-4 h-4 text-lago-gold" />
-                      {locale === 'lv' ? 'Kāpnes' : locale === 'en' ? 'Stairs' : 'Лестницы'}
-                    </span>
-                  </div>
-                </div>
-                
-                {/* Feature Tags */}
-                <div className="flex flex-wrap gap-2 pt-4 border-t border-white/10">
-                  <span className="px-3 py-1 bg-lago-gold/10 text-lago-gold text-xs rounded-full font-medium">{locale === 'lv' ? 'Unikāls raksts' : locale === 'en' ? 'Unique pattern' : 'Уникальный рисунок'}</span>
-                  <span className="px-3 py-1 bg-lago-gold/10 text-lago-gold text-xs rounded-full font-medium">{locale === 'lv' ? 'Ilgmūžīgs' : locale === 'en' ? 'Long-lasting' : 'Долговечный'}</span>
-                  <span className="px-3 py-1 bg-lago-gold/10 text-lago-gold text-xs rounded-full font-medium">{locale === 'lv' ? '100% dabīgs' : locale === 'en' ? '100% natural' : '100% натуральный'}</span>
-                </div>
-              </div>
-              
-              {/* Hover Glow Effect */}
-              <div className="absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-500 pointer-events-none">
-                <div className="absolute inset-0 bg-gradient-to-t from-lago-gold/5 to-transparent" />
-              </div>
-            </Link>
-
-            {/* Marble Card */}
-            <Link
-              href={`/${locale}/${locale === 'lv' ? 'akmens-virsmas' : locale === 'ru' ? 'kamennye-poverhnosti' : 'stone-surfaces'}/${locale === 'lv' ? 'marmors' : locale === 'ru' ? 'mramor' : 'marble'}`}
-              className="group relative bg-lago-dark/50 backdrop-blur-sm rounded-2xl overflow-hidden border border-white/5 hover:border-lago-gold/50 transition-all duration-500 hover:shadow-2xl hover:shadow-lago-gold/10 opacity-0 animate-fade-in-up"
-              style={{ animationDelay: '500ms', animationFillMode: 'forwards' }}
-            >
-              {/* Image Section */}
-              <div className="relative h-56 overflow-hidden">
-                <Image
-                  src={getMaterialImage('marble')}
-                  alt={locale === 'lv' ? 'Marmors' : locale === 'en' ? 'Marble' : 'Мрамор'}
-                  fill
-                  className="object-cover transition-transform duration-700 group-hover:scale-110"
-                  loading="lazy"
-                  sizes="(max-width: 768px) 100vw, 50vw"
-                  quality={75} // PERFORMANCE: Reduced quality to save bandwidth
-                />
-                <div className="absolute inset-0 bg-gradient-to-t from-lago-dark via-lago-dark/50 to-transparent" />
-                
-                {/* Floating Badge */}
-                <div className="absolute top-4 right-4 px-3 py-1.5 bg-gradient-to-r from-lago-gold to-lago-gold-light text-lago-black text-xs font-bold rounded-full">
-                  {locale === 'lv' ? 'PREMIUM' : locale === 'en' ? 'PREMIUM' : 'ПРЕМИУМ'}
-                </div>
-                
-                {/* Rating Stars */}
-                <div className="absolute bottom-4 left-4 flex items-center gap-2">
-                  <div className="flex text-lago-gold text-sm">★★★★★</div>
-                  <span className="text-white/80 text-xs">{locale === 'lv' ? 'Luksuss' : locale === 'en' ? 'Luxury' : 'Люкс'}</span>
-                </div>
-              </div>
-              
-              {/* Content Section */}
-              <div className="p-8">
-                <div className="flex items-center justify-between mb-4">
-                  <h3 className="text-3xl font-heading text-white group-hover:text-lago-gold transition-colors duration-300">
-                    {locale === 'lv' ? 'Marmors' : locale === 'en' ? 'Marble' : 'Мрамор'}
-                  </h3>
-                  <div className="w-10 h-10 rounded-full bg-lago-gold/10 flex items-center justify-center group-hover:bg-lago-gold group-hover:text-lago-black transition-all duration-300">
-                    <ArrowUpRight className="w-5 h-5 text-lago-gold group-hover:text-lago-black transform group-hover:translate-x-0.5 group-hover:-translate-y-0.5 transition-all" />
-                  </div>
-                </div>
-                
-                <p className="text-lago-light/80 mb-6 leading-relaxed">
-                  {locale === 'lv' ? 'Luksusa dabīgais akmens ar izsmalcinātu estētiku. Ideāls ekskluzīviem interjera risinājumiem, kas prasa augstāko kvalitāti.' : locale === 'en' ? 'Luxury natural stone with refined aesthetics. Perfect for exclusive interior solutions that demand the highest quality.' : 'Роскошный натуральный камень с изысканной эстетикой. Идеально для эксклюзивных интерьеров.'}
-                </p>
-                
-                {/* Best For Section */}
-                <div className="mb-6">
-                  <span className="text-lago-gold text-xs font-medium uppercase tracking-wider mb-3 block">
-                    {locale === 'lv' ? 'Ideāli piemērots:' : locale === 'en' ? 'Best for:' : 'Идеально для:'}
-                  </span>
-                  <div className="flex flex-wrap gap-2">
-                    <span className="inline-flex items-center gap-1.5 px-3 py-1.5 bg-white/5 text-white text-sm rounded-lg">
-                      <CheckCircle2 className="w-4 h-4 text-lago-gold" />
-                      {locale === 'lv' ? 'Luksus vannas' : locale === 'en' ? 'Luxury baths' : 'Люкс ванные'}
-                    </span>
-                    <span className="inline-flex items-center gap-1.5 px-3 py-1.5 bg-white/5 text-white text-sm rounded-lg">
-                      <CheckCircle2 className="w-4 h-4 text-lago-gold" />
-                      {locale === 'lv' ? 'Kamīni' : locale === 'en' ? 'Fireplaces' : 'Камины'}
-                    </span>
-                    <span className="inline-flex items-center gap-1.5 px-3 py-1.5 bg-white/5 text-white text-sm rounded-lg">
-                      <CheckCircle2 className="w-4 h-4 text-lago-gold" />
-                      {locale === 'lv' ? 'Akcent sienas' : locale === 'en' ? 'Feature walls' : 'Акцентные стены'}
-                    </span>
-                  </div>
-                </div>
-                
-                {/* Feature Tags */}
-                <div className="flex flex-wrap gap-2 pt-4 border-t border-white/10">
-                  <span className="px-3 py-1 bg-lago-gold/10 text-lago-gold text-xs rounded-full font-medium">{locale === 'lv' ? 'Ekskluzīvs' : locale === 'en' ? 'Exclusive' : 'Эксклюзивный'}</span>
-                  <span className="px-3 py-1 bg-lago-gold/10 text-lago-gold text-xs rounded-full font-medium">{locale === 'lv' ? 'Klasiska elegance' : locale === 'en' ? 'Timeless' : 'Вневременной'}</span>
-                  <span className="px-3 py-1 bg-lago-gold/10 text-lago-gold text-xs rounded-full font-medium">{locale === 'lv' ? 'Premium izskats' : locale === 'en' ? 'Premium look' : 'Премиум вид'}</span>
-                </div>
-              </div>
-              
-              {/* Hover Glow Effect */}
-              <div className="absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-500 pointer-events-none">
-                <div className="absolute inset-0 bg-gradient-to-t from-lago-gold/5 to-transparent" />
-              </div>
-            </Link>
-          </div>
-
-          {/* Quick Comparison Table */}
-          <div className="bg-lago-dark/80 backdrop-blur-sm rounded-2xl overflow-hidden border border-white/10 shadow-2xl opacity-0 animate-fade-in-up" style={{ animationDelay: '600ms', animationFillMode: 'forwards' }}>
-            <div className="p-6 border-b border-white/10 bg-gradient-to-r from-lago-gold/10 to-transparent">
-              <h3 className="text-2xl font-heading text-white flex items-center gap-3">
-                <span className="w-8 h-8 rounded-lg bg-lago-gold/20 flex items-center justify-center">
-                  <CheckCircle2 className="w-5 h-5 text-lago-gold" />
-                </span>
-                {locale === 'lv' ? 'Ātrais salīdzinājums' : locale === 'en' ? 'Quick Comparison' : 'Быстрое сравнение'}
-              </h3>
-            </div>
-            <div className="overflow-x-auto">
-              <table className="w-full text-sm">
-                <thead>
-                  <tr className="border-b border-white/10 bg-lago-charcoal/50">
-                    <th className="text-left p-5 text-lago-muted font-medium">{locale === 'lv' ? 'Īpašība' : locale === 'en' ? 'Property' : 'Свойство'}</th>
-                    <th className="text-center p-5 text-lago-gold font-semibold">Silestone</th>
-                    <th className="text-center p-5 text-lago-gold font-semibold">Dekton</th>
-                    <th className="text-center p-5 text-lago-gold font-semibold">{locale === 'lv' ? 'Granīts' : locale === 'en' ? 'Granite' : 'Гранит'}</th>
-                    <th className="text-center p-5 text-lago-gold font-semibold">{locale === 'lv' ? 'Marmors' : locale === 'en' ? 'Marble' : 'Мрамор'}</th>
-                  </tr>
-                </thead>
-                <tbody className="text-lago-light">
-                  <tr className="border-b border-white/5 hover:bg-white/5 transition-colors">
-                    <td className="p-5 font-medium">{locale === 'lv' ? 'Karstumizturība' : locale === 'en' ? 'Heat Resistance' : 'Термостойкость'}</td>
-                    <td className="text-center p-5"><span className="text-lago-gold">★★★★</span><span className="text-lago-stone">☆</span></td>
-                    <td className="text-center p-5"><span className="text-lago-gold">★★★★★</span></td>
-                    <td className="text-center p-5"><span className="text-lago-gold">★★★★</span><span className="text-lago-stone">☆</span></td>
-                    <td className="text-center p-5"><span className="text-lago-gold">★★★</span><span className="text-lago-stone">☆☆</span></td>
-                  </tr>
-                  <tr className="border-b border-white/5 hover:bg-white/5 transition-colors">
-                    <td className="p-5 font-medium">{locale === 'lv' ? 'Skrāpējumu izturība' : locale === 'en' ? 'Scratch Resistance' : 'Устойчивость к царапинам'}</td>
-                    <td className="text-center p-5"><span className="text-lago-gold">★★★★★</span></td>
-                    <td className="text-center p-5"><span className="text-lago-gold">★★★★★</span></td>
-                    <td className="text-center p-5"><span className="text-lago-gold">★★★★</span><span className="text-lago-stone">☆</span></td>
-                    <td className="text-center p-5"><span className="text-lago-gold">★★★</span><span className="text-lago-stone">☆☆</span></td>
-                  </tr>
-                  <tr className="border-b border-white/5 hover:bg-white/5 transition-colors">
-                    <td className="p-5 font-medium">{locale === 'lv' ? 'Traipu izturība' : locale === 'en' ? 'Stain Resistance' : 'Устойчивость к пятнам'}</td>
-                    <td className="text-center p-5"><span className="text-lago-gold">★★★★★</span></td>
-                    <td className="text-center p-5"><span className="text-lago-gold">★★★★★</span></td>
-                    <td className="text-center p-5"><span className="text-lago-gold">★★★</span><span className="text-lago-stone">☆☆</span></td>
-                    <td className="text-center p-5"><span className="text-lago-gold">★★</span><span className="text-lago-stone">☆☆☆</span></td>
-                  </tr>
-                  <tr className="border-b border-white/5 hover:bg-white/5 transition-colors">
-                    <td className="p-5 font-medium">{locale === 'lv' ? 'Kopšanas vienkāršība' : locale === 'en' ? 'Easy Maintenance' : 'Легкость ухода'}</td>
-                    <td className="text-center p-5"><span className="text-lago-gold">★★★★★</span></td>
-                    <td className="text-center p-5"><span className="text-lago-gold">★★★★★</span></td>
-                    <td className="text-center p-5"><span className="text-lago-gold">★★★★</span><span className="text-lago-stone">☆</span></td>
-                    <td className="text-center p-5"><span className="text-lago-gold">★★★</span><span className="text-lago-stone">☆☆</span></td>
-                  </tr>
-                  <tr className="hover:bg-white/5 transition-colors">
-                    <td className="p-5 font-medium">{locale === 'lv' ? 'Āra lietošana' : locale === 'en' ? 'Outdoor Use' : 'Использование на улице'}</td>
-                    <td className="text-center p-5"><span className="text-lago-gold">★★</span><span className="text-lago-stone">☆☆☆</span></td>
-                    <td className="text-center p-5"><span className="text-lago-gold">★★★★★</span></td>
-                    <td className="text-center p-5"><span className="text-lago-gold">★★★★</span><span className="text-lago-stone">☆</span></td>
-                    <td className="text-center p-5"><span className="text-lago-gold">★★</span><span className="text-lago-stone">☆☆☆</span></td>
-                  </tr>
-                </tbody>
-              </table>
-            </div>
-            
-            {/* Table Footer */}
-            <div className="p-6 bg-lago-charcoal/30 border-t border-white/5">
-              <p className="text-lago-muted text-sm text-center">
-                {locale === 'lv' ? '★ = zems · ★★★ = vidējs · ★★★★★ = augsts' : locale === 'en' ? '★ = low · ★★★ = medium · ★★★★★ = high' : '★ = низкий · ★★★ = средний · ★★★★★ = высокий'}
-              </p>
-            </div>
-          </div>
-        </div>
-      </section>
-
-      {/* CTA Section */}
-      <section className="py-20 bg-lago-dark relative overflow-hidden">
-        <div className="absolute inset-0 bg-dots opacity-20" />
-        <div className="container-lg relative z-10">
-          <div className="max-w-2xl mx-auto text-center">
-            <h2 className="text-3xl md:text-4xl font-heading text-white mb-4 opacity-0 animate-fade-in-up" style={{ animationDelay: '100ms', animationFillMode: 'forwards' }}>
-              {locale === 'lv' ? 'Nepieciešama palīdzība izvēlē?' : locale === 'en' ? 'Need help choosing?' : 'Нужна помощь в выборе?'}
-            </h2>
-            <p className="text-lago-muted mb-8 opacity-0 animate-fade-in-up" style={{ animationDelay: '200ms', animationFillMode: 'forwards' }}>
-              {locale === 'lv' ? 'Mūsu speciālisti labprāt palīdzēs izvēlēties piemērotāko materiālu.' : locale === 'en' ? 'Our specialists will help you choose the right material.' : 'Наши специалисты помогут выбрать подходящий материал.'}
-            </p>
-            <NeonButton
-              href={`tel:${companyInfo.phone.replace(/\s/g, '')}`}
-              variant="solid"
-              size="lg"
-              className="opacity-0 animate-fade-in-up"
-              style={{ animationDelay: '300ms', animationFillMode: 'forwards' }}
-            >
-              <Phone className="w-5 h-5" />
-              {locale === 'lv' ? 'Sazināties' : locale === 'en' ? 'Contact Us' : 'Связаться'}
-            </NeonButton>
-          </div>
+          <Link href={`/${locale}/${locale === 'lv' ? 'par-mums' : locale === 'ru' ? 'o-nas' : 'about-us'}#contact`} className="mt-8 inline-flex min-h-12 items-center gap-2 bg-[#d9c394] px-5 font-semibold text-[#25221c] transition-colors hover:bg-white focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-[#d9c394]">
+            {copy.contact}<ArrowRight aria-hidden="true" className="h-4 w-4" />
+          </Link>
         </div>
       </section>
     </>
@@ -616,15 +304,15 @@ function StoneSurfacesPage({ locale }: { locale: Locale }) {
 function MaterialDetailPage({ locale, material }: { locale: Locale; material: typeof materials[0] }) {
   const featuresByMaterial: Record<typeof material.id, Record<Locale, string>[]> = {
     silestone: [
-      { lv: 'Minerālu virsma ar HybriQ® tehnoloģiju', en: 'Mineral surface made with HybriQ® technology', ru: 'Минеральная поверхность по технологии HybriQ®' },
-      { lv: 'Sastāvā atlasīti minerāli un pārstrādāti materiāli', en: 'Made with selected minerals and recycled materials', ru: 'В составе — отобранные минералы и переработанные материалы' },
-      { lv: 'Ražotājs norāda izturību pret ikdienas traipiem, skrāpējumiem un triecieniem', en: 'Manufacturer describes resistance to everyday stains, scratches and impacts', ru: 'Производитель указывает устойчивость к бытовым пятнам, царапинам и ударам' },
-      { lv: 'Sargāt no strauja karstuma trieciena; sekot izvēlētā produkta kopšanas norādēm', en: 'Protect from thermal shock; follow care guidance for the selected product', ru: 'Защищать от резкого перепада температуры; следовать инструкции для выбранного продукта' },
+      { lv: 'Cosentino zīmola minerālu virsmu saime', en: 'A family of Cosentino-branded mineral surfaces', ru: 'Семейство минеральных поверхностей бренда Cosentino' },
+      { lv: 'Sastāvs un ražošanas tehnoloģija atšķiras pēc produktu līnijas', en: 'Composition and manufacturing technology vary by product line', ru: 'Состав и технология производства зависят от линейки продукта' },
+      { lv: 'Ražotājs norāda izturību pret traipiem un skrāpējumiem atsevišķām līnijām', en: 'Manufacturer describes stain and scratch resistance for specific lines', ru: 'Производитель указывает устойчивость к пятнам и царапинам для отдельных линеек' },
+      { lv: 'Sargāt no strauja karstuma trieciena; lietot paliktni un sekot kopšanas norādēm', en: 'Protect from thermal shock, use a trivet and follow product care guidance', ru: 'Защищать от резкого перепада температуры, использовать подставку и следовать инструкции' },
     ],
     dekton: [
       { lv: 'Ultra-kompakta minerālu virsma', en: 'Ultra-compact mineral surface', ru: 'Ультракомпактная минеральная поверхность' },
       { lv: 'Ražotājs norāda izturību pret UV starojumu', en: 'Manufacturer describes UV resistance', ru: 'Производитель указывает устойчивость к УФ-излучению' },
-      { lv: 'Ražotājs norāda izturību pret traipiem, skrāpējumiem un karstumu', en: 'Manufacturer describes resistance to stains, scratches and heat', ru: 'Производитель указывает устойчивость к пятнам, царапинам и жару' },
+      { lv: 'Ražotājs norāda izturību pret traipiem, skrāpējumiem un karstumu; malas var bojāt trieciens', en: 'Manufacturer describes resistance to stains, scratches and heat; edges can be damaged by impact', ru: 'Производитель указывает устойчивость к пятнам, царапинам и жару; края можно повредить ударом' },
       { lv: 'Ilgstošam karstumam izmantot paliktni; izvairīties no tiešas liesmas', en: 'Use a trivet for prolonged heat; avoid direct flame', ru: 'При длительном нагреве использовать подставку; избегать открытого огня' },
     ],
     granite: [
@@ -997,7 +685,7 @@ function AboutPage({ locale }: { locale: Locale }) {
               <p className="text-sm uppercase tracking-[0.2em] text-lago-gold mb-3">LAGO · 2003</p>
               <h2 className="text-3xl md:text-4xl font-heading text-white max-w-2xl">{copy.capabilities}</h2>
             </div>
-            <Link href={`/${locale}#materials`} className="inline-flex items-center gap-2 text-lago-gold hover:text-white transition-colors font-medium">
+            <Link href={`/${locale}/${locale === 'lv' ? 'akmens-virsmas' : locale === 'ru' ? 'kamennye-poverhnosti' : 'stone-surfaces'}/#material-comparison`} className="inline-flex items-center gap-2 text-lago-gold hover:text-white transition-colors font-medium">
               {locale === 'lv' ? 'Iepazīt materiālus' : locale === 'en' ? 'Explore materials' : 'Изучить материалы'} <ArrowRight className="w-4 h-4" />
             </Link>
           </div>

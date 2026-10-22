@@ -3,7 +3,6 @@
 // ============================================
 // Helper functions for checking admin permissions
 
-import { createBrowserSupabaseClient } from '@/lib/supabase/client'
 
 /**
  * Check if a user has admin role (server-side)
@@ -16,13 +15,8 @@ export async function isAdminServer(): Promise<boolean> {
 
     if (error || !user) return false
 
-    // Check admin role in user metadata
-    if (user.app_metadata?.role === 'admin') return true
-
-    // Check email domain
-
-
-    return false
+    const { data: isAdmin, error: roleError } = await supabase.rpc('is_current_user_admin')
+    return !roleError && isAdmin === true
 
   } catch {
     return false
@@ -34,18 +28,12 @@ export async function isAdminServer(): Promise<boolean> {
  */
 export async function isAdminClient(): Promise<boolean> {
   try {
+    const { createBrowserSupabaseClient } = await import('@/lib/supabase/client')
     const supabase = createBrowserSupabaseClient()
     const { data: { user }, error } = await supabase.auth.getUser()
-
     if (error || !user) return false
-
-    // Check admin role in user metadata
-    if (user.app_metadata?.role === 'admin') return true
-
-    // Check email domain
-
-
-    return false
+    const { data: isAdmin, error: roleError } = await supabase.rpc('is_current_user_admin')
+    return !roleError && isAdmin === true
   } catch {
     return false
   }
@@ -65,7 +53,7 @@ export async function getCurrentUser() {
     return {
       id: user.id,
       email: user.email,
-      role: user.app_metadata?.role || 'user',
+      role: await isAdminServer() ? 'admin' : 'user',
       isAdmin: await isAdminServer(),
     }
   } catch {

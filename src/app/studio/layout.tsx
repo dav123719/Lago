@@ -12,7 +12,6 @@ export const metadata = {
   title: 'LAGO Studio',
   description: 'Content management for LAGO luxury furniture',
 }
-
 export default async function StudioLayout({
   children,
 }: {
@@ -48,10 +47,9 @@ export default async function StudioLayout({
     redirect('/lv/?login=1')
   }
 
-  // Check admin role in user metadata or database
-  const isAdmin = user.app_metadata?.role === 'admin'
+  const { data: isAdmin, error: roleError } = await supabase.rpc('is_current_user_admin')
 
-  if (!isAdmin) {
+  if (roleError || !isAdmin) {
     redirect('/?error=unauthorized')
   }
 
@@ -62,20 +60,4 @@ export default async function StudioLayout({
       </div>
     </>
   )
-}
-
-async function checkAdminRole(supabase: any, userId: string): Promise<boolean> {
-  try {
-    const { data, error } = await supabase
-      .from('user_roles')
-      .select('role')
-      .eq('user_id', userId)
-      .eq('role', 'admin')
-      .single()
-
-    if (error) return false
-    return !!data
-  } catch {
-    return false
-  }
 }

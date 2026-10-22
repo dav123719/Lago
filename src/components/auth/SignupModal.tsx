@@ -27,7 +27,7 @@ const labels = {
     email: 'E-pasts',
     emailPlaceholder: 'jusu@epasts.lv',
     password: 'Parole',
-    passwordPlaceholder: 'Minimāli 8 simboli',
+    passwordPlaceholder: 'Vismaz 12 rakstzīmes',
     confirmPassword: 'Apstipriniet paroli',
     confirmPasswordPlaceholder: 'Atkārtoti ievadiet paroli',
     signupButton: 'Izveidot kontu',
@@ -36,8 +36,10 @@ const labels = {
     login: 'Ienākt',
     error: 'Kļūda. Lūdzu, mēģiniet vēlreiz.',
     passwordMismatch: 'Paroles nesakrīt',
-    weakPassword: 'Parolei jābūt vismaz 8 simboliem',
-    success: 'Konts izveidots! Lūdzu, pārbaudiet e-pastu, lai apstiprinātu.',
+    weakPassword: 'Parolei jābūt vismaz 12 rakstzīmēm',
+    success: 'Ja šo e-pastu var reģistrēt, uz to nosūtīta apstiprinājuma saite.',
+    resend: 'Nosūtīt apstiprinājuma e-pastu vēlreiz',
+    sent: 'Ja šim kontam nepieciešams apstiprinājums, uz e-pastu nosūtīta saite. Pārbaudiet arī mēstuļu mapi.',
   },
   en: {
     title: 'Create Account',
@@ -47,7 +49,7 @@ const labels = {
     email: 'Email',
     emailPlaceholder: 'your@email.com',
     password: 'Password',
-    passwordPlaceholder: 'Minimum 8 characters',
+    passwordPlaceholder: 'At least 12 characters',
     confirmPassword: 'Confirm Password',
     confirmPasswordPlaceholder: 'Re-enter your password',
     signupButton: 'Create Account',
@@ -56,8 +58,10 @@ const labels = {
     login: 'Login',
     error: 'Error. Please try again.',
     passwordMismatch: 'Passwords do not match',
-    weakPassword: 'Password must be at least 8 characters',
-    success: 'Account created! Please check your email to confirm.',
+    weakPassword: 'Password must be at least 12 characters',
+    success: 'If this email can be registered, a confirmation link has been sent.',
+    resend: 'Resend confirmation email',
+    sent: 'If this account needs confirmation, a link has been sent. Check your spam folder too.',
   },
   ru: {
     title: 'Создать аккаунт',
@@ -67,7 +71,7 @@ const labels = {
     email: 'Email',
     emailPlaceholder: 'ваш@email.ru',
     password: 'Пароль',
-    passwordPlaceholder: 'Минимум 8 символов',
+    passwordPlaceholder: 'Не менее 12 символов',
     confirmPassword: 'Подтвердите пароль',
     confirmPasswordPlaceholder: 'Повторно введите пароль',
     signupButton: 'Создать аккаунт',
@@ -76,13 +80,15 @@ const labels = {
     login: 'Войти',
     error: 'Ошибка. Пожалуйста, попробуйте снова.',
     passwordMismatch: 'Пароли не совпадают',
-    weakPassword: 'Пароль должен быть не менее 8 символов',
-    success: 'Аккаунт создан! Пожалуйста, проверьте почту для подтверждения.',
+    weakPassword: 'Пароль должен содержать не менее 12 символов',
+    success: 'Если этот адрес можно зарегистрировать, на него отправлена ссылка подтверждения.',
+    resend: 'Отправить письмо подтверждения повторно',
+    sent: 'Если аккаунту нужно подтверждение, ссылка отправлена. Проверьте также папку спама.',
   },
 }
 
 export function SignupModal({ locale, isOpen, onClose, onLoginClick }: SignupModalProps) {
-  const { signUp } = useAuth()
+  const { signUp, resendSignupConfirmation } = useAuth()
   const [fullName, setFullName] = useState('')
   const [email, setEmail] = useState('')
   const [password, setPassword] = useState('')
@@ -90,6 +96,8 @@ export function SignupModal({ locale, isOpen, onClose, onLoginClick }: SignupMod
   const [showPassword, setShowPassword] = useState(false)
   const [showConfirmPassword, setShowConfirmPassword] = useState(false)
   const [isLoading, setIsLoading] = useState(false)
+  const [resending, setResending] = useState(false)
+  const [confirmationSent, setConfirmationSent] = useState(false)
   const t = labels[locale]
 
   // Handle escape key
@@ -118,6 +126,8 @@ export function SignupModal({ locale, isOpen, onClose, onLoginClick }: SignupMod
       setShowPassword(false)
       setShowConfirmPassword(false)
       setIsLoading(false)
+      setResending(false)
+      setConfirmationSent(false)
     }
   }, [isOpen])
 
@@ -125,7 +135,7 @@ export function SignupModal({ locale, isOpen, onClose, onLoginClick }: SignupMod
     e.preventDefault()
 
     // Validation
-    if (password.length < 8) {
+    if (password.length < 12) {
       toast.error(t.weakPassword)
       return
     }
@@ -137,15 +147,30 @@ export function SignupModal({ locale, isOpen, onClose, onLoginClick }: SignupMod
 
     setIsLoading(true)
 
-    const { error } = await signUp(email, password, fullName)
+    const { error } = await signUp(email, password, fullName, locale)
 
     if (error) {
       toast.error(t.error)
       setIsLoading(false)
     } else {
+      setConfirmationSent(true)
       toast.success(t.success)
-      onClose()
+      setIsLoading(false)
     }
+  }
+
+  const handleResend = async () => {
+    setResending(true)
+    const { error } = await resendSignupConfirmation(email, locale)
+    setResending(false)
+    if (error) {
+      const message = error.message.toLowerCase().includes('rate')
+        ? 'Please wait before requesting another email.'
+        : t.error
+      toast.error(message)
+      return
+    }
+    toast.success(t.success)
   }
 
   if (!isOpen) return null
@@ -185,6 +210,18 @@ export function SignupModal({ locale, isOpen, onClose, onLoginClick }: SignupMod
             <p className="text-lago-muted text-sm">{t.subtitle}</p>
           </div>
 
+          {confirmationSent ? (
+            <div role="status" className="space-y-4 text-center">
+              <p className="text-lago-muted">{t.sent}</p>
+              <button type="button" onClick={handleResend} disabled={resending}
+                className="w-full py-3 px-5 rounded-lg border border-white/15 text-white disabled:opacity-60">
+                {resending ? t.signingUp : t.resend}
+              </button>
+              <button type="button" onClick={onLoginClick} className="text-sm text-lago-gold">
+                {t.login}
+              </button>
+            </div>
+          ) : <>
           {/* Form */}
           <form onSubmit={handleSubmit} className="space-y-5">
             {/* Full Name field */}
@@ -239,7 +276,7 @@ export function SignupModal({ locale, isOpen, onClose, onLoginClick }: SignupMod
                   onChange={(e) => setPassword(e.target.value)}
                   placeholder={t.passwordPlaceholder}
                   required
-                  minLength={8}
+                  minLength={12}
                   className="w-full pl-12 pr-12 py-3 rounded-lg bg-lago-dark border border-white/10 text-white placeholder-lago-muted focus:border-lago-gold/50 focus:outline-none focus:ring-1 focus:ring-lago-gold/50 transition-all"
                 />
                 <button
@@ -307,6 +344,7 @@ export function SignupModal({ locale, isOpen, onClose, onLoginClick }: SignupMod
               {t.login}
             </button>
           </div>
+          </>}
         </div>
       </div>
     </div>

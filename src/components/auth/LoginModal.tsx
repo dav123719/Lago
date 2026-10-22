@@ -16,6 +16,7 @@ interface LoginModalProps {
   isOpen: boolean
   onClose: () => void
   onSignupClick: () => void
+  onForgotPasswordClick: () => void
 }
 
 const labels = {
@@ -63,7 +64,7 @@ const labels = {
   },
 }
 
-export function LoginModal({ locale, isOpen, onClose, onSignupClick }: LoginModalProps) {
+export function LoginModal({ locale, isOpen, onClose, onSignupClick, onForgotPasswordClick }: LoginModalProps) {
   const { signInWithEmail } = useAuth()
   const [email, setEmail] = useState('')
   const [password, setPassword] = useState('')
@@ -200,6 +201,7 @@ export function LoginModal({ locale, isOpen, onClose, onSignupClick }: LoginModa
             <div className="text-right">
               <button
                 type="button"
+                onClick={onForgotPasswordClick}
                 className="text-sm text-lago-gold hover:text-lago-gold-light transition-colors"
               >
                 {t.forgotPassword}

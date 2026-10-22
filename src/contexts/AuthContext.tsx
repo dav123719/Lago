@@ -6,11 +6,12 @@
 'use client'
 
 import { createContext, useContext, useEffect, useState, useRef, useCallback, ReactNode } from 'react'
-import { User, AuthError, Provider } from '@supabase/supabase-js'
+import { User, AuthError, Provider, UserIdentity } from '@supabase/supabase-js'
 import { createBrowserSupabaseClient } from '@/lib/supabase/client'
 import { Database } from '@/lib/supabase/database.types'
 import { toast } from 'sonner'
 import { Locale } from '@/lib/i18n/config'
+import { safeInternalRedirect } from '@/lib/auth/redirect'
 
 type Profile = Database['public']['Tables']['profiles']['Row']
 
@@ -19,9 +20,16 @@ interface AuthContextType {
   profile: Profile | null
   isLoading: boolean
   isAuthenticated: boolean
-  signInWithOAuth: (provider: Provider, locale: Locale) => Promise<void>
+  signInWithOAuth: (provider: Provider, locale: Locale) => Promise<{ error: AuthError | Error | null }>
   signInWithEmail: (email: string, password: string) => Promise<{ error: AuthError | null }>
-  signUp: (email: string, password: string, fullName: string) => Promise<{ error: AuthError | null }>
+  signUp: (email: string, password: string, fullName: string, locale?: Locale) => Promise<{ error: AuthError | null }>
+  resendSignupConfirmation: (email: string, locale: Locale) => Promise<{ error: AuthError | null }>
+  requestPasswordReset: (email: string, locale: Locale) => Promise<{ error: AuthError | null }>
+  updateEmail: (email: string, locale?: Locale) => Promise<{ error: AuthError | null }>
+  updatePassword: (password: string) => Promise<{ error: AuthError | null }>
+  getIdentities: () => Promise<{ identities: UserIdentity[]; error: AuthError | null }>
+  linkOAuthIdentity: (provider: 'google' | 'facebook', locale: Locale) => Promise<{ error: AuthError | Error | null }>
+  unlinkIdentity: (identity: UserIdentity) => Promise<{ error: AuthError | Error | null }>
   signOut: () => Promise<void>
   updateProfile: (updates: Partial<Profile>) => Promise<{ error: AuthError | Error | null }>
   refreshProfile: () => Promise<void>
@@ -66,11 +74,19 @@ export function AuthProvider({ children }: AuthProviderProps) {
 
   // Fetch user profile
   const fetchProfile = useCallback(async (userId: string) => {
-    const { data, error } = await supabase
+    let { data, error } = await supabase
       .from('profiles')
       .select('*')
       .eq('id', userId)
       .single()
+
+    if (!data && error?.code === 'PGRST116') {
+      const provision = await supabase.rpc('ensure_my_profile')
+      if (!provision.error) {
+        data = provision.data
+        error = null
+      }
+    }
 
     if (error) {
       console.error('Error fetching profile:', error)
@@ -142,12 +158,21 @@ export function AuthProvider({ children }: AuthProviderProps) {
   }, [supabase, fetchProfile])
 
   // OAuth sign in
-  const signInWithOAuth = async (provider: Provider, locale: Locale) => {
+  const signInWithOAuth = async (provider: Provider, locale: Locale, next = `/${locale}/account`) => {
     try {
+      const enabled = provider === 'google'
+        ? process.env.NEXT_PUBLIC_GOOGLE_OAUTH_ENABLED === 'true'
+        : provider === 'facebook' && process.env.NEXT_PUBLIC_FACEBOOK_OAUTH_ENABLED === 'true'
+      if (!enabled) throw new Error(`${provider} sign-in is not configured`)
+      const origin = typeof window !== 'undefined' ? window.location.origin : process.env.NEXT_PUBLIC_APP_URL || ''
+      const callback = new URL('/auth/callback', origin)
+      callback.searchParams.set('flow', 'signin')
+      callback.searchParams.set('locale', locale)
+      callback.searchParams.set('next', safeInternalRedirect(next, `/${locale}/account`))
       const { error } = await supabase.auth.signInWithOAuth({
         provider,
         options: {
-          redirectTo: `${process.env.NEXT_PUBLIC_APP_URL}/auth/callback?locale=${locale}`,
+          redirectTo: callback.toString(),
           queryParams: {
             access_type: 'offline',
             prompt: 'consent',
@@ -155,13 +180,11 @@ export function AuthProvider({ children }: AuthProviderProps) {
         },
       })
 
-      if (error) {
-        toast.error(authMessages[locale].error)
-        throw error
-      }
+      if (error) throw error
+      return { error: null }
     } catch (error) {
-      console.error('OAuth error:', error)
       toast.error(authMessages[locale].error)
+      return { error: error instanceof Error ? error : new Error(authMessages[locale].error) }
     }
   }
 
@@ -176,18 +199,85 @@ export function AuthProvider({ children }: AuthProviderProps) {
   }
 
   // Sign up
-  const signUp = async (email: string, password: string, fullName: string) => {
+  const authCallbackUrl = (flow: string, locale: Locale) => {
+    const origin = typeof window !== 'undefined' ? window.location.origin : process.env.NEXT_PUBLIC_APP_URL || ''
+    const callback = new URL('/auth/callback', origin)
+    callback.searchParams.set('flow', flow)
+    callback.searchParams.set('locale', locale)
+    return callback.toString()
+  }
+
+  const signUp = async (email: string, password: string, fullName: string, locale: Locale = 'lv') => {
     const { error } = await supabase.auth.signUp({
-      email,
+      email: email.trim(),
       password,
       options: {
-        emailRedirectTo: `${process.env.NEXT_PUBLIC_APP_URL || window.location.origin}/auth/callback/`,
+        emailRedirectTo: authCallbackUrl('signup', locale),
         data: {
-          full_name: fullName,
+          full_name: fullName.trim().slice(0, 120),
         },
       },
     })
 
+    return { error }
+  }
+
+  const resendSignupConfirmation = async (email: string, locale: Locale) => {
+    const { error } = await supabase.auth.resend({
+      type: 'signup',
+      email: email.trim(),
+      options: { emailRedirectTo: authCallbackUrl('signup', locale) },
+    })
+    return { error }
+  }
+
+  const requestPasswordReset = async (email: string, locale: Locale) => {
+    const callback = authCallbackUrl('recovery', locale)
+    const { error } = await supabase.auth.resetPasswordForEmail(email.trim(), { redirectTo: callback })
+    return { error }
+  }
+
+  const updateEmail = async (email: string, locale: Locale = 'lv') => {
+    const { error } = await supabase.auth.updateUser(
+      { email: email.trim() },
+      { emailRedirectTo: authCallbackUrl('email_change', locale) }
+    )
+    return { error }
+  }
+
+  const updatePassword = async (password: string) => {
+    const { error } = await supabase.auth.updateUser({ password })
+    return { error }
+  }
+
+  const getIdentities = async () => {
+    const { data, error } = await supabase.auth.getUserIdentities()
+    return { identities: data?.identities ?? [], error }
+  }
+
+  const linkOAuthIdentity = async (provider: 'google' | 'facebook', locale: Locale) => {
+    const manualLinkEnabled = process.env.NEXT_PUBLIC_MANUAL_IDENTITY_LINKING_ENABLED === 'true'
+    const providerEnabled = provider === 'google'
+      ? process.env.NEXT_PUBLIC_GOOGLE_OAUTH_ENABLED === 'true'
+      : process.env.NEXT_PUBLIC_FACEBOOK_OAUTH_ENABLED === 'true'
+    if (!manualLinkEnabled || !providerEnabled) {
+      return { error: new Error('This sign-in provider is not enabled') }
+    }
+    const callback = authCallbackUrl('link', locale)
+    const { error } = await supabase.auth.linkIdentity({
+      provider,
+      options: { redirectTo: callback },
+    })
+    return { error }
+  }
+
+  const unlinkIdentity = async (identity: UserIdentity) => {
+    const { data, error: identitiesError } = await supabase.auth.getUserIdentities()
+    if (identitiesError) return { error: identitiesError }
+    if ((data?.identities.length ?? 0) <= 1) {
+      return { error: new Error('Keep at least one sign-in method connected') }
+    }
+    const { error } = await supabase.auth.unlinkIdentity(identity)
     return { error }
   }
 
@@ -204,9 +294,23 @@ export function AuthProvider({ children }: AuthProviderProps) {
       return { error: new Error('No user logged in') }
     }
 
-    const { error } = await (supabase
-      .from('profiles') as any)
-      .update({ ...updates, updated_at: new Date().toISOString() })
+    const safeUpdates: Database['public']['Tables']['profiles']['Update'] = {}
+    if (updates.full_name !== undefined) safeUpdates.full_name = updates.full_name?.trim().slice(0, 120) || null
+    if (updates.first_name !== undefined) safeUpdates.first_name = updates.first_name?.trim().slice(0, 100) || null
+    if (updates.last_name !== undefined) safeUpdates.last_name = updates.last_name?.trim().slice(0, 100) || null
+    if (updates.phone !== undefined) safeUpdates.phone = updates.phone?.trim().slice(0, 50) || null
+    if (updates.avatar_url !== undefined) {
+      const avatar = updates.avatar_url?.trim().slice(0, 2048) || null
+      if (avatar && !/^https:\/\//i.test(avatar)) return { error: new Error('Avatar URL must use HTTPS') }
+      safeUpdates.avatar_url = avatar
+    }
+    if (updates.bio !== undefined) safeUpdates.bio = updates.bio?.trim().slice(0, 500) || null
+    if (updates.preferred_language !== undefined) safeUpdates.preferred_language = updates.preferred_language
+    if (updates.email_notifications !== undefined) safeUpdates.email_notifications = updates.email_notifications
+    if (updates.sms_notifications !== undefined) safeUpdates.sms_notifications = updates.sms_notifications
+    const { error } = await supabase
+      .from('profiles')
+      .update(safeUpdates)
       .eq('id', user.id)
 
     if (!error) {
@@ -224,6 +328,13 @@ export function AuthProvider({ children }: AuthProviderProps) {
     signInWithOAuth,
     signInWithEmail,
     signUp,
+    resendSignupConfirmation,
+    requestPasswordReset,
+    updateEmail,
+    updatePassword,
+    getIdentities,
+    linkOAuthIdentity,
+    unlinkIdentity,
     signOut,
     updateProfile,
     refreshProfile,
