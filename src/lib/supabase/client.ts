@@ -11,10 +11,9 @@ import type { Database } from './database.types'
 
 // Check if Supabase credentials are available
 const supabaseUrl = process.env.NEXT_PUBLIC_SUPABASE_URL
-const supabaseServiceKey = process.env.SUPABASE_SERVICE_ROLE_KEY
 const supabaseAnonKey = process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY
 
-const hasServerCredentials = Boolean(supabaseUrl && supabaseServiceKey)
+const hasServerCredentials = Boolean(supabaseUrl && supabaseAnonKey)
 const hasBrowserCredentials = Boolean(supabaseUrl && supabaseAnonKey)
 
 // Mock client for graceful degradation when credentials are missing
@@ -59,7 +58,7 @@ export function createServerClient() {
   try {
     return createSupabaseClient<Database>(
       supabaseUrl!,
-      supabaseServiceKey!,
+      supabaseAnonKey!,
       {
         auth: {
           autoRefreshToken: false,

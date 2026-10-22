@@ -1,0 +1,106 @@
+name: Deploy production
+# Manual until protected production environment and scoped SSH access are configured.
+on:
+  workflow_dispatch:
+permissions:
+  contents: read
+concurrency:
+  group: lago-production
+  cancel-in-progress: false
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    environment: production
+    env:
+      NEXT_TELEMETRY_DISABLED: '1'
+      NEXT_PUBLIC_APP_URL: https://lago.lv
+      NEXT_PUBLIC_SITE_URL: https://lago.lv
+      NEXT_PUBLIC_SUPABASE_URL: ${{ vars.NEXT_PUBLIC_SUPABASE_URL }}
+      NEXT_PUBLIC_SUPABASE_ANON_KEY: ${{ vars.NEXT_PUBLIC_SUPABASE_ANON_KEY }}
+      NEXT_PUBLIC_SANITY_PROJECT_ID: ${{ vars.NEXT_PUBLIC_SANITY_PROJECT_ID }}
+      NEXT_PUBLIC_SANITY_DATASET: ${{ vars.NEXT_PUBLIC_SANITY_DATASET }}
+      NEXT_PUBLIC_SANITY_API_VERSION: ${{ vars.NEXT_PUBLIC_SANITY_API_VERSION }}
+      NEXT_PUBLIC_STRIPE_PUBLISHABLE_KEY: ${{ vars.NEXT_PUBLIC_STRIPE_PUBLISHABLE_KEY }}
+      NEXT_PUBLIC_GA_MEASUREMENT_ID: ${{ vars.NEXT_PUBLIC_GA_MEASUREMENT_ID }}
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22.23.3'
+          cache: npm
+      - name: Validate production branch and public configuration
+        run: |
+          test "$GITHUB_REF" = "refs/heads/main"
+          test -n "$NEXT_PUBLIC_SUPABASE_URL"
+          test -n "$NEXT_PUBLIC_SUPABASE_ANON_KEY"
+          test -n "$NEXT_PUBLIC_SANITY_PROJECT_ID"
+          test -n "$NEXT_PUBLIC_SANITY_DATASET"
+      - run: npm ci
+      - run: npm audit --audit-level=critical
+      - run: npm run lint
+      - run: npm run test:unit
+      - run: npm run build
+      - run: npm run type-check
+      - name: Package standalone release without secrets
+        run: |
+          mkdir -p dist/standalone/dist
+          cp -a dist/static dist/standalone/dist/static
+          cp -a public dist/standalone/public
+          find dist/standalone -name '.env*' -delete
+          # Dereference links; the privileged receiver rejects archive links.
+          tar -czhf "$RUNNER_TEMP/release.tar.gz" -C dist/standalone .
+          sha256sum "$RUNNER_TEMP/release.tar.gz" | cut -d ' ' -f 1 > "$RUNNER_TEMP/release.sha256"
+      - name: Browser smoke tests against built release
+        env:
+          HOSTNAME: 127.0.0.1
+          PORT: '3100'
+          PLAYWRIGHT_BASE_URL: http://127.0.0.1:3100
+        run: |
+          set -euo pipefail
+          npx --no-install playwright install --with-deps chromium
+          node dist/standalone/server.js > "$RUNNER_TEMP/lago-smoke.log" 2>&1 &
+          server_pid=$!
+          trap 'kill "$server_pid" 2>/dev/null || true' EXIT
+          ready=false
+          for attempt in {1..30}; do
+            if curl --fail --silent http://127.0.0.1:3100/api/health/ | node -e 'let s="";process.stdin.on("data",c=>s+=c);process.stdin.on("end",()=>{if(JSON.parse(s).status!=="ok")process.exit(1)})'; then
+              ready=true
+              break
+            fi
+            sleep 2
+          done
+          test "$ready" = true
+          npx --no-install playwright test --config=playwright.smoke.config.ts
+      - name: Upload and activate verified release
+        env:
+          DEPLOY_HOST: ${{ secrets.DEPLOY_HOST }}
+          DEPLOY_USER: ${{ secrets.DEPLOY_USER }}
+          DEPLOY_SSH_KEY: ${{ secrets.DEPLOY_SSH_KEY }}
+          DEPLOY_KNOWN_HOSTS: ${{ secrets.DEPLOY_KNOWN_HOSTS }}
+        run: |
+          set -euo pipefail
+          [[ "$DEPLOY_HOST" =~ ^[a-zA-Z0-9.-]+$ ]]
+          [[ "$DEPLOY_USER" =~ ^[a-zA-Z0-9_-]+$ ]]
+          install -d -m 700 ~/.ssh
+          printf '%s\n' "$DEPLOY_SSH_KEY" > ~/.ssh/id_ed25519
+          printf '%s\n' "$DEPLOY_KNOWN_HOSTS" > ~/.ssh/known_hosts
+          chmod 600 ~/.ssh/id_ed25519 ~/.ssh/known_hosts
+          trap 'rm -f ~/.ssh/id_ed25519' EXIT
+          ssh -o BatchMode=yes -o StrictHostKeyChecking=yes "$DEPLOY_USER@$DEPLOY_HOST" 'mkdir -p /srv/lago/incoming'
+          scp -o BatchMode=yes -o StrictHostKeyChecking=yes "$RUNNER_TEMP/release.tar.gz" "$DEPLOY_USER@$DEPLOY_HOST:/srv/lago/incoming/$GITHUB_SHA.tar.gz"
+          digest=$(cat "$RUNNER_TEMP/release.sha256")
+          ssh -o BatchMode=yes -o StrictHostKeyChecking=yes "$DEPLOY_USER@$DEPLOY_HOST" "sudo -n /usr/local/sbin/lago-release $GITHUB_SHA $digest"
+      - name: Verify public endpoint
+        run: |
+          set -euo pipefail
+          curl --fail --silent --show-error --retry 3 --retry-delay 5 https://lago.lv/api/health/ | node -e 'let s="";process.stdin.on("data",c=>s+=c);process.stdin.on("end",()=>{if(JSON.parse(s).status!=="ok")process.exit(1)})'
+      - name: Upload smoke diagnostics
+        if: failure()
+        uses: actions/upload-artifact@v4
+        with:
+          name: deployment-smoke-diagnostics
+          path: |
+            test-results/smoke/
+            ${{ runner.temp }}/lago-smoke.log
+          retention-days: 7
+          if-no-files-found: ignore

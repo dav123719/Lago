@@ -6,7 +6,7 @@
 
 import { Product, Order, OrderItem } from '@/types/store'
 import { SanityProject } from '@/lib/sanity/types'
-import { Locale, locales } from '@/lib/i18n/config'
+import { Locale, locales, defaultLocale } from '@/lib/i18n/config'
 
 const SITE_URL = process.env.NEXT_PUBLIC_SITE_URL || 'https://lago.lv'
 

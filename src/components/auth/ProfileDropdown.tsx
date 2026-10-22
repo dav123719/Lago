@@ -101,6 +101,7 @@ export function ProfileDropdown({ locale, mobile, profile }: ProfileDropdownProp
                 alt={displayName}
                 width={48}
                 height={48}
+                unoptimized
                 className="w-full h-full object-cover"
               />
             ) : (
@@ -166,6 +167,7 @@ export function ProfileDropdown({ locale, mobile, profile }: ProfileDropdownProp
               alt={displayName}
               width={32}
               height={32}
+              unoptimized
               className="w-full h-full object-cover"
             />
           ) : (

@@ -3,33 +3,27 @@
 // ============================================
 // Helper functions for checking admin permissions
 
-import { createServerClient, createBrowserSupabaseClient } from '@/lib/supabase/client'
+import { createBrowserSupabaseClient } from '@/lib/supabase/client'
 
 /**
  * Check if a user has admin role (server-side)
  */
 export async function isAdminServer(): Promise<boolean> {
   try {
-    const supabase = createServerClient()
+    const { createClient } = await import('@/lib/supabase/server')
+    const supabase = await createClient()
     const { data: { user }, error } = await supabase.auth.getUser()
 
     if (error || !user) return false
 
     // Check admin role in user metadata
-    if (user.user_metadata?.role === 'admin') return true
+    if (user.app_metadata?.role === 'admin') return true
 
     // Check email domain
-    if (user.email?.endsWith('@lago.lv')) return true
 
-    // Check user_roles table
-    const { data } = await supabase
-      .from('user_roles')
-      .select('role')
-      .eq('user_id', user.id)
-      .eq('role', 'admin')
-      .single()
 
-    return !!data
+    return false
+
   } catch {
     return false
   }
@@ -46,10 +40,10 @@ export async function isAdminClient(): Promise<boolean> {
     if (error || !user) return false
 
     // Check admin role in user metadata
-    if (user.user_metadata?.role === 'admin') return true
+    if (user.app_metadata?.role === 'admin') return true
 
     // Check email domain
-    if (user.email?.endsWith('@lago.lv')) return true
+
 
     return false
   } catch {
@@ -62,7 +56,8 @@ export async function isAdminClient(): Promise<boolean> {
  */
 export async function getCurrentUser() {
   try {
-    const supabase = createServerClient()
+    const { createClient } = await import('@/lib/supabase/server')
+    const supabase = await createClient()
     const { data: { user }, error } = await supabase.auth.getUser()
 
     if (error || !user) return null
@@ -70,7 +65,7 @@ export async function getCurrentUser() {
     return {
       id: user.id,
       email: user.email,
-      role: user.user_metadata?.role || 'user',
+      role: user.app_metadata?.role || 'user',
       isAdmin: await isAdminServer(),
     }
   } catch {

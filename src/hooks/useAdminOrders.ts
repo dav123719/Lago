@@ -1,4 +1,5 @@
 'use client'
+import { normalizeOrder } from '@/lib/orders/normalize'
 
 // ===================================
 // useAdminOrders Hook - Admin order management
@@ -83,7 +84,7 @@ export function useAdminOrders(filters?: OrderFilters): UseAdminOrdersReturn {
         throw new Error(ordersError.message)
       }
 
-      setOrders(ordersData || [])
+      setOrders((ordersData || []).map(normalizeOrder))
 
       // Fetch stats
       const { data: statsData, error: statsError } = await (supabase

@@ -67,7 +67,7 @@ export function EditProjectModal({
     year: project?.year || new Date().getFullYear(),
   }))
 
-  if (!isOpen || !project) return null
+
 
   const handleTitleChange = (lang: Locale, value: string) => {
     setFormData(prev => ({
@@ -143,6 +143,7 @@ export function EditProjectModal({
   }
 
   const handleFileUpload = async (file: File) => {
+    if (!project) return
     if (!file.type.startsWith('image/')) {
       toast.error('Please upload an image file')
       return
@@ -178,6 +179,8 @@ export function EditProjectModal({
       setIsUploading(false)
     }
   }
+
+  if (!isOpen || !project) return null
 
   return (
     <div className="fixed inset-0 z-50 flex items-center justify-center p-4">

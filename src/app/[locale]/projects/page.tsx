@@ -1,3 +1,5 @@
+import { ProjectsPage as StaticProjectsPage } from '@/components/pages/ProjectsPage'
+export const dynamic = 'force-dynamic'
 // ============================================
 // Projects Page with Sanity Integration
 // ============================================
@@ -20,9 +22,9 @@ interface ProjectsPageProps {
 export async function generateMetadata({ params }: ProjectsPageProps): Promise<Metadata> {
   const { locale } = await params
   const titles: Record<Locale, string> = {
-    lv: 'Projekti | LAGO',
-    en: 'Projects | LAGO',
-    ru: 'Проекты | LAGO',
+    lv: 'LAGO projekti',
+    en: 'LAGO projects',
+    ru: 'Проекты LAGO',
   }
   const descriptions: Record<Locale, string> = {
     lv: 'Apskatiet mūsu realizētos projektus - no privātām virtuvēm līdz komerciālajiem objektiem.',
@@ -33,6 +35,21 @@ export async function generateMetadata({ params }: ProjectsPageProps): Promise<M
   return {
     title: titles[locale as Locale],
     description: descriptions[locale as Locale],
+    alternates: {
+      canonical: `/${locale}/${locale === 'lv' ? 'projekti' : locale === 'ru' ? 'proekty' : 'projects'}/`,
+      languages: {
+        lv: '/lv/projekti/',
+        en: '/en/projects/',
+        ru: '/ru/proekty/',
+        'x-default': '/lv/projekti/',
+      },
+    },
+    openGraph: {
+      type: 'website',
+      title: titles[locale as Locale],
+      description: descriptions[locale as Locale],
+      url: `https://lago.lv/${locale}/${locale === 'lv' ? 'projekti' : locale === 'ru' ? 'proekty' : 'projects'}/`,
+    },
   }
 }
 
@@ -47,8 +64,7 @@ async function checkIsAdmin(): Promise<boolean> {
     
     if (!user) return false
     
-    return user.user_metadata?.role === 'admin' || 
-           user.email?.endsWith('@lago.lv') || false
+    return user.app_metadata?.role === 'admin' || false
   } catch {
     return false
   }
@@ -83,6 +99,8 @@ export default async function ProjectsPage({ params }: ProjectsPageProps) {
   } else {
     console.warn('Sanity not configured, projects will not be fetched')
   }
+
+  if (!projects.length && !isPreview) return <StaticProjectsPage locale={validLocale} />
 
   // Check if user is admin for edit functionality
   let isAdmin = false

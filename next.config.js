@@ -1,32 +1,45 @@
 /** @type {import('next').NextConfig} */
+const remoteImagePatterns = [
+  {
+    protocol: 'https',
+    hostname: 'cdn.sanity.io',
+    pathname: '/images/**',
+  },
+]
+
+// Limit server-side image fetching to the configured Supabase project's
+// public object storage. User-provided avatar URLs bypass the optimizer.
+try {
+  const supabaseUrl = process.env.NEXT_PUBLIC_SUPABASE_URL
+  if (supabaseUrl) {
+    const { protocol, hostname } = new URL(supabaseUrl)
+    if (protocol === 'https:' && /^[a-z0-9-]+\.supabase\.co$/.test(hostname)) {
+      remoteImagePatterns.push({
+        protocol: 'https',
+        hostname,
+        pathname: '/storage/v1/object/public/**',
+      })
+    }
+  }
+} catch {
+  // An invalid or absent optional URL simply adds no remote image host.
+}
+
 const nextConfig = {
-  output: 'export',
+  output: 'standalone',
   distDir: 'dist',
   trailingSlash: true,
+  // Preserve listener origin for internal rewrites behind Apache HTTPS.
+  skipProxyUrlNormalize: true,
   
-  // TypeScript - allow production builds with type errors (API routes have type issues but work correctly)
+  // Fail production builds on TypeScript errors.
   typescript: {
-    ignoreBuildErrors: true,
+    ignoreBuildErrors: false,
   },
   
-  // ESLint - allow production builds with linting warnings
-  eslint: {
-    ignoreDuringBuilds: true,
-  },
   
   images: {
-    unoptimized: true,
-    remotePatterns: [
-      {
-        protocol: 'https',
-        hostname: 'cdn.sanity.io',
-        pathname: '/**',
-      },
-      {
-        protocol: 'https',
-        hostname: '**',
-      },
-    ],
+    remotePatterns: remoteImagePatterns,
     formats: ['image/avif', 'image/webp'],
     minimumCacheTTL: 60,
     deviceSizes: [640, 750, 828, 1080, 1200, 1920, 2048, 3840],

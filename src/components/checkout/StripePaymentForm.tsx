@@ -101,7 +101,7 @@ export function StripePaymentForm({
   useEffect(() => {
     const fetchCartTotal = async () => {
       try {
-        const response = await fetch(`/_api/cart/total?cart_id=${cartId}`)
+        const response = await fetch(`/api/cart/total?cart_id=${cartId}`)
         const data = await response.json()
         setSubtotal(data.subtotal || 0)
       } catch (error) {

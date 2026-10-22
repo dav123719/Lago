@@ -1,6 +1,6 @@
 # LAGO E-Commerce Platform
 
-A premium e-commerce platform for LAGO Stone & Furniture, built with Next.js 14+, Supabase, Sanity, and Stripe.
+A premium e-commerce platform for LAGO Stone & Furniture, built with Next.js 16, Supabase, Sanity, and Stripe.
 
 ![LAGO Banner](https://lago.lv/images/logo/lago-logo.png)
 
@@ -24,7 +24,7 @@ A premium e-commerce platform for LAGO Stone & Furniture, built with Next.js 14+
 
 ## Tech Stack
 
-- **Framework**: Next.js 14+ (App Router, Static Export)
+- **Framework**: Next.js 16 (App Router, Node.js server)
 - **Styling**: Tailwind CSS with custom luxury dark theme
 - **Database**: Supabase (PostgreSQL + Realtime)
 - **Auth**: Supabase Auth
@@ -40,7 +40,7 @@ git clone <repo-url>
 cd lago
 
 # Install dependencies
-npm install --legacy-peer-deps
+npm ci
 
 # Environment setup
 cp .env.local.example .env.local
@@ -151,7 +151,7 @@ npm run test:e2e:debug
 npm run build
 ```
 
-Output is in `/dist` directory (static export).
+Output uses Next.js standalone server mode. See [production deployment](docs/DEPLOYMENT.md) and [integration acceptance gates](docs/INTEGRATION_STATUS.md). Do not serve `dist/` as static HTML.
 
 ### Database Migrations
 Run SQL in Supabase Dashboard → SQL Editor:

@@ -1,3 +1,5 @@
+> Historical report from an earlier static build. Current deployment uses standalone Node.js; see docs/DEPLOYMENT.md and docs/INTEGRATION_STATUS.md.
+
 # LAGO Website - Deployment Summary
 
 > **Generated**: 2026-02-12  

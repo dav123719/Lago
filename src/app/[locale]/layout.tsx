@@ -1,8 +1,6 @@
 import { notFound } from 'next/navigation'
 import { locales, Locale, localeHtmlLang } from '@/lib/i18n/config'
 import { Header, Footer } from '@/components/layout'
-import { headingFont, bodyFont, buttonFont } from '@/lib/fonts'
-import { AsyncCSSLoader } from '@/components/AsyncCSSLoader'
 import { AuthProvider } from '@/contexts/AuthContext'
 import { CartProvider } from '@/contexts/CartContext'
 import { CartDrawer } from '@/components/cart/CartDrawer'
@@ -32,14 +30,8 @@ export default async function LocaleLayout({
   const validLocale = locale as Locale
 
   return (
-    <html lang={localeHtmlLang[validLocale]} className={`dark ${headingFont.variable} ${bodyFont.variable} ${buttonFont.variable}`}>
-      <head>
-        {/* PERFORMANCE: Resource hints for faster font loading */}
-        <link rel="preconnect" href="https://fonts.googleapis.com" />
-        <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin="anonymous" />
-        <link rel="dns-prefetch" href="https://fonts.googleapis.com" />
-        <link rel="dns-prefetch" href="https://fonts.gstatic.com" />
-        
+    <>
+      <>
         {/* PERFORMANCE: Inline critical CSS to eliminate render-blocking (minified) */}
         <style dangerouslySetInnerHTML={{ __html: `
           :root{--lago-black:#0a0a0a;--lago-dark:#111111;--lago-charcoal:#1a1a1a;--lago-gray:#2a2a2a;--lago-stone:#4a4a4a;--lago-muted:#a0a0a0;--lago-light:#e8e8e8;--lago-white:#ffffff;--lago-gold:#c9a962;--lago-gold-light:#d4bc7d;--lago-gold-dark:#a8893f}
@@ -61,10 +53,8 @@ export default async function LocaleLayout({
           .text-white{color:var(--lago-white)}
           .antialiased{-webkit-font-smoothing:antialiased;-moz-osx-font-smoothing:grayscale}
         `}} />
-      </head>
-      <body className={`min-h-screen flex flex-col bg-lago-black text-lago-light antialiased ${bodyFont.className}`}>
-        {/* PERFORMANCE: Load non-critical CSS asynchronously after initial render */}
-        <AsyncCSSLoader />
+      </>
+      <div className="min-h-screen flex flex-col">
         <AuthProvider>
           <CartProvider>
             <Header locale={validLocale} />
@@ -85,7 +75,7 @@ export default async function LocaleLayout({
             },
           }}
         />
-      </body>
-    </html>
+      </div>
+    </>
   )
 }

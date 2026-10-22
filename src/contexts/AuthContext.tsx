@@ -5,7 +5,7 @@
 
 'use client'
 
-import { createContext, useContext, useEffect, useState, ReactNode } from 'react'
+import { createContext, useContext, useEffect, useState, useRef, useCallback, ReactNode } from 'react'
 import { User, AuthError, Provider } from '@supabase/supabase-js'
 import { createBrowserSupabaseClient } from '@/lib/supabase/client'
 import { Database } from '@/lib/supabase/database.types'
@@ -62,9 +62,10 @@ export function AuthProvider({ children }: AuthProviderProps) {
   const [profile, setProfile] = useState<Profile | null>(null)
   const [isLoading, setIsLoading] = useState(true)
   const supabase = createBrowserSupabaseClient()
+  const activeUserId = useRef<string | null>(null)
 
   // Fetch user profile
-  const fetchProfile = async (userId: string) => {
+  const fetchProfile = useCallback(async (userId: string) => {
     const { data, error } = await supabase
       .from('profiles')
       .select('*')
@@ -77,54 +78,68 @@ export function AuthProvider({ children }: AuthProviderProps) {
     }
 
     return data
-  }
+  }, [supabase])
 
   // Refresh profile
   const refreshProfile = async () => {
     if (user?.id) {
       const profile = await fetchProfile(user.id)
-      setProfile(profile)
+      if (activeUserId.current === user.id) setProfile(profile)
     }
   }
 
-  // Initialize auth state
+  // Supabase invokes auth callbacks while holding its auth lock. Defer database
+  // requests until the callback returns, and ignore results from older sessions.
   useEffect(() => {
-    const initializeAuth = async () => {
-      try {
-        const { data: { session } } = await supabase.auth.getSession()
-        setUser(session?.user ?? null)
-        
-        if (session?.user?.id) {
-          const profile = await fetchProfile(session.user.id)
-          setProfile(profile)
-        }
-      } catch (error) {
-        console.error('Error initializing auth:', error)
-      } finally {
-        setIsLoading(false)
+    let active = true
+    let revision = 0
+    let authEventReceived = false
+    let pending: ReturnType<typeof setTimeout> | undefined
+
+    const applySession = (sessionUser: User | null) => {
+      if (!active) return
+      const currentRevision = ++revision
+      activeUserId.current = sessionUser?.id ?? null
+      setUser(sessionUser)
+      setProfile(null)
+      setIsLoading(false)
+      clearTimeout(pending)
+      if (sessionUser) {
+        pending = setTimeout(() => {
+          void fetchProfile(sessionUser.id).then((nextProfile) => {
+            if (active && revision === currentRevision) setProfile(nextProfile)
+          }).catch((error) => {
+            if (active && revision === currentRevision) console.error('Error fetching profile:', error)
+          })
+        }, 0)
       }
     }
 
-    initializeAuth()
-
-    // Listen for auth changes
     const { data: { subscription } } = supabase.auth.onAuthStateChange(
-      async (event, session) => {
-        setUser(session?.user ?? null)
-        
-        if (session?.user?.id) {
-          const profile = await fetchProfile(session.user.id)
-          setProfile(profile)
-        } else {
-          setProfile(null)
-        }
+      (_event, session) => {
+        authEventReceived = true
+        applySession(session?.user ?? null)
       }
     )
 
+    void supabase.auth.getSession().then(({ data: { session } }) => {
+      // An auth event can arrive while getSession is resolving.
+      if (!authEventReceived) applySession(session?.user ?? null)
+    }).catch((error) => {
+      if (active && !authEventReceived) {
+        console.error('Error initializing auth:', error)
+        setIsLoading(false)
+      }
+    })
+
     return () => {
+      active = false
+      activeUserId.current = null
+      revision++
+      clearTimeout(pending)
       subscription.unsubscribe()
     }
-  }, [supabase])
+  }, [supabase, fetchProfile])
 
   // OAuth sign in
   const signInWithOAuth = async (provider: Provider, locale: Locale) => {
@@ -152,36 +167,26 @@ export function AuthProvider({ children }: AuthProviderProps) {
 
   // Email sign in
   const signInWithEmail = async (email: string, password: string) => {
-    const { data, error } = await supabase.auth.signInWithPassword({
+    const { error } = await supabase.auth.signInWithPassword({
       email,
       password,
     })
-
-    if (!error && data.user) {
-      const profile = await fetchProfile(data.user.id)
-      setProfile(profile)
-    }
 
     return { error }
   }
 
   // Sign up
   const signUp = async (email: string, password: string, fullName: string) => {
-    const { data, error } = await supabase.auth.signUp({
+    const { error } = await supabase.auth.signUp({
       email,
       password,
       options: {
+        emailRedirectTo: `${process.env.NEXT_PUBLIC_APP_URL || window.location.origin}/auth/callback/`,
         data: {
           full_name: fullName,
         },
       },
     })
-
-    if (!error && data.user) {
-      // Profile is created by database trigger
-      const profile = await fetchProfile(data.user.id)
-      setProfile(profile)
-    }
 
     return { error }
   }

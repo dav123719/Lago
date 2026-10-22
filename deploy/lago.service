@@ -1,0 +1,28 @@
+[Unit]
+Description=LAGO production Next.js
+After=network-online.target
+Wants=network-online.target
+
+[Service]
+Type=simple
+User=lago
+Group=lago
+WorkingDirectory=/srv/lago/current
+Environment=NODE_ENV=production
+Environment=HOSTNAME=127.0.0.1
+Environment=PORT=3100
+EnvironmentFile=/etc/lago/production.env
+ExecStart=/usr/bin/node /srv/lago/current/server.js
+SuccessExitStatus=143
+Restart=on-failure
+RestartSec=5
+UMask=0027
+NoNewPrivileges=true
+PrivateTmp=true
+ProtectHome=true
+ProtectSystem=strict
+ReadWritePaths=/var/cache/lago /var/lib/lago
+SyslogIdentifier=lago
+
+[Install]
+WantedBy=multi-user.target

@@ -1,4 +1,5 @@
 'use client'
+import { normalizeOrder } from '@/lib/orders/normalize'
 
 // ===================================
 // useOrder Hook - Single order with realtime updates
@@ -48,7 +49,7 @@ export function useOrder(
         throw new Error(fetchError.message)
       }
 
-      setOrder(data)
+      setOrder(normalizeOrder(data))
     } catch (err) {
       setError(err instanceof Error ? err : new Error('Failed to fetch order'))
     } finally {

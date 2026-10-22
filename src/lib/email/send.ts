@@ -37,36 +37,32 @@ interface EmailProvider {
   send(data: EmailData): Promise<{ success: boolean; messageId?: string; error?: string }>
 }
 
-// Placeholder email provider
-// Replace this with your actual email provider (SendGrid, AWS SES, Resend, etc.)
-class PlaceholderEmailProvider implements EmailProvider {
+// Deliver through Resend; report failure instead of pretending to send.
+class ResendEmailProvider implements EmailProvider {
   async send(data: EmailData): Promise<{ success: boolean; messageId?: string; error?: string }> {
-    // Log email for development
-    console.log('📧 Email would be sent:')
-    console.log('To:', data.to)
-    console.log('Subject:', data.subject)
-    console.log('---')
-    
-    // In production, replace with actual email sending logic
-    // Example with SendGrid:
-    // return sendgrid.send({
-    //   to: data.to,
-    //   from: data.from || defaultConfig.from,
-    //   subject: data.subject,
-    //   html: data.html,
-    //   text: data.text,
-    // })
-
-    return {
-      success: true,
-      messageId: `placeholder-${Date.now()}`,
+    const key = process.env.RESEND_API_KEY
+    if (!key || !/^re_[A-Za-z0-9_-]{15,}$/.test(key)) return { success: false, error: 'Email service is not configured' }
+    try {
+      const response = await fetch('https://api.resend.com/emails', {
+        method: 'POST',
+        headers: { Authorization: `Bearer ${key}`, 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          from: data.from || defaultConfig.from, to: data.to, subject: data.subject,
+          html: data.html, text: data.text, reply_to: data.replyTo || defaultConfig.replyTo,
+          cc: data.cc, bcc: data.bcc,
+          attachments: data.attachments?.map(a => ({ filename: a.filename, content: Buffer.isBuffer(a.content) ? a.content.toString('base64') : a.content })),
+        }),
+        signal: AbortSignal.timeout(10000),
+      })
+      if (!response.ok) return { success: false, error: 'Email provider rejected the request' }
+      const result = await response.json() as { id: string }
+      return { success: true, messageId: result.id }
+    } catch {
+      return { success: false, error: 'Email provider is unavailable' }
     }
   }
 }
-
-// Initialize email provider
-// Replace PlaceholderEmailProvider with your actual provider
-const emailProvider: EmailProvider = new PlaceholderEmailProvider()
+const emailProvider: EmailProvider = new ResendEmailProvider()
 
 /**
  * Send an email

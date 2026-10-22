@@ -1,5 +1,7 @@
 'use client'
 
+import { serializeJsonLd } from '@/lib/seo/serialize-json-ld'
+
 // ============================================
 // Product Structured Data Component
 // ============================================
@@ -88,7 +90,7 @@ export function ProductWithReviewsSchema({
   return (
     <script
       type="application/ld+json"
-      dangerouslySetInnerHTML={{ __html: JSON.stringify(schema) }}
+      dangerouslySetInnerHTML={{ __html: serializeJsonLd(schema) }}
     />
   )
 }
@@ -145,7 +147,7 @@ export function ProductVariantsSchema({
   return (
     <script
       type="application/ld+json"
-      dangerouslySetInnerHTML={{ __html: JSON.stringify(schema) }}
+      dangerouslySetInnerHTML={{ __html: serializeJsonLd(schema) }}
     />
   )
 }
@@ -195,7 +197,7 @@ export function SoftwareApplicationSchema({
   return (
     <script
       type="application/ld+json"
-      dangerouslySetInnerHTML={{ __html: JSON.stringify(schema) }}
+      dangerouslySetInnerHTML={{ __html: serializeJsonLd(schema) }}
     />
   )
 }

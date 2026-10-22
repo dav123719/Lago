@@ -16,7 +16,7 @@ import type {
 const stripeSecretKey = process.env.STRIPE_SECRET_KEY
 
 // Check if Stripe is properly configured
-export const isStripeConfigured = !!stripeSecretKey && stripeSecretKey.startsWith('sk_')
+export const isStripeConfigured = !!stripeSecretKey && /^sk_(test|live)_[A-Za-z0-9]{20,}$/.test(stripeSecretKey)
 
 if (!isStripeConfigured) {
   console.warn('⚠️  STRIPE_SECRET_KEY is not configured. Stripe payments will be disabled.')

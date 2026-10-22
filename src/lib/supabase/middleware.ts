@@ -55,7 +55,7 @@ export async function updateSession(request: NextRequest) {
     const { data: { user }, error } = await supabase.auth.getUser()
     
     if (error) {
-      console.error('[Supabase Middleware] Auth error:', error.message)
+      if (error.name !== 'AuthSessionMissingError') console.error('[Supabase Middleware] Auth error:', error.message)
       return { response: supabaseResponse, user: null }
     }
 
