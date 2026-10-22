@@ -6,6 +6,7 @@ for (const locale of ['lv', 'en', 'ru']) {
     page.on('pageerror', error => errors.push(error.message))
     const response = await page.goto(`/${locale}/`)
     expect(response?.status()).toBe(200)
+    await expect(page.locator('html')).toHaveAttribute('lang', locale)
     await expect(page.locator('main')).toHaveCount(1)
     await expect(page.locator('main')).toBeVisible()
     await expect(page.locator('h1')).toHaveCount(1)

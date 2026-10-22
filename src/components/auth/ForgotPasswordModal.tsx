@@ -1,6 +1,7 @@
 'use client'
 
 import { useState } from 'react'
+import { useModalDialog } from '@/hooks/useModalDialog'
 import { Loader2, Mail, X } from 'lucide-react'
 import { toast } from 'sonner'
 import { useAuth } from '@/hooks/useAuth'
@@ -23,24 +24,27 @@ export function ForgotPasswordModal({ locale, isOpen, onClose, onBackToLogin }: 
   const [loading, setLoading] = useState(false)
   const [sent, setSent] = useState(false)
   const t = copy[locale]
+  const dialogRef = useModalDialog(isOpen, onClose)
   if (!isOpen) return null
 
   const submit = async (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault()
     setLoading(true)
-    const { error } = await requestPasswordReset(email, locale)
-    setLoading(false)
-    if (error) {
+    try {
+      const { error } = await requestPasswordReset(email, locale)
+      if (error) { toast.error(t.error); return }
+      setSent(true)
+    } catch {
       toast.error(t.error)
-      return
+    } finally {
+      setLoading(false)
     }
-    setSent(true)
   }
 
   return (
-    <div className="fixed inset-0 z-[60] flex items-center justify-center p-4" role="dialog" aria-modal="true" aria-labelledby="reset-request-title">
-      <button className="absolute inset-0 bg-black/80" aria-label="Close" onClick={onClose} />
-      <section className="relative w-full max-w-md rounded-xl border border-lago-gold/30 bg-[#0a0a0a] p-8 text-white shadow-2xl">
+    <div className="fixed inset-0 z-[60] flex items-center justify-center p-4">
+      <div className="absolute inset-0 bg-black/80" aria-hidden="true" onClick={onClose} />
+      <div ref={dialogRef} role="dialog" aria-modal="true" aria-labelledby="reset-request-title" tabIndex={-1} className="relative w-full max-w-md rounded-xl border border-lago-gold/30 bg-[#0a0a0a] p-8 text-white shadow-2xl">
         <button onClick={onClose} aria-label="Close" className="absolute right-4 top-4 rounded p-2 hover:bg-white/10"><X className="h-5 w-5" /></button>
         <h2 id="reset-request-title" className="mb-3 text-2xl font-heading">{t.title}</h2>
         {sent ? <div role="status" className="space-y-5">
@@ -60,7 +64,7 @@ export function ForgotPasswordModal({ locale, isOpen, onClose, onBackToLogin }: 
           </form>
           <button onClick={onBackToLogin} className="mt-5 text-sm text-lago-gold">{t.back}</button>
         </>}
-      </section>
+      </div>
     </div>
   )
 }

@@ -1,0 +1,4 @@
+{
+  "site_url": "https://lago.lv",
+  "uri_allow_list": "http://127.0.0.1:3000/auth/callback,http://127.0.0.1:3000/auth/callback?**,http://localhost:3000/auth/callback,http://localhost:3000/auth/callback?**,https://lago.lv/auth/callback,https://lago.lv/auth/callback?**"
+}

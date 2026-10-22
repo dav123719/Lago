@@ -41,6 +41,15 @@ function isKnownLocalizedRoute(pathname: string): boolean {
 
 export async function middleware(request: NextRequest) {
   const pathname = request.nextUrl.pathname
+  const isPrivate = /^\/(?:lv|en|ru)\/account(?:\/|$)/.test(pathname) ||
+    /^\/(?:admin|auth|studio)(?:\/|$)/.test(pathname)
+  const finish = (response: NextResponse) => {
+    if (isPrivate) {
+      response.headers.set('Cache-Control', 'private, no-store, max-age=0')
+      response.headers.set('CDN-Cache-Control', 'no-store')
+    }
+    return response
+  }
 
   if (pathname === '/_not-found' || pathname === '/_not-found/') return NextResponse.next()
   if (!isKnownLocalizedRoute(pathname)) {
@@ -60,7 +69,7 @@ export async function middleware(request: NextRequest) {
   // ============================================
   if (['/studio', '/admin', '/auth', '/api'].some(path => pathname === path || pathname.startsWith(path + '/'))) {
     // Let the Studio layout handle authentication
-    return response
+    return finish(response)
   }
 
   // ============================================
@@ -73,7 +82,7 @@ export async function middleware(request: NextRequest) {
     // Redirect to home with error parameter
     const locale = pathname.split('/')[1]
     const validLocale = locales.includes(locale as typeof locales[number]) ? locale : defaultLocale
-    return NextResponse.redirect(new URL(`/${validLocale}?error=auth_required`, request.url))
+    return finish(NextResponse.redirect(new URL(`/${validLocale}?error=auth_required`, request.url)))
   }
 
   // ============================================
@@ -112,7 +121,7 @@ export async function middleware(request: NextRequest) {
     })
   }
 
-  return response
+  return finish(response)
 }
 
 export const config = {

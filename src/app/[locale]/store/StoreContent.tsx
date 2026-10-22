@@ -5,7 +5,7 @@
 
 'use client'
 
-import { useState, useCallback, useEffect } from 'react'
+import { useState, useCallback, useEffect, useRef } from 'react'
 import { useSearchParams } from 'next/navigation'
 import Image from 'next/image'
 import Link from 'next/link'
@@ -35,6 +35,32 @@ interface StoreContentProps {
   initialFilters?: ProductFiltersType
 }
 
+const filterKeys = ['category', 'material', 'finish', 'minPrice', 'maxPrice', 'inStock', 'search'] as const
+const sortOptions: SortOption[] = ['featured', 'newest', 'price_asc', 'price_desc', 'name_asc', 'name_desc']
+
+function parsePrice(value: string | null): number | undefined {
+  if (value === null || value === '') return undefined
+  const price = Number(value)
+  return Number.isFinite(price) && price >= 0 ? price : undefined
+}
+
+function parseFilters(params: URLSearchParams): ProductFiltersType {
+  return {
+    category: params.get('category') || undefined,
+    material: (params.get('material') as MaterialType) || undefined,
+    finish: (params.get('finish') as FinishType) || undefined,
+    minPrice: parsePrice(params.get('minPrice')),
+    maxPrice: parsePrice(params.get('maxPrice')),
+    inStock: params.get('inStock') === 'true' || undefined,
+    search: params.get('search') || undefined,
+  }
+}
+
+function parseSort(params: URLSearchParams): SortOption {
+  const value = params.get('sort') as SortOption
+  return sortOptions.includes(value) ? value : 'featured'
+}
+
 export function StoreContent({
   locale,
   categories,
@@ -43,34 +69,49 @@ export function StoreContent({
   initialFilters,
 }: StoreContentProps) {
   const searchParams = useSearchParams()
-  
-  // Parse filters from URL search params on client side
-  const parseFiltersFromURL = useCallback((): ProductFiltersType => {
-    if (!searchParams) return {}
-    return {
-      category: searchParams.get('category') || undefined,
-      material: (searchParams.get('material') as MaterialType) || undefined,
-      finish: (searchParams.get('finish') as FinishType) || undefined,
-      minPrice: searchParams.get('minPrice') ? parseFloat(searchParams.get('minPrice')!) : undefined,
-      maxPrice: searchParams.get('maxPrice') ? parseFloat(searchParams.get('maxPrice')!) : undefined,
-      inStock: searchParams.get('inStock') === 'true',
-      search: searchParams.get('search') || undefined,
+  const queryString = searchParams?.toString() || ''
+  const lastQuery = useRef(queryString)
+  const [filters, setFilters] = useState<ProductFiltersType>(() =>
+    queryString ? parseFilters(new URLSearchParams(queryString)) : initialFilters || {}
+  )
+  const [sort, setSort] = useState<SortOption>(() => parseSort(new URLSearchParams(queryString)))
+
+  // Native history updates are supported by Next's useSearchParams and avoid
+  // requesting the server-rendered store shell again for client-side filters.
+  const updateURL = useCallback((newFilters: ProductFiltersType, newSort: SortOption) => {
+    const params = new URLSearchParams(window.location.search)
+    for (const key of filterKeys) {
+      const value = newFilters[key]
+      if (value === undefined || value === false || value === '') params.delete(key)
+      else params.set(key, String(value))
     }
-  }, [searchParams])
-  
-  const [filters, setFilters] = useState<ProductFiltersType>(initialFilters || parseFiltersFromURL())
-  const [sort, setSort] = useState<SortOption>('featured')
-  
-  // Update filters when URL changes
+    if (newSort === 'featured') params.delete('sort')
+    else params.set('sort', newSort)
+    const query = params.toString()
+    const destination = `${window.location.pathname}${query ? `?${query}` : ''}${window.location.hash}`
+    if (destination !== `${window.location.pathname}${window.location.search}${window.location.hash}`) {
+      window.history.pushState(null, '', destination)
+    }
+  }, [])
+
+  // Restore both filters and sorting after back/forward navigation.
   useEffect(() => {
-    if (!initialFilters && searchParams) {
-      setFilters(parseFiltersFromURL())
-    }
-  }, [searchParams, initialFilters, parseFiltersFromURL])
+    if (lastQuery.current === queryString) return
+    lastQuery.current = queryString
+    const params = new URLSearchParams(queryString)
+    setFilters(parseFilters(params))
+    setSort(parseSort(params))
+  }, [queryString])
 
   const handleFiltersChange = useCallback((newFilters: ProductFiltersType) => {
     setFilters(newFilters)
-  }, [])
+    updateURL(newFilters, sort)
+  }, [sort, updateURL])
+
+  const handleSortChange = useCallback((newSort: SortOption) => {
+    setSort(newSort)
+    updateURL(filters, newSort)
+  }, [filters, updateURL])
 
   // Translations
   const t = {
@@ -99,6 +140,7 @@ export function StoreContent({
       }
     ).format(price)
   }
+  const ListingHeading = featuredProduct ? 'h2' : 'h1'
 
   return (
     <div className="min-h-screen bg-lago-black">
@@ -175,9 +217,9 @@ export function StoreContent({
         <div className="container-lg">
           {/* Section Header */}
           <div className="text-center mb-12">
-            <h2 className="text-3xl md:text-4xl font-heading text-white mb-4">
+            <ListingHeading className="text-3xl md:text-4xl font-heading text-white mb-4">
               {t.allProducts}
-            </h2>
+            </ListingHeading>
             <p className="text-lago-muted max-w-2xl mx-auto">
               {locale === 'lv'
                 ? 'Izpētiet mūsu kvalitatīvo akmens virsmu un luksusa mēbeļu klāstu. Katrs produkts ir rūpīgi atlasīts, lai nodrošinātu izcilu kvalitāti un dizainu.'
@@ -205,7 +247,7 @@ export function StoreContent({
             <div className="flex-1">
               {/* Sort and Results Count */}
               <div className="flex items-center justify-between mb-6">
-                <ProductSort locale={locale} value={sort} onChange={setSort} />
+                <ProductSort locale={locale} value={sort} onChange={handleSortChange} />
               </div>
 
               {/* Product Grid */}

@@ -9,7 +9,7 @@ import { notFound } from 'next/navigation'
 import { locales, type Locale } from '@/lib/i18n/config'
 import { createServerClient, isSupabaseConfigured } from '@/lib/supabase/client'
 import { StoreContent } from './StoreContent'
-import type { Category, ProductFilters, MaterialType, FinishType } from '@/types/store'
+import type { Category } from '@/types/store'
 
 // ============================================
 // METADATA
@@ -64,7 +64,7 @@ async function fetchCategories(): Promise<Category[]> {
 
     const { data, error } = await supabase
       .from('categories')
-      .select('*')
+      .select('id,sanity_id,slug,name_lv,name_en,name_ru,description_lv,description_en,description_ru,parent_id,sort_order,is_active,image_url,created_at,updated_at')
       .eq('is_active', true)
       .order('sort_order', { ascending: true })
 
@@ -142,40 +142,21 @@ async function fetchFilterOptions() {
   try {
     const supabase = createServerClient()
 
-    // Get price range
-    const { data: priceData, error: priceError } = await supabase
-      .from('products')
-      .select('price')
-      .eq('status', 'active')
-      .order('price', { ascending: true })
-      .limit(1)
-      .single() as { data: PriceData | null; error: { code?: string; message: string } | null }
-
-    if (priceError && priceError.code !== 'PGRST116') {
-      console.error('Error fetching min price:', priceError)
-    }
-
-    const { data: maxPriceData, error: maxPriceError } = await supabase
-      .from('products')
-      .select('price')
-      .eq('status', 'active')
-      .order('price', { ascending: false })
-      .limit(1)
-      .single() as { data: PriceData | null; error: { code?: string; message: string } | null }
-
-    if (maxPriceError && maxPriceError.code !== 'PGRST116') {
-      console.error('Error fetching max price:', maxPriceError)
-    }
-
-    // Get unique materials and finishes
-    const { data: products, error: productsError } = await supabase
-      .from('products')
-      .select('material, finish')
-      .eq('status', 'active')
-
-    if (productsError) {
-      console.error('Error fetching products for filters:', productsError)
-    }
+    // These independent reads used to wait for each other. Start them together
+    // so metadata waits for the slowest request rather than their sum.
+    const [minimum, maximum, attributes] = await Promise.all([
+      supabase.from('products').select('price').eq('status', 'active')
+        .order('price', { ascending: true }).limit(1).maybeSingle(),
+      supabase.from('products').select('price').eq('status', 'active')
+        .order('price', { ascending: false }).limit(1).maybeSingle(),
+      supabase.from('products').select('material, finish').eq('status', 'active'),
+    ])
+    const { data: priceData, error: priceError } = minimum as { data: PriceData | null; error: { message: string } | null }
+    const { data: maxPriceData, error: maxPriceError } = maximum as { data: PriceData | null; error: { message: string } | null }
+    const { data: products, error: productsError } = attributes
+    if (priceError) console.error('Error fetching min price:', priceError)
+    if (maxPriceError) console.error('Error fetching max price:', maxPriceError)
+    if (productsError) console.error('Error fetching products for filters:', productsError)
 
     const materials = [
       ...new Set((products || []).map((p: ProductFilterData) => p.material).filter((m): m is string => Boolean(m))),
@@ -186,8 +167,8 @@ async function fetchFilterOptions() {
 
     return {
       priceRange: {
-        min: Math.floor(priceData?.price || 0),
-        max: Math.ceil(maxPriceData?.price || 10000),
+        min: Math.floor(priceData?.price ?? 0),
+        max: Math.ceil(maxPriceData?.price ?? 10000),
       },
       materials,
       finishes,
@@ -235,8 +216,8 @@ async function fetchFeaturedProduct() {
     const { data, error } = await supabase
       .from('products')
       .select(`
-        *,
-        category:categories(*)
+        id,slug,name_lv,name_en,name_ru,short_description_lv,short_description_en,short_description_ru,price,sale_price,featured_image,
+        category:categories(slug,name_lv,name_en,name_ru)
       `)
       .eq('status', 'active')
       .eq('is_featured', true)
@@ -308,28 +289,12 @@ export default async function StorePage({ params }: StorePageProps) {
 
   const validLocale = locale as Locale
 
-  // Fetch data with error handling
-  let categories: Category[] = []
-  let filterOptions = { priceRange: { min: 0, max: 10000 }, materials: [] as string[], finishes: [] as string[] }
-  let featuredProduct = null
-
-  try {
-    categories = await fetchCategories()
-  } catch (error) {
-    console.error('Error in fetchCategories:', error)
-  }
-
-  try {
-    filterOptions = await fetchFilterOptions()
-  } catch (error) {
-    console.error('Error in fetchFilterOptions:', error)
-  }
-
-  try {
-    featuredProduct = await fetchFeaturedProduct()
-  } catch (error) {
-    console.error('Error in fetchFeaturedProduct:', error)
-  }
+  // Every helper supplies its own safe fallback; no shared private/session cache.
+  const [categories, filterOptions, featuredProduct] = await Promise.all([
+    fetchCategories(),
+    fetchFilterOptions(),
+    fetchFeaturedProduct(),
+  ])
 
   return (
     <StoreContent

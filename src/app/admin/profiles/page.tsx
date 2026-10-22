@@ -1,6 +1,6 @@
 'use client'
 
-import { FormEvent, useCallback, useEffect, useState } from 'react'
+import { FormEvent, useCallback, useEffect, useRef, useState } from 'react'
 import { Loader2, Search, Save } from 'lucide-react'
 
 type Profile = {
@@ -16,20 +16,43 @@ export default function AdminProfilesPage() {
   const [savingId, setSavingId] = useState<string | null>(null)
   const [message, setMessage] = useState('')
 
-  const load = useCallback(async (value = query) => {
-    setLoading(true); setMessage('')
+  const activeSearch = useRef<AbortController | null>(null)
+  const searchRevision = useRef(0)
+  const submittedQuery = useRef('')
+  const mounted = useRef(true)
+
+  const load = useCallback(async (value: string) => {
+    const revision = ++searchRevision.current
+    activeSearch.current?.abort()
+    const controller = new AbortController()
+    activeSearch.current = controller
+    submittedQuery.current = value
+    setLoading(true)
     try {
-      const response = await fetch(`/api/admin/profiles?q=${encodeURIComponent(value)}`, { cache: 'no-store' })
+      const response = await fetch(`/api/admin/profiles?q=${encodeURIComponent(value)}`, {
+        cache: 'no-store', signal: controller.signal,
+      })
       const result = await response.json()
       if (!response.ok) throw new Error(result.error || 'Could not load profiles')
-      setProfiles(result.profiles)
+      if (mounted.current && revision === searchRevision.current) setProfiles(result.profiles)
     } catch (error) {
-      setMessage(error instanceof Error ? error.message : 'Could not load profiles')
-    } finally { setLoading(false) }
-  }, [query])
+      if (mounted.current && revision === searchRevision.current && !controller.signal.aborted) {
+        setProfiles([])
+        setMessage(error instanceof Error ? error.message : 'Could not load profiles')
+      }
+    } finally {
+      if (mounted.current && revision === searchRevision.current) setLoading(false)
+    }
+  }, [])
   useEffect(() => {
+    mounted.current = true
     const timer = window.setTimeout(() => { void load('') }, 0)
-    return () => window.clearTimeout(timer)
+    return () => {
+      mounted.current = false
+      window.clearTimeout(timer)
+      searchRevision.current++
+      activeSearch.current?.abort()
+    }
   }, [load])
 
   async function save(event: FormEvent<HTMLFormElement>, profile: Profile) {
@@ -45,20 +68,21 @@ export default function AdminProfilesPage() {
         }),
       })
       const result = await response.json()
+      if (!mounted.current) return
       if (!response.ok) { setMessage(result.error || 'Save failed'); return }
       setMessage(`Saved ${profile.email}`)
-      await load()
+      await load(submittedQuery.current)
     } catch {
-      setMessage('Could not save profile. Check the connection and try again.')
+      if (mounted.current) setMessage('Could not save profile. Check the connection and try again.')
     } finally {
-      setSavingId(null)
+      if (mounted.current) setSavingId(null)
     }
   }
 
   return <main className="mx-auto max-w-5xl px-5 py-12 text-white">
     <h1 className="mb-2 text-3xl">Account profiles</h1>
     <p className="mb-8 text-white/65">Search users and edit application profile fields. Authentication email and access roles are managed separately.</p>
-    <form className="mb-6 flex gap-2" onSubmit={event => { event.preventDefault(); void load(query) }}>
+    <form className="mb-6 flex gap-2" onSubmit={event => { event.preventDefault(); setMessage(''); void load(query) }}>
       <label className="sr-only" htmlFor="profile-search">Search by name or email</label>
       <input id="profile-search" className="min-w-0 flex-1 rounded border border-white/20 bg-black px-3 py-2" value={query} onChange={event => setQuery(event.target.value)} />
       <button className="inline-flex items-center gap-2 rounded bg-white/10 px-4 py-2" type="submit"><Search size={16}/> Search</button>
@@ -74,7 +98,7 @@ export default function AdminProfilesPage() {
         <input aria-label="Avatar URL" name="avatar_url" defaultValue={profile.avatar_url || ''} placeholder="Avatar URL (https)" className="rounded border border-white/20 bg-black px-3 py-2" />
         <select aria-label="Preferred language" name="preferred_language" defaultValue={profile.preferred_language} className="rounded border border-white/20 bg-black px-3 py-2"><option value="lv">Latviešu</option><option value="en">English</option><option value="ru">Русский</option></select>
         <textarea aria-label="Bio" name="bio" defaultValue={profile.bio || ''} maxLength={500} placeholder="Bio" className="rounded border border-white/20 bg-black px-3 py-2 md:col-span-2" />
-        <button disabled={savingId === profile.id} className="inline-flex items-center justify-center gap-2 rounded bg-lago-gold px-4 py-2 font-semibold text-black disabled:cursor-wait disabled:opacity-60 md:col-span-2" type="submit">{savingId === profile.id ? <Loader2 size={16} className="animate-spin"/> : <Save size={16}/>} {savingId === profile.id ? 'Saving…' : 'Save profile'}</button>
+        <button disabled={savingId !== null} className="inline-flex items-center justify-center gap-2 rounded bg-lago-gold px-4 py-2 font-semibold text-black disabled:cursor-wait disabled:opacity-60 md:col-span-2" type="submit">{savingId === profile.id ? <Loader2 size={16} className="animate-spin"/> : <Save size={16}/>} {savingId === profile.id ? 'Saving…' : 'Save profile'}</button>
       </form>)}</div>}
   </main>
 }

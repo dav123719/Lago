@@ -5,10 +5,12 @@
 
 'use client'
 
-import React, { createContext, useContext, useEffect, useState, useCallback } from 'react'
+import React, { createContext, useContext, useEffect, useState, useCallback, useRef } from 'react'
 import { createBrowserSupabaseClient } from '@/lib/supabase/client'
 import { useGuestSession } from '@/hooks/useGuestSession'
 import type { Cart, CartItem, Product } from '@/types/checkout'
+import { useAuthContext } from '@/contexts/AuthContext'
+import { usePathname } from 'next/navigation'
 
 // ===================================
 // Types
@@ -53,8 +55,19 @@ interface CartProviderProps {
 }
 
 export function CartProvider({ children }: CartProviderProps) {
+  const { user, isLoading } = useAuthContext()
+  // A changed identity gets fresh state and subscriptions, never the previous
+  // user's in-flight results or drawer contents.
+  return <IdentityCartProvider key={user?.id ?? 'guest'} userId={user?.id} authLoading={isLoading}>{children}</IdentityCartProvider>
+}
+
+function IdentityCartProvider({ children, userId, authLoading }: CartProviderProps & { userId?: string; authLoading: boolean }) {
+  const pathname = usePathname()
+  const [activated, setActivated] = useState(false)
+  const shoppingRoute = /\/(?:cart|checkout)(?:\/|$)|\/store\/product\//.test(pathname)
+  const enabled = !authLoading && (activated || shoppingRoute)
   const supabase = createBrowserSupabaseClient()
-  const { sessionId, isLoading: isSessionLoading } = useGuestSession()
+  const { sessionId, isLoading: isSessionLoading } = useGuestSession({ scope: userId, enabled })
   
   // State
   const [cart, setCart] = useState<Cart | null>(null)
@@ -64,10 +77,16 @@ export function CartProvider({ children }: CartProviderProps) {
   const [error, setError] = useState<string | null>(null)
   const [isCartOpen, setIsCartOpen] = useState(false)
   
+  const mounted = useRef(true)
+  useEffect(() => {
+    mounted.current = true
+    return () => { mounted.current = false }
+  }, [])
+
   // Derived state
   const itemCount = items.reduce((sum, item) => sum + item.quantity, 0)
   const subtotal = items.reduce((sum, item) => {
-    const price = item.price_at_time || item.product?.price || 0
+    const price = item.price_at_time ?? item.product?.price ?? 0
     return sum + price * item.quantity
   }, 0)
 
@@ -75,8 +94,27 @@ export function CartProvider({ children }: CartProviderProps) {
   // Cart Management
   // ===================================
 
+  const fetchCartItems = useCallback(async (cartId: string) => {
+    try {
+      const { data: cartItems, error: itemsError } = await supabase
+        .from('cart_items')
+        .select(`
+          *,
+          product:products(*)
+        `)
+        .eq('cart_id', cartId)
+        .order('created_at', { ascending: false }) as { data: CartItem[] | null, error: any }
+
+      if (itemsError) throw itemsError
+      if (mounted.current) setItems(cartItems || [])
+    } catch (err) {
+      console.error('Error fetching cart items:', err)
+      if (mounted.current) setError(err instanceof Error ? err.message : 'Failed to load cart items')
+    }
+  }, [supabase])
+
   const fetchOrCreateCart = useCallback(async () => {
-    if (!sessionId) return
+    if (!sessionId || !mounted.current) return
 
     try {
       // Try to get existing active cart
@@ -91,6 +129,7 @@ export function CartProvider({ children }: CartProviderProps) {
         throw cartError
       }
 
+      if (!mounted.current) return
       if (existingCart) {
         setCart(existingCart as Cart)
         await fetchCartItems(existingCart.id)
@@ -106,40 +145,28 @@ export function CartProvider({ children }: CartProviderProps) {
           .single()
 
         if (createError) throw createError
+        if (!mounted.current) return
         setCart(newCart as Cart)
         setItems([])
       }
     } catch (err) {
       console.error('Error fetching/creating cart:', err)
-      setError(err instanceof Error ? err.message : 'Failed to load cart')
+      if (mounted.current) setError(err instanceof Error ? err.message : 'Failed to load cart')
     }
-  }, [sessionId, supabase])
+  }, [sessionId, supabase, fetchCartItems])
 
-  const fetchCartItems = async (cartId: string) => {
-    try {
-      const { data: cartItems, error: itemsError } = await supabase
-        .from('cart_items')
-        .select(`
-          *,
-          product:products(*)
-        `)
-        .eq('cart_id', cartId)
-        .order('created_at', { ascending: false }) as { data: CartItem[] | null, error: any }
-
-      if (itemsError) throw itemsError
-      setItems(cartItems || [])
-    } catch (err) {
-      console.error('Error fetching cart items:', err)
-      setError(err instanceof Error ? err.message : 'Failed to load cart items')
-    }
-  }
 
   // ===================================
   // Actions
   // ===================================
 
   const addItem = useCallback(async (productId: string, quantity: number) => {
+    if (!Number.isSafeInteger(quantity) || quantity < 1) {
+      setError('Choose a positive whole quantity')
+      return
+    }
     if (!cart?.id) {
+      setActivated(true)
       setError('Cart not initialized')
       return
     }
@@ -163,25 +190,29 @@ export function CartProvider({ children }: CartProviderProps) {
       }
 
       // Check for existing item
-      const { data: existingItem } = await supabase
+      if (!mounted.current) return
+      const { data: existingItem, error: existingError } = await supabase
         .from('cart_items')
         .select('*')
         .eq('cart_id', cart.id)
         .eq('product_id', productId)
         .single() as { data: { id: string, quantity: number } | null, error: any }
 
+      if (existingError && existingError.code !== 'PGRST116') throw existingError
+      if (!mounted.current) return
       if (existingItem) {
         const newQuantity = existingItem.quantity + quantity
         if (newQuantity > product.stock_quantity) {
           throw new Error(`Cannot add more. Only ${product.stock_quantity} items available.`)
         }
 
-        await (supabase
+        const { error: mutationError } = await (supabase
           .from('cart_items') as any)
           .update({ quantity: newQuantity })
-          .eq('id', existingItem.id)
+          .eq('id', existingItem.id).eq('cart_id', cart.id)
+        if (mutationError) throw mutationError
       } else {
-        await (supabase
+        const { error: mutationError } = await (supabase
           .from('cart_items') as any)
           .insert({
             cart_id: cart.id,
@@ -189,110 +220,119 @@ export function CartProvider({ children }: CartProviderProps) {
             quantity,
             price_at_time: product.price,
           })
+        if (mutationError) throw mutationError
       }
 
+      if (!mounted.current) return
       // Refresh items
       await fetchCartItems(cart.id)
       
       // Open cart drawer
-      setIsCartOpen(true)
+      if (mounted.current) setIsCartOpen(true)
     } catch (err) {
       console.error('Error adding item:', err)
-      setError(err instanceof Error ? err.message : 'Failed to add item')
+      if (mounted.current) setError(err instanceof Error ? err.message : 'Failed to add item')
     } finally {
-      setIsSyncing(false)
+      if (mounted.current) setIsSyncing(false)
     }
-  }, [cart?.id, supabase])
+  }, [cart?.id, supabase, fetchCartItems])
 
   const updateQuantity = useCallback(async (itemId: string, quantity: number) => {
-    if (!cart?.id) return
+    if (!cart?.id || !mounted.current) return
 
     setIsSyncing(true)
     setError(null)
 
     try {
+      if (!Number.isSafeInteger(quantity)) throw new Error('Choose a whole quantity')
       if (quantity <= 0) {
-        await (supabase
+        const { error: mutationError } = await (supabase
           .from('cart_items') as any)
           .delete()
-          .eq('id', itemId)
+          .eq('id', itemId).eq('cart_id', cart.id)
+        if (mutationError) throw mutationError
       } else {
         // Check stock
-        const { data: item } = await supabase
+        const { data: item, error: itemError } = await supabase
           .from('cart_items')
           .select('product:products(stock_quantity)')
-          .eq('id', itemId)
+          .eq('id', itemId).eq('cart_id', cart.id)
           .single() as { data: { product: { stock_quantity: number } } | null, error: any }
 
-        const stockQuantity = item?.product?.stock_quantity || 0
+        if (itemError) throw itemError
+        if (!mounted.current) return
+        const stockQuantity = item?.product?.stock_quantity ?? 0
         if (quantity > stockQuantity) {
           throw new Error(`Only ${stockQuantity} items available`)
         }
 
-        await (supabase
+        const { error: mutationError } = await (supabase
           .from('cart_items') as any)
           .update({ quantity })
-          .eq('id', itemId)
+          .eq('id', itemId).eq('cart_id', cart.id)
+        if (mutationError) throw mutationError
       }
 
       await fetchCartItems(cart.id)
     } catch (err) {
       console.error('Error updating quantity:', err)
-      setError(err instanceof Error ? err.message : 'Failed to update quantity')
+      if (mounted.current) setError(err instanceof Error ? err.message : 'Failed to update quantity')
     } finally {
-      setIsSyncing(false)
+      if (mounted.current) setIsSyncing(false)
     }
-  }, [cart?.id, supabase])
+  }, [cart?.id, supabase, fetchCartItems])
 
   const removeItem = useCallback(async (itemId: string) => {
+    if (!cart?.id || !mounted.current) return
     setIsSyncing(true)
     setError(null)
 
     try {
-      await (supabase
+      const { error: mutationError } = await (supabase
         .from('cart_items') as any)
         .delete()
-        .eq('id', itemId)
+        .eq('id', itemId).eq('cart_id', cart.id)
+      if (mutationError) throw mutationError
 
       if (cart?.id) {
         await fetchCartItems(cart.id)
       }
     } catch (err) {
       console.error('Error removing item:', err)
-      setError(err instanceof Error ? err.message : 'Failed to remove item')
+      if (mounted.current) setError(err instanceof Error ? err.message : 'Failed to remove item')
     } finally {
-      setIsSyncing(false)
+      if (mounted.current) setIsSyncing(false)
     }
-  }, [cart?.id, supabase])
+  }, [cart?.id, supabase, fetchCartItems])
 
   const clearCart = useCallback(async () => {
-    if (!cart?.id) return
+    if (!cart?.id || !mounted.current) return
 
     setIsSyncing(true)
     setError(null)
 
     try {
-      await (supabase
+      const { error: mutationError } = await (supabase
         .from('cart_items') as any)
         .delete()
         .eq('cart_id', cart.id)
-
-      setItems([])
+      if (mutationError) throw mutationError
+      if (mounted.current) setItems([])
     } catch (err) {
       console.error('Error clearing cart:', err)
-      setError(err instanceof Error ? err.message : 'Failed to clear cart')
+      if (mounted.current) setError(err instanceof Error ? err.message : 'Failed to clear cart')
     } finally {
-      setIsSyncing(false)
+      if (mounted.current) setIsSyncing(false)
     }
-  }, [cart?.id, supabase])
+  }, [cart?.id, supabase, fetchCartItems])
 
   const refreshCart = useCallback(async () => {
     if (cart?.id) {
       await fetchCartItems(cart.id)
     }
-  }, [cart?.id, supabase])
+  }, [cart?.id, supabase, fetchCartItems])
 
-  const openCart = useCallback(() => setIsCartOpen(true), [])
+  const openCart = useCallback(() => { setActivated(true); setIsCartOpen(true) }, [])
   const closeCart = useCallback(() => setIsCartOpen(false), [])
 
   // ===================================
@@ -301,15 +341,16 @@ export function CartProvider({ children }: CartProviderProps) {
 
   // Initial cart load
   useEffect(() => {
-    if (!isSessionLoading && sessionId) {
+    if (enabled && !isSessionLoading && sessionId) {
       setIsLoading(true)
-      fetchOrCreateCart().finally(() => setIsLoading(false))
+      fetchOrCreateCart().finally(() => { if (mounted.current) setIsLoading(false) })
     }
-  }, [sessionId, isSessionLoading, fetchOrCreateCart])
+    else if (!enabled) setIsLoading(false)
+  }, [enabled, sessionId, isSessionLoading, fetchOrCreateCart])
 
   // Real-time subscription to cart changes
   useEffect(() => {
-    if (!cart?.id) return
+    if (!cart?.id || !enabled) return
 
     const subscription = supabase
       .channel(`cart:${cart.id}`)
@@ -331,7 +372,7 @@ export function CartProvider({ children }: CartProviderProps) {
     return () => {
       subscription.unsubscribe()
     }
-  }, [cart?.id, supabase])
+  }, [cart?.id, supabase, enabled, fetchCartItems])
 
   // ===================================
   // Context Value

@@ -1,0 +1,1498 @@
+{
+  "browser": "145.0.7632.6",
+  "conditions": {
+    "viewport": {
+      "width": 390,
+      "height": 844
+    },
+    "cpu": 4,
+    "network": {
+      "latency": 80,
+      "downloadThroughput": 200000,
+      "uploadThroughput": 93750
+    },
+    "cache": "cold browser cache, warm server caches",
+    "order": "alternating paired runs",
+    "capture": "original load+1500ms and fixed 8000ms; CPU profiler and tracing enabled equally"
+  },
+  "results": [
+    {
+      "endpoint": "before",
+      "run": 1,
+      "route": "/lv/akmens-virsmas/silestone/",
+      "original": {
+        "nowMs": 4936,
+        "loadMs": 3419.599999964237,
+        "longTasks": [
+          {
+            "start": 639.5,
+            "duration": 202,
+            "attribution": [
+              {
+                "name": "unknown",
+                "containerType": "window",
+                "containerSrc": ""
+              }
+            ]
+          },
+          {
+            "start": 1157.7999999523163,
+            "duration": 135,
+            "attribution": [
+              {
+                "name": "unknown",
+                "containerType": "window",
+                "containerSrc": ""
+              }
+            ]
+          },
+          {
+            "start": 2208.099999964237,
+            "duration": 217,
+            "attribution": [
+              {
+                "name": "unknown",
+                "containerType": "window",
+                "containerSrc": ""
+              }
+            ]
+          },
+          {
+            "start": 2435,
+            "duration": 82,
+            "attribution": [
+              {
+                "name": "unknown",
+                "containerType": "window",
+                "containerSrc": ""
+              }
+            ]
+          },
+          {
+            "start": 2538.899999976158,
+            "duration": 85,
+            "attribution": [
+              {
+                "name": "unknown",
+                "containerType": "window",
+                "containerSrc": ""
+              }
+            ]
+          },
+          {
+            "start": 2996.199999988079,
+            "duration": 92,
+            "attribution": [
+              {
+                "name": "unknown",
+                "containerType": "window",
+                "containerSrc": ""
+              }
+            ]
+          },
+          {
+            "start": 3095.699999988079,
+            "duration": 86,
+            "attribution": [
+              {
+                "name": "unknown",
+                "containerType": "window",
+                "containerSrc": ""
+              }
+            ]
+          },
+          {
+            "start": 3225.099999964237,
+            "duration": 56,
+            "attribution": [
+              {
+                "name": "unknown",
+                "containerType": "window",
+                "containerSrc": ""
+              }
+            ]
+          },
+          {
+            "start": 3316.399999976158,
+            "duration": 64,
+            "attribution": [
+              {
+                "name": "unknown",
+                "containerType": "window",
+                "containerSrc": ""
+              }
+            ]
+          },
+          {
+            "start": 3626.599999964237,
+            "duration": 64,
+            "attribution": [
+              {
+                "name": "unknown",
+                "containerType": "window",
+                "containerSrc": ""
+              }
+            ]
+          }
+        ],
+        "lcp": 3296,
+        "longTaskMs": 1083,
+        "labBlockingMs": 583
+      },
+      "fixed": {
+        "nowMs": 8016.799999952316,
+        "loadMs": 3419.599999964237,
+        "longTasks": [
+          {
+            "start": 639.5,
+            "duration": 202,
+            "attribution": [
+              {
+                "name": "unknown",
+                "containerType": "window",
+                "containerSrc": ""
+              }
+            ]
+          },
+          {
+            "start": 1157.7999999523163,
+            "duration": 135,
+            "attribution": [
+              {
+                "name": "unknown",
+                "containerType": "window",
+                "containerSrc": ""
+              }
+            ]
+          },
+          {
+            "start": 2208.099999964237,
+            "duration": 217,
+            "attribution": [
+              {
+                "name": "unknown",
+                "containerType": "window",
+                "containerSrc": ""
+              }
+            ]
+          },
+          {
+            "start": 2435,
+            "duration": 82,
+            "attribution": [
+              {
+                "name": "unknown",
+                "containerType": "window",
+                "containerSrc": ""
+              }
+            ]
+          },
+          {
+            "start": 2538.899999976158,
+            "duration": 85,
+            "attribution": [
+              {
+                "name": "unknown",
+                "containerType": "window",
+                "containerSrc": ""
+              }
+            ]
+          },
+          {
+            "start": 2996.199999988079,
+            "duration": 92,
+            "attribution": [
+              {
+                "name": "unknown",
+                "containerType": "window",
+                "containerSrc": ""
+              }
+            ]
+          },
+          {
+            "start": 3095.699999988079,
+            "duration": 86,
+            "attribution": [
+              {
+                "name": "unknown",
+                "containerType": "window",
+                "containerSrc": ""
+              }
+            ]
+          },
+          {
+            "start": 3225.099999964237,
+            "duration": 56,
+            "attribution": [
+              {
+                "name": "unknown",
+                "containerType": "window",
+                "containerSrc": ""
+              }
+            ]
+          },
+          {
+            "start": 3316.399999976158,
+            "duration": 64,
+            "attribution": [
+              {
+                "name": "unknown",
+                "containerType": "window",
+                "containerSrc": ""
+              }
+            ]
+          },
+          {
+            "start": 3626.599999964237,
+            "duration": 64,
+            "attribution": [
+              {
+                "name": "unknown",
+                "containerType": "window",
+                "containerSrc": ""
+              }
+            ]
+          }
+        ],
+        "lcp": 3296,
+        "longTaskMs": 1083,
+        "labBlockingMs": 583
+      },
+      "originalPerformance": {
+        "LayoutCount": 12,
+        "RecalcStyleCount": 22,
+        "LayoutDuration": 0.347036,
+        "RecalcStyleDuration": 0.151031,
+        "ScriptDuration": 0.732808,
+        "TaskDuration": 2.554096,
+        "JSHeapUsedSize": 6260000
+      },
+      "fixedPerformance": {
+        "LayoutCount": 12,
+        "RecalcStyleCount": 22,
+        "LayoutDuration": 0.347036,
+        "RecalcStyleDuration": 0.151031,
+        "ScriptDuration": 0.732808,
+        "TaskDuration": 2.561442,
+        "JSHeapUsedSize": 6353720
+      }
+    },
+    {
+      "endpoint": "after",
+      "run": 1,
+      "route": "/lv/akmens-virsmas/silestone/",
+      "original": {
+        "nowMs": 4232.199999988079,
+        "loadMs": 2716.699999988079,
+        "longTasks": [
+          {
+            "start": 718.1999999880791,
+            "duration": 53,
+            "attribution": [
+              {
+                "name": "unknown",
+                "containerType": "window",
+                "containerSrc": ""
+              }
+            ]
+          },
+          {
+            "start": 800.8000000119209,
+            "duration": 390,
+            "attribution": [
+              {
+                "name": "unknown",
+                "containerType": "window",
+                "containerSrc": ""
+              }
+            ]
+          },
+          {
+            "start": 1572.8999999761581,
+            "duration": 77,
+            "attribution": [
+              {
+                "name": "unknown",
+                "containerType": "window",
+                "containerSrc": ""
+              }
+            ]
+          },
+          {
+            "start": 1923.199999988079,
+            "duration": 64,
+            "attribution": [
+              {
+                "name": "unknown",
+                "containerType": "window",
+                "containerSrc": ""
+              }
+            ]
+          },
+          {
+            "start": 2059.100000023842,
+            "duration": 63,
+            "attribution": [
+              {
+                "name": "unknown",
+                "containerType": "window",
+                "containerSrc": ""
+              }
+            ]
+          },
+          {
+            "start": 2235.899999976158,
+            "duration": 65,
+            "attribution": [
+              {
+                "name": "unknown",
+                "containerType": "window",
+                "containerSrc": ""
+              }
+            ]
+          },
+          {
+            "start": 2346.100000023842,
+            "duration": 288,
+            "attribution": [
+              {
+                "name": "unknown",
+                "containerType": "window",
+                "containerSrc": ""
+              }
+            ]
+          },
+          {
+            "start": 2803.100000023842,
+            "duration": 148,
+            "attribution": [
+              {
+                "name": "unknown",
+                "containerType": "window",
+                "containerSrc": ""
+              }
+            ]
+          },
+          {
+            "start": 3151.699999988079,
+            "duration": 122,
+            "attribution": [
+              {
+                "name": "unknown",
+                "containerType": "window",
+                "containerSrc": ""
+              }
+            ]
+          },
+          {
+            "start": 3339.199999988079,
+            "duration": 62,
+            "attribution": [
+              {
+                "name": "unknown",
+                "containerType": "window",
+                "containerSrc": ""
+              }
+            ]
+          }
+        ],
+        "lcp": 2172,
+        "longTaskMs": 1332,
+        "labBlockingMs": 832
+      },
+      "fixed": {
+        "nowMs": 8026.199999988079,
+        "loadMs": 2716.699999988079,
+        "longTasks": [
+          {
+            "start": 718.1999999880791,
+            "duration": 53,
+            "attribution": [
+              {
+                "name": "unknown",
+                "containerType": "window",
+                "containerSrc": ""
+              }
+            ]
+          },
+          {
+            "start": 800.8000000119209,
+            "duration": 390,
+            "attribution": [
+              {
+                "name": "unknown",
+                "containerType": "window",
+                "containerSrc": ""
+              }
+            ]
+          },
+          {
+            "start": 1572.8999999761581,
+            "duration": 77,
+            "attribution": [
+              {
+                "name": "unknown",
+                "containerType": "window",
+                "containerSrc": ""
+              }
+            ]
+          },
+          {
+            "start": 1923.199999988079,
+            "duration": 64,
+            "attribution": [
+              {
+                "name": "unknown",
+                "containerType": "window",
+                "containerSrc": ""
+              }
+            ]
+          },
+          {
+            "start": 2059.100000023842,
+            "duration": 63,
+            "attribution": [
+              {
+                "name": "unknown",
+                "containerType": "window",
+                "containerSrc": ""
+              }
+            ]
+          },
+          {
+            "start": 2235.899999976158,
+            "duration": 65,
+            "attribution": [
+              {
+                "name": "unknown",
+                "containerType": "window",
+                "containerSrc": ""
+              }
+            ]
+          },
+          {
+            "start": 2346.100000023842,
+            "duration": 288,
+            "attribution": [
+              {
+                "name": "unknown",
+                "containerType": "window",
+                "containerSrc": ""
+              }
+            ]
+          },
+          {
+            "start": 2803.100000023842,
+            "duration": 148,
+            "attribution": [
+              {
+                "name": "unknown",
+                "containerType": "window",
+                "containerSrc": ""
+              }
+            ]
+          },
+          {
+            "start": 3151.699999988079,
+            "duration": 122,
+            "attribution": [
+              {
+                "name": "unknown",
+                "containerType": "window",
+                "containerSrc": ""
+              }
+            ]
+          },
+          {
+            "start": 3339.199999988079,
+            "duration": 62,
+            "attribution": [
+              {
+                "name": "unknown",
+                "containerType": "window",
+                "containerSrc": ""
+              }
+            ]
+          }
+        ],
+        "lcp": 2172,
+        "longTaskMs": 1332,
+        "labBlockingMs": 832
+      },
+      "originalPerformance": {
+        "LayoutCount": 12,
+        "RecalcStyleCount": 27,
+        "LayoutDuration": 0.457559,
+        "RecalcStyleDuration": 0.24729,
+        "ScriptDuration": 0.65362,
+        "TaskDuration": 2.672546,
+        "JSHeapUsedSize": 5771768
+      },
+      "fixedPerformance": {
+        "LayoutCount": 12,
+        "RecalcStyleCount": 27,
+        "LayoutDuration": 0.457559,
+        "RecalcStyleDuration": 0.24729,
+        "ScriptDuration": 0.65362,
+        "TaskDuration": 2.68649,
+        "JSHeapUsedSize": 5865168
+      }
+    },
+    {
+      "endpoint": "after",
+      "run": 2,
+      "route": "/lv/akmens-virsmas/silestone/",
+      "original": {
+        "nowMs": 4189.099999964237,
+        "loadMs": 2674.5,
+        "longTasks": [
+          {
+            "start": 701.6999999880791,
+            "duration": 56,
+            "attribution": [
+              {
+                "name": "unknown",
+                "containerType": "window",
+                "containerSrc": ""
+              }
+            ]
+          },
+          {
+            "start": 777.1999999880791,
+            "duration": 303,
+            "attribution": [
+              {
+                "name": "unknown",
+                "containerType": "window",
+                "containerSrc": ""
+              }
+            ]
+          },
+          {
+            "start": 1164.3999999761581,
+            "duration": 67,
+            "attribution": [
+              {
+                "name": "unknown",
+                "containerType": "window",
+                "containerSrc": ""
+              }
+            ]
+          },
+          {
+            "start": 1448,
+            "duration": 67,
+            "attribution": [
+              {
+                "name": "unknown",
+                "containerType": "window",
+                "containerSrc": ""
+              }
+            ]
+          },
+          {
+            "start": 1631.300000011921,
+            "duration": 71,
+            "attribution": [
+              {
+                "name": "unknown",
+                "containerType": "window",
+                "containerSrc": ""
+              }
+            ]
+          },
+          {
+            "start": 2067.699999988079,
+            "duration": 68,
+            "attribution": [
+              {
+                "name": "unknown",
+                "containerType": "window",
+                "containerSrc": ""
+              }
+            ]
+          },
+          {
+            "start": 2208.699999988079,
+            "duration": 79,
+            "attribution": [
+              {
+                "name": "unknown",
+                "containerType": "window",
+                "containerSrc": ""
+              }
+            ]
+          },
+          {
+            "start": 2294.099999964237,
+            "duration": 225,
+            "attribution": [
+              {
+                "name": "unknown",
+                "containerType": "window",
+                "containerSrc": ""
+              }
+            ]
+          },
+          {
+            "start": 2677.699999988079,
+            "duration": 128,
+            "attribution": [
+              {
+                "name": "unknown",
+                "containerType": "window",
+                "containerSrc": ""
+              }
+            ]
+          },
+          {
+            "start": 3000.099999964237,
+            "duration": 95,
+            "attribution": [
+              {
+                "name": "unknown",
+                "containerType": "window",
+                "containerSrc": ""
+              }
+            ]
+          },
+          {
+            "start": 3153.5,
+            "duration": 75,
+            "attribution": [
+              {
+                "name": "unknown",
+                "containerType": "window",
+                "containerSrc": ""
+              }
+            ]
+          }
+        ],
+        "lcp": 2016,
+        "longTaskMs": 1234,
+        "labBlockingMs": 684
+      },
+      "fixed": {
+        "nowMs": 8013,
+        "loadMs": 2674.5,
+        "longTasks": [
+          {
+            "start": 701.6999999880791,
+            "duration": 56,
+            "attribution": [
+              {
+                "name": "unknown",
+                "containerType": "window",
+                "containerSrc": ""
+              }
+            ]
+          },
+          {
+            "start": 777.1999999880791,
+            "duration": 303,
+            "attribution": [
+              {
+                "name": "unknown",
+                "containerType": "window",
+                "containerSrc": ""
+              }
+            ]
+          },
+          {
+            "start": 1164.3999999761581,
+            "duration": 67,
+            "attribution": [
+              {
+                "name": "unknown",
+                "containerType": "window",
+                "containerSrc": ""
+              }
+            ]
+          },
+          {
+            "start": 1448,
+            "duration": 67,
+            "attribution": [
+              {
+                "name": "unknown",
+                "containerType": "window",
+                "containerSrc": ""
+              }
+            ]
+          },
+          {
+            "start": 1631.300000011921,
+            "duration": 71,
+            "attribution": [
+              {
+                "name": "unknown",
+                "containerType": "window",
+                "containerSrc": ""
+              }
+            ]
+          },
+          {
+            "start": 2067.699999988079,
+            "duration": 68,
+            "attribution": [
+              {
+                "name": "unknown",
+                "containerType": "window",
+                "containerSrc": ""
+              }
+            ]
+          },
+          {
+            "start": 2208.699999988079,
+            "duration": 79,
+            "attribution": [
+              {
+                "name": "unknown",
+                "containerType": "window",
+                "containerSrc": ""
+              }
+            ]
+          },
+          {
+            "start": 2294.099999964237,
+            "duration": 225,
+            "attribution": [
+              {
+                "name": "unknown",
+                "containerType": "window",
+                "containerSrc": ""
+              }
+            ]
+          },
+          {
+            "start": 2677.699999988079,
+            "duration": 128,
+            "attribution": [
+              {
+                "name": "unknown",
+                "containerType": "window",
+                "containerSrc": ""
+              }
+            ]
+          },
+          {
+            "start": 3000.099999964237,
+            "duration": 95,
+            "attribution": [
+              {
+                "name": "unknown",
+                "containerType": "window",
+                "containerSrc": ""
+              }
+            ]
+          },
+          {
+            "start": 3153.5,
+            "duration": 75,
+            "attribution": [
+              {
+                "name": "unknown",
+                "containerType": "window",
+                "containerSrc": ""
+              }
+            ]
+          }
+        ],
+        "lcp": 2016,
+        "longTaskMs": 1234,
+        "labBlockingMs": 684
+      },
+      "originalPerformance": {
+        "LayoutCount": 12,
+        "RecalcStyleCount": 24,
+        "LayoutDuration": 0.393911,
+        "RecalcStyleDuration": 0.215118,
+        "ScriptDuration": 0.638737,
+        "TaskDuration": 2.447989,
+        "JSHeapUsedSize": 5970168
+      },
+      "fixedPerformance": {
+        "LayoutCount": 12,
+        "RecalcStyleCount": 24,
+        "LayoutDuration": 0.393911,
+        "RecalcStyleDuration": 0.215118,
+        "ScriptDuration": 0.638737,
+        "TaskDuration": 2.462591,
+        "JSHeapUsedSize": 6072748
+      }
+    },
+    {
+      "endpoint": "before",
+      "run": 2,
+      "route": "/lv/akmens-virsmas/silestone/",
+      "original": {
+        "nowMs": 4811.099999964237,
+        "loadMs": 3293.599999964237,
+        "longTasks": [
+          {
+            "start": 634.8999999761581,
+            "duration": 178,
+            "attribution": [
+              {
+                "name": "unknown",
+                "containerType": "window",
+                "containerSrc": ""
+              }
+            ]
+          },
+          {
+            "start": 1134.199999988079,
+            "duration": 131,
+            "attribution": [
+              {
+                "name": "unknown",
+                "containerType": "window",
+                "containerSrc": ""
+              }
+            ]
+          },
+          {
+            "start": 2195.300000011921,
+            "duration": 224,
+            "attribution": [
+              {
+                "name": "unknown",
+                "containerType": "window",
+                "containerSrc": ""
+              }
+            ]
+          },
+          {
+            "start": 2437.399999976158,
+            "duration": 90,
+            "attribution": [
+              {
+                "name": "unknown",
+                "containerType": "window",
+                "containerSrc": ""
+              }
+            ]
+          },
+          {
+            "start": 3001.199999988079,
+            "duration": 102,
+            "attribution": [
+              {
+                "name": "unknown",
+                "containerType": "window",
+                "containerSrc": ""
+              }
+            ]
+          },
+          {
+            "start": 3110.5,
+            "duration": 90,
+            "attribution": [
+              {
+                "name": "unknown",
+                "containerType": "window",
+                "containerSrc": ""
+              }
+            ]
+          }
+        ],
+        "lcp": 3240,
+        "longTaskMs": 815,
+        "labBlockingMs": 515
+      },
+      "fixed": {
+        "nowMs": 8012.800000011921,
+        "loadMs": 3293.599999964237,
+        "longTasks": [
+          {
+            "start": 634.8999999761581,
+            "duration": 178,
+            "attribution": [
+              {
+                "name": "unknown",
+                "containerType": "window",
+                "containerSrc": ""
+              }
+            ]
+          },
+          {
+            "start": 1134.199999988079,
+            "duration": 131,
+            "attribution": [
+              {
+                "name": "unknown",
+                "containerType": "window",
+                "containerSrc": ""
+              }
+            ]
+          },
+          {
+            "start": 2195.300000011921,
+            "duration": 224,
+            "attribution": [
+              {
+                "name": "unknown",
+                "containerType": "window",
+                "containerSrc": ""
+              }
+            ]
+          },
+          {
+            "start": 2437.399999976158,
+            "duration": 90,
+            "attribution": [
+              {
+                "name": "unknown",
+                "containerType": "window",
+                "containerSrc": ""
+              }
+            ]
+          },
+          {
+            "start": 3001.199999988079,
+            "duration": 102,
+            "attribution": [
+              {
+                "name": "unknown",
+                "containerType": "window",
+                "containerSrc": ""
+              }
+            ]
+          },
+          {
+            "start": 3110.5,
+            "duration": 90,
+            "attribution": [
+              {
+                "name": "unknown",
+                "containerType": "window",
+                "containerSrc": ""
+              }
+            ]
+          }
+        ],
+        "lcp": 3240,
+        "longTaskMs": 815,
+        "labBlockingMs": 515
+      },
+      "originalPerformance": {
+        "LayoutCount": 10,
+        "RecalcStyleCount": 19,
+        "LayoutDuration": 0.291268,
+        "RecalcStyleDuration": 0.139994,
+        "ScriptDuration": 0.762131,
+        "TaskDuration": 2.43574,
+        "JSHeapUsedSize": 6807028
+      },
+      "fixedPerformance": {
+        "LayoutCount": 10,
+        "RecalcStyleCount": 19,
+        "LayoutDuration": 0.291268,
+        "RecalcStyleDuration": 0.139994,
+        "ScriptDuration": 0.762131,
+        "TaskDuration": 2.441229,
+        "JSHeapUsedSize": 6865372
+      }
+    },
+    {
+      "endpoint": "before",
+      "run": 3,
+      "route": "/lv/akmens-virsmas/silestone/",
+      "original": {
+        "nowMs": 4831.600000023842,
+        "loadMs": 3310.900000035763,
+        "longTasks": [
+          {
+            "start": 640.6000000238419,
+            "duration": 232,
+            "attribution": [
+              {
+                "name": "unknown",
+                "containerType": "window",
+                "containerSrc": ""
+              }
+            ]
+          },
+          {
+            "start": 1197.6000000238419,
+            "duration": 150,
+            "attribution": [
+              {
+                "name": "unknown",
+                "containerType": "window",
+                "containerSrc": ""
+              }
+            ]
+          },
+          {
+            "start": 2209.300000011921,
+            "duration": 223,
+            "attribution": [
+              {
+                "name": "unknown",
+                "containerType": "window",
+                "containerSrc": ""
+              }
+            ]
+          },
+          {
+            "start": 2446.100000023842,
+            "duration": 73,
+            "attribution": [
+              {
+                "name": "unknown",
+                "containerType": "window",
+                "containerSrc": ""
+              }
+            ]
+          },
+          {
+            "start": 2539.400000035763,
+            "duration": 70,
+            "attribution": [
+              {
+                "name": "unknown",
+                "containerType": "window",
+                "containerSrc": ""
+              }
+            ]
+          },
+          {
+            "start": 3022.7000000476837,
+            "duration": 100,
+            "attribution": [
+              {
+                "name": "unknown",
+                "containerType": "window",
+                "containerSrc": ""
+              }
+            ]
+          },
+          {
+            "start": 3133.7000000476837,
+            "duration": 87,
+            "attribution": [
+              {
+                "name": "unknown",
+                "containerType": "window",
+                "containerSrc": ""
+              }
+            ]
+          },
+          {
+            "start": 3554.600000023842,
+            "duration": 56,
+            "attribution": [
+              {
+                "name": "unknown",
+                "containerType": "window",
+                "containerSrc": ""
+              }
+            ]
+          }
+        ],
+        "lcp": 3268,
+        "longTaskMs": 991,
+        "labBlockingMs": 591
+      },
+      "fixed": {
+        "nowMs": 8017.100000023842,
+        "loadMs": 3310.900000035763,
+        "longTasks": [
+          {
+            "start": 640.6000000238419,
+            "duration": 232,
+            "attribution": [
+              {
+                "name": "unknown",
+                "containerType": "window",
+                "containerSrc": ""
+              }
+            ]
+          },
+          {
+            "start": 1197.6000000238419,
+            "duration": 150,
+            "attribution": [
+              {
+                "name": "unknown",
+                "containerType": "window",
+                "containerSrc": ""
+              }
+            ]
+          },
+          {
+            "start": 2209.300000011921,
+            "duration": 223,
+            "attribution": [
+              {
+                "name": "unknown",
+                "containerType": "window",
+                "containerSrc": ""
+              }
+            ]
+          },
+          {
+            "start": 2446.100000023842,
+            "duration": 73,
+            "attribution": [
+              {
+                "name": "unknown",
+                "containerType": "window",
+                "containerSrc": ""
+              }
+            ]
+          },
+          {
+            "start": 2539.400000035763,
+            "duration": 70,
+            "attribution": [
+              {
+                "name": "unknown",
+                "containerType": "window",
+                "containerSrc": ""
+              }
+            ]
+          },
+          {
+            "start": 3022.7000000476837,
+            "duration": 100,
+            "attribution": [
+              {
+                "name": "unknown",
+                "containerType": "window",
+                "containerSrc": ""
+              }
+            ]
+          },
+          {
+            "start": 3133.7000000476837,
+            "duration": 87,
+            "attribution": [
+              {
+                "name": "unknown",
+                "containerType": "window",
+                "containerSrc": ""
+              }
+            ]
+          },
+          {
+            "start": 3554.600000023842,
+            "duration": 56,
+            "attribution": [
+              {
+                "name": "unknown",
+                "containerType": "window",
+                "containerSrc": ""
+              }
+            ]
+          }
+        ],
+        "lcp": 3268,
+        "longTaskMs": 991,
+        "labBlockingMs": 591
+      },
+      "originalPerformance": {
+        "LayoutCount": 11,
+        "RecalcStyleCount": 21,
+        "LayoutDuration": 0.364604,
+        "RecalcStyleDuration": 0.144907,
+        "ScriptDuration": 0.716227,
+        "TaskDuration": 2.522081,
+        "JSHeapUsedSize": 6450388
+      },
+      "fixedPerformance": {
+        "LayoutCount": 11,
+        "RecalcStyleCount": 21,
+        "LayoutDuration": 0.364604,
+        "RecalcStyleDuration": 0.144907,
+        "ScriptDuration": 0.716227,
+        "TaskDuration": 2.531159,
+        "JSHeapUsedSize": 6525492
+      }
+    },
+    {
+      "endpoint": "after",
+      "run": 3,
+      "route": "/lv/akmens-virsmas/silestone/",
+      "original": {
+        "nowMs": 4188.800000011921,
+        "loadMs": 2672.5,
+        "longTasks": [
+          {
+            "start": 709.6999999880791,
+            "duration": 58,
+            "attribution": [
+              {
+                "name": "unknown",
+                "containerType": "window",
+                "containerSrc": ""
+              }
+            ]
+          },
+          {
+            "start": 799.6999999880791,
+            "duration": 305,
+            "attribution": [
+              {
+                "name": "unknown",
+                "containerType": "window",
+                "containerSrc": ""
+              }
+            ]
+          },
+          {
+            "start": 1126.300000011921,
+            "duration": 59,
+            "attribution": [
+              {
+                "name": "unknown",
+                "containerType": "window",
+                "containerSrc": ""
+              }
+            ]
+          },
+          {
+            "start": 1409.800000011921,
+            "duration": 73,
+            "attribution": [
+              {
+                "name": "unknown",
+                "containerType": "window",
+                "containerSrc": ""
+              }
+            ]
+          },
+          {
+            "start": 1645.800000011921,
+            "duration": 59,
+            "attribution": [
+              {
+                "name": "unknown",
+                "containerType": "window",
+                "containerSrc": ""
+              }
+            ]
+          },
+          {
+            "start": 2049,
+            "duration": 63,
+            "attribution": [
+              {
+                "name": "unknown",
+                "containerType": "window",
+                "containerSrc": ""
+              }
+            ]
+          },
+          {
+            "start": 2236,
+            "duration": 87,
+            "attribution": [
+              {
+                "name": "unknown",
+                "containerType": "window",
+                "containerSrc": ""
+              }
+            ]
+          },
+          {
+            "start": 2328.699999988079,
+            "duration": 250,
+            "attribution": [
+              {
+                "name": "unknown",
+                "containerType": "window",
+                "containerSrc": ""
+              }
+            ]
+          },
+          {
+            "start": 2716.800000011921,
+            "duration": 122,
+            "attribution": [
+              {
+                "name": "unknown",
+                "containerType": "window",
+                "containerSrc": ""
+              }
+            ]
+          },
+          {
+            "start": 3054.5,
+            "duration": 125,
+            "attribution": [
+              {
+                "name": "unknown",
+                "containerType": "window",
+                "containerSrc": ""
+              }
+            ]
+          },
+          {
+            "start": 3249.699999988079,
+            "duration": 64,
+            "attribution": [
+              {
+                "name": "unknown",
+                "containerType": "window",
+                "containerSrc": ""
+              }
+            ]
+          }
+        ],
+        "lcp": 1960,
+        "longTaskMs": 1265,
+        "labBlockingMs": 715
+      },
+      "fixed": {
+        "nowMs": 8021.600000023842,
+        "loadMs": 2672.5,
+        "longTasks": [
+          {
+            "start": 709.6999999880791,
+            "duration": 58,
+            "attribution": [
+              {
+                "name": "unknown",
+                "containerType": "window",
+                "containerSrc": ""
+              }
+            ]
+          },
+          {
+            "start": 799.6999999880791,
+            "duration": 305,
+            "attribution": [
+              {
+                "name": "unknown",
+                "containerType": "window",
+                "containerSrc": ""
+              }
+            ]
+          },
+          {
+            "start": 1126.300000011921,
+            "duration": 59,
+            "attribution": [
+              {
+                "name": "unknown",
+                "containerType": "window",
+                "containerSrc": ""
+              }
+            ]
+          },
+          {
+            "start": 1409.800000011921,
+            "duration": 73,
+            "attribution": [
+              {
+                "name": "unknown",
+                "containerType": "window",
+                "containerSrc": ""
+              }
+            ]
+          },
+          {
+            "start": 1645.800000011921,
+            "duration": 59,
+            "attribution": [
+              {
+                "name": "unknown",
+                "containerType": "window",
+                "containerSrc": ""
+              }
+            ]
+          },
+          {
+            "start": 2049,
+            "duration": 63,
+            "attribution": [
+              {
+                "name": "unknown",
+                "containerType": "window",
+                "containerSrc": ""
+              }
+            ]
+          },
+          {
+            "start": 2236,
+            "duration": 87,
+            "attribution": [
+              {
+                "name": "unknown",
+                "containerType": "window",
+                "containerSrc": ""
+              }
+            ]
+          },
+          {
+            "start": 2328.699999988079,
+            "duration": 250,
+            "attribution": [
+              {
+                "name": "unknown",
+                "containerType": "window",
+                "containerSrc": ""
+              }
+            ]
+          },
+          {
+            "start": 2716.800000011921,
+            "duration": 122,
+            "attribution": [
+              {
+                "name": "unknown",
+                "containerType": "window",
+                "containerSrc": ""
+              }
+            ]
+          },
+          {
+            "start": 3054.5,
+            "duration": 125,
+            "attribution": [
+              {
+                "name": "unknown",
+                "containerType": "window",
+                "containerSrc": ""
+              }
+            ]
+          },
+          {
+            "start": 3249.699999988079,
+            "duration": 64,
+            "attribution": [
+              {
+                "name": "unknown",
+                "containerType": "window",
+                "containerSrc": ""
+              }
+            ]
+          }
+        ],
+        "lcp": 1960,
+        "longTaskMs": 1265,
+        "labBlockingMs": 715
+      },
+      "originalPerformance": {
+        "LayoutCount": 11,
+        "RecalcStyleCount": 23,
+        "LayoutDuration": 0.368558,
+        "RecalcStyleDuration": 0.284786,
+        "ScriptDuration": 0.59728,
+        "TaskDuration": 2.357191,
+        "JSHeapUsedSize": 5748844
+      },
+      "fixedPerformance": {
+        "LayoutCount": 11,
+        "RecalcStyleCount": 23,
+        "LayoutDuration": 0.368558,
+        "RecalcStyleDuration": 0.284786,
+        "ScriptDuration": 0.59728,
+        "TaskDuration": 2.366963,
+        "JSHeapUsedSize": 5851540
+      }
+    }
+  ]
+}

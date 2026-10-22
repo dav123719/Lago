@@ -32,6 +32,8 @@ const labels = {
     noAddresses: 'Vēl nav pievienotu adrešu',
     loading: 'Ielāde...',
     bio: 'Par mani',
+    profileError: 'Profilu neizdevās ielādēt.',
+    retry: 'Mēģināt vēlreiz',
     profileIncomplete: 'Pabeidziet profilu, lai turpmāk to būtu vieglāk izmantot.',
   },
   en: {
@@ -53,6 +55,8 @@ const labels = {
     noAddresses: 'No addresses added yet',
     loading: 'Loading...',
     bio: 'About me',
+    profileError: 'Could not load your profile.',
+    retry: 'Try again',
     profileIncomplete: 'Complete your profile to make future visits easier.',
   },
   ru: {
@@ -74,6 +78,8 @@ const labels = {
     noAddresses: 'Пока нет адресов',
     loading: 'Загрузка...',
     bio: 'Обо мне',
+    profileError: 'Не удалось загрузить профиль.',
+    retry: 'Повторить',
     profileIncomplete: 'Заполните профиль, чтобы упростить дальнейшую работу с аккаунтом.',
   },
 }
@@ -82,7 +88,7 @@ export default function AccountPage({ params }: AccountPageProps) {
   const [locale, setLocale] = useState<Locale>('lv')
   useEffect(() => { void params.then(p => setLocale(p.locale)) }, [params])
   
-  const { user, profile, isLoading: authLoading } = useAuth()
+  const { user, profile, isLoading: authLoading, isProfileLoading, profileError, refreshProfile } = useAuth()
   const { updateUserProfile, isLoading: profileLoading } = useProfile(locale)
   
   const [isEditing, setIsEditing] = useState(false)
@@ -92,17 +98,19 @@ export default function AccountPage({ params }: AccountPageProps) {
   const [bio, setBio] = useState(profile?.bio || '')
 
   const t = labels[locale]
-  const isLoading = authLoading || profileLoading
+  const isLoading = authLoading || isProfileLoading || profileLoading
 
   // Update local state when profile changes
   useEffect(() => {
-    if (profile) {
+    if (!profile) {
+      setFirstName(''); setLastName(''); setPhone(''); setBio(''); setIsEditing(false)
+    } else {
       setFirstName(profile.first_name || '')
       setLastName(profile.last_name || '')
       setPhone(profile.phone || '')
       setBio(profile.bio || '')
     }
-  }, [profile])
+  }, [profile, user?.id])
 
   const handleSave = async () => {
     const { error } = await updateUserProfile({
@@ -131,7 +139,12 @@ export default function AccountPage({ params }: AccountPageProps) {
         <p className="text-lago-muted text-lg">{t.subtitle}</p>
       </div>
 
-      {isLoading ? (
+      {profileError ? (
+        <div role="alert" className="rounded-xl border border-white/10 bg-lago-dark p-6 text-lago-light">
+          <p>{t.profileError}</p>
+          <button type="button" onClick={() => void refreshProfile()} className="mt-3 rounded border border-white/20 px-4 py-2 text-lago-gold">{t.retry}</button>
+        </div>
+      ) : isLoading ? (
         <div className="flex items-center justify-center py-20">
           <Loader2 className="w-8 h-8 text-lago-gold animate-spin" />
           <span className="ml-3 text-lago-muted">{t.loading}</span>
@@ -163,22 +176,28 @@ export default function AccountPage({ params }: AccountPageProps) {
                 <div className="space-y-5">
                   <div className="grid grid-cols-2 gap-4">
                     <div>
-                      <label className="block text-sm font-medium text-lago-light mb-2">
+                      <label htmlFor="profile-first-name" className="block text-sm font-medium text-lago-light mb-2">
                         {t.firstName || 'Vārds'}
                       </label>
                       <input
                         type="text"
+                        id="profile-first-name"
+                        autoComplete="given-name"
+                        maxLength={100}
                         value={firstName}
                         onChange={(e) => setFirstName(e.target.value)}
                         className="w-full px-4 py-3 rounded-lg bg-lago-black border border-white/10 text-white focus:border-lago-gold/50 focus:outline-none transition-all"
                       />
                     </div>
                     <div>
-                      <label className="block text-sm font-medium text-lago-light mb-2">
+                      <label htmlFor="profile-last-name" className="block text-sm font-medium text-lago-light mb-2">
                         {t.lastName || 'Uzvārds'}
                       </label>
                       <input
                         type="text"
+                        id="profile-last-name"
+                        autoComplete="family-name"
+                        maxLength={100}
                         value={lastName}
                         onChange={(e) => setLastName(e.target.value)}
                         className="w-full px-4 py-3 rounded-lg bg-lago-black border border-white/10 text-white focus:border-lago-gold/50 focus:outline-none transition-all"
@@ -186,11 +205,12 @@ export default function AccountPage({ params }: AccountPageProps) {
                     </div>
                   </div>
                   <div>
-                    <label className="block text-sm font-medium text-lago-light mb-2">
+                    <label htmlFor="profile-email" className="block text-sm font-medium text-lago-light mb-2">
                       {t.email}
                     </label>
                     <input
                       type="email"
+                      id="profile-email"
                       value={user?.email || ''}
                       disabled
                       className="w-full px-4 py-3 rounded-lg bg-lago-black border border-white/10 text-lago-muted cursor-not-allowed"
@@ -201,11 +221,14 @@ export default function AccountPage({ params }: AccountPageProps) {
                     <textarea id="profile-bio" maxLength={500} rows={3} value={bio} onChange={e => setBio(e.target.value)} className="w-full px-4 py-3 rounded-lg bg-lago-black border border-white/10 text-white focus:border-lago-gold/50 focus:outline-none transition-all" />
                   </div>
                   <div>
-                    <label className="block text-sm font-medium text-lago-light mb-2">
+                    <label htmlFor="profile-phone" className="block text-sm font-medium text-lago-light mb-2">
                       {t.phone}
                     </label>
                     <input
                       type="tel"
+                      id="profile-phone"
+                      autoComplete="tel"
+                      maxLength={50}
                       value={phone}
                       onChange={(e) => setPhone(e.target.value)}
                       placeholder="+371 20000000"
@@ -267,7 +290,7 @@ export default function AccountPage({ params }: AccountPageProps) {
               )}
             </div>
 
-            <AccountSecuritySettings locale={locale} />
+            <AccountSecuritySettings key={user?.id} locale={locale} />
 
             {/* Orders Preview */}
             <div className="bg-lago-dark rounded-xl border border-white/10 p-6 md:p-8">

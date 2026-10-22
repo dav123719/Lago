@@ -5,11 +5,12 @@
 
 'use client'
 
-import { useState, useEffect, useCallback } from 'react'
+import { useState, useEffect } from 'react'
 import { X, Mail, Lock, Eye, EyeOff, Loader2 } from 'lucide-react'
 import { useAuth } from '@/hooks/useAuth'
 import { Locale } from '@/lib/i18n/config'
 import { toast } from 'sonner'
+import { useModalDialog } from '@/hooks/useModalDialog'
 
 interface LoginModalProps {
   locale: Locale
@@ -72,21 +73,7 @@ export function LoginModal({ locale, isOpen, onClose, onSignupClick, onForgotPas
   const [isLoading, setIsLoading] = useState(false)
   const t = labels[locale]
 
-  // Handle escape key
-  const handleEscape = useCallback((e: KeyboardEvent) => {
-    if (e.key === 'Escape') onClose()
-  }, [onClose])
-
-  useEffect(() => {
-    if (isOpen) {
-      document.addEventListener('keydown', handleEscape)
-      document.body.style.overflow = 'hidden'
-    }
-    return () => {
-      document.removeEventListener('keydown', handleEscape)
-      document.body.style.overflow = ''
-    }
-  }, [isOpen, handleEscape])
+  const dialogRef = useModalDialog(isOpen, onClose)
 
   // Reset form when closed
   useEffect(() => {
@@ -102,13 +89,14 @@ export function LoginModal({ locale, isOpen, onClose, onSignupClick, onForgotPas
     e.preventDefault()
     setIsLoading(true)
 
-    const { error } = await signInWithEmail(email, password)
-
-    if (error) {
+    try {
+      const { error } = await signInWithEmail(email, password)
+      if (error) toast.error(t.error)
+      else onClose()
+    } catch {
       toast.error(t.error)
+    } finally {
       setIsLoading(false)
-    } else {
-      onClose()
     }
   }
 
@@ -123,7 +111,7 @@ export function LoginModal({ locale, isOpen, onClose, onSignupClick, onForgotPas
       />
 
       {/* Modal */}
-      <div className="relative w-full max-w-md animate-scale-in">
+      <div ref={dialogRef} role="dialog" aria-modal="true" aria-labelledby="login-title" aria-describedby="login-description" tabIndex={-1} className="relative w-full max-w-md animate-scale-in">
         {/* Glow effect */}
         <div className="absolute -inset-1 bg-gradient-to-r from-lago-gold/20 via-lago-gold/10 to-lago-gold/20 rounded-2xl blur-xl" />
 
@@ -145,8 +133,8 @@ export function LoginModal({ locale, isOpen, onClose, onSignupClick, onForgotPas
 
           {/* Header */}
           <div className="text-center mb-8">
-            <h2 className="text-2xl font-heading text-white mb-2">{t.title}</h2>
-            <p className="text-lago-muted text-sm">{t.subtitle}</p>
+            <h2 id="login-title" className="text-2xl font-heading text-white mb-2">{t.title}</h2>
+            <p id="login-description" className="text-lago-muted text-sm">{t.subtitle}</p>
           </div>
 
           {/* Form */}
@@ -161,6 +149,7 @@ export function LoginModal({ locale, isOpen, onClose, onSignupClick, onForgotPas
                 <input
                   type="email"
                   id="email"
+                  autoComplete="email"
                   value={email}
                   onChange={(e) => setEmail(e.target.value)}
                   placeholder={t.emailPlaceholder}
@@ -180,6 +169,7 @@ export function LoginModal({ locale, isOpen, onClose, onSignupClick, onForgotPas
                 <input
                   type={showPassword ? 'text' : 'password'}
                   id="password"
+                  autoComplete="current-password"
                   value={password}
                   onChange={(e) => setPassword(e.target.value)}
                   placeholder={t.passwordPlaceholder}

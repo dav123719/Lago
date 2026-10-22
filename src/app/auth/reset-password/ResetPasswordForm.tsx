@@ -2,13 +2,13 @@
 
 import { useEffect, useState } from 'react'
 import Link from 'next/link'
-import { useRouter, useSearchParams } from 'next/navigation'
+import { useSearchParams } from 'next/navigation'
 import { Loader2, Lock, XCircle } from 'lucide-react'
 import { createBrowserSupabaseClient } from '@/lib/supabase/client'
 import { locales, defaultLocale, type Locale } from '@/lib/i18n/config'
+import { hasPasswordRecovery, clearPasswordRecovery } from '@/lib/auth/recovery'
 
 export function ResetPasswordForm() {
-  const router = useRouter()
   const search = useSearchParams()
   const rawLocale = search.get('locale') || defaultLocale
   const locale = (locales.includes(rawLocale as Locale) ? rawLocale : defaultLocale) as Locale
@@ -29,16 +29,19 @@ export function ResetPasswordForm() {
   useEffect(() => {
     let active = true
     const verify = async () => {
-      const isRecoveryFlow = sessionStorage.getItem('lago:password-recovery') === '1'
-      if (!isRecoveryFlow || search.get('invalid') === '1') {
+      if (search.get('invalid') === '1') {
         if (active) { setInvalid(true); setReady(true) }
         return
       }
       const supabase = createBrowserSupabaseClient()
-      const { data, error: authError } = await supabase.auth.getUser()
-      if (active) {
-        setInvalid(Boolean(authError || !data.user))
-        setReady(true)
+      try {
+        const { data, error: authError } = await supabase.auth.getUser()
+        if (active) {
+          setInvalid(Boolean(authError || !data.user || !hasPasswordRecovery(data.user.id)))
+          setReady(true)
+        }
+      } catch {
+        if (active) { setInvalid(true); setReady(true) }
       }
     }
     void verify()
@@ -50,12 +53,24 @@ export function ResetPasswordForm() {
     if (password.length < 12) { setError(t.weak); return }
     if (password !== confirm) { setError(t.mismatch); return }
     setLoading(true); setError('')
-    const { error: updateError } = await createBrowserSupabaseClient().auth.updateUser({ password })
-    setLoading(false)
-    if (updateError) { setError(t.error); return }
-    sessionStorage.removeItem('lago:password-recovery')
-    setComplete(true)
-    window.setTimeout(() => router.replace(`/${locale}/account`), 1200)
+    try {
+      const supabase = createBrowserSupabaseClient()
+      const { data, error: userError } = await supabase.auth.getUser()
+      if (userError || !data.user || !hasPasswordRecovery(data.user.id)) {
+        clearPasswordRecovery()
+        setInvalid(true)
+        return
+      }
+      const { error: updateError } = await supabase.auth.updateUser({ password })
+      if (updateError) { setError(t.error); return }
+      clearPasswordRecovery()
+      setPassword(''); setConfirm('')
+      setComplete(true)
+    } catch {
+      setError(t.error)
+    } finally {
+      setLoading(false)
+    }
   }
 
   return <main className="min-h-screen bg-lago-black px-4 py-20 text-white"><section className="mx-auto max-w-md rounded-xl border border-white/10 bg-lago-dark p-8">
@@ -63,7 +78,7 @@ export function ResetPasswordForm() {
       <XCircle className="mb-4 h-9 w-9 text-red-400" aria-hidden="true" />
       <h1 className="mb-3 text-2xl font-heading">{t.title}</h1><p role="alert" className="mb-6 text-lago-muted">{t.invalid}</p>
       <Link href={`/auth/forgot-password?locale=${locale}`} className="text-lago-gold">{t.retry}</Link>
-    </> : complete ? <><h1 className="mb-3 text-2xl font-heading">{t.title}</h1><p role="status" className="text-lago-muted">{t.done}</p></> : <>
+    </> : complete ? <><h1 className="mb-3 text-2xl font-heading">{t.title}</h1><p role="status" className="text-lago-muted">{t.done}</p><Link href={`/${locale}/account`} className="mt-4 inline-block text-lago-gold">{locale === 'lv' ? 'Mans konts' : locale === 'ru' ? 'Мой аккаунт' : 'My account'}</Link></> : <>
       <h1 className="mb-6 text-2xl font-heading">{t.title}</h1>
       <form onSubmit={submit} className="space-y-4">
         <label htmlFor="new-password" className="block text-sm">{t.password}</label>

@@ -1,3 +1,5 @@
 #!/bin/bash
-# Quick type check
-npx tsc --noEmit --pretty 2>&1 | head -30
+# Preserve the compiler's exit status and diagnostics for local/CI callers.
+set -euo pipefail
+
+npx tsc --noEmit --pretty "$@"

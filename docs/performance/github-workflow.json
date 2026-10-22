@@ -1,0 +1,27 @@
+{
+  "repository": "dav123719/Lago",
+  "fork": false,
+  "defaultBranch": "main",
+  "workingBranch": "codex/engineering-optimization",
+  "observations": [
+    {
+      "url": "https://api.github.com/repos/dav123719/Lago/branches/main",
+      "error": false,
+      "data": {
+        "name": "main",
+        "protected": false,
+        "sha": "bbce8091d2dd752c37e03c8ee6854e55c23f807d"
+      }
+    },
+    {
+      "url": "https://api.github.com/repos/dav123719/Lago/rulesets",
+      "error": false,
+      "data": []
+    },
+    {
+      "url": "https://api.github.com/repos/dav123719/Lago/branches/main/protection",
+      "error": true,
+      "data": "GitHub API error 403: {\"message\":\"Resource not accessible by integration\",\"documentation_url\":\"https://docs.github.com/rest/branches/branch-protection#get-branch-protection\",\"status\":\"403\"}"
+    }
+  ]
+}

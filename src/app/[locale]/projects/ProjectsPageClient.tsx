@@ -6,10 +6,10 @@
 'use client'
 
 import { useState, useMemo, useCallback } from 'react'
+import dynamic from 'next/dynamic'
 import { Locale } from '@/lib/i18n/config'
 import { SanityProject } from '@/lib/sanity/types'
 import { ProjectCardEditable } from '@/components/projects/ProjectCardEditable'
-import { EditProjectModal } from '@/components/projects/EditProjectModal'
 import { toast } from 'sonner'
 import { 
   MapPin, 
@@ -24,6 +24,10 @@ import {
   Building2,
   Filter
 } from 'lucide-react'
+
+// Public project browsing does not need the administrative editor. Mount it
+// only after an authorized edit, with fresh form state for the chosen project.
+const EditProjectModal = dynamic(() => import('@/components/projects/EditProjectModal').then(module => module.EditProjectModal))
 
 // Material types for filtering
 type MaterialType = 'silestone' | 'dekton' | 'granite' | 'marble'
@@ -53,6 +57,7 @@ function FilterButton({
   return (
     <button
       onClick={onClick}
+      aria-pressed={isSelected}
       className={[
         className,
         'group/btn relative rounded-xl font-medium text-base transition-all duration-300 transform hover:scale-105 overflow-hidden',
@@ -394,7 +399,8 @@ export function ProjectsPageClient({
       </section>
 
       {/* Edit Modal */}
-      <EditProjectModal
+      {isAdmin && isEditModalOpen && editingProject && <EditProjectModal
+        key={editingProject._id}
         project={editingProject}
         locale={locale}
         isOpen={isEditModalOpen}
@@ -403,7 +409,7 @@ export function ProjectsPageClient({
           setEditingProject(null)
         }}
         onSave={handleSave}
-      />
+      />}
     </>
   )
 }

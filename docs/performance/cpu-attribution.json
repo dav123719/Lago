@@ -1,0 +1,275 @@
+{
+  "units": "milliseconds unless noted",
+  "browser": "145.0.7632.6",
+  "source": "Three alternating before/after pairs with equal profiler/tracing overhead, cold browser cache, warm server cache, viewport390x844/mobile/touch/reduced-motion,4xCPU,80ms latency,200000B/s down,93750B/s up; not field INP or Lighthouse TBT. Original capture=load+1500ms; fixed capture=8000ms after navigation.",
+  "groups": {
+    "after": {
+      "captureWindowChangedLongTaskTotals": false,
+      "originalCaptureMs": {
+        "median": 4189.099999964237,
+        "min": 4188.800000011921,
+        "max": 4232.199999988079,
+        "n": 3
+      },
+      "fixedCaptureMs": {
+        "median": 8021.600000023842,
+        "min": 8013,
+        "max": 8026.199999988079,
+        "n": 3
+      },
+      "metrics": {
+        "lcp": {
+          "median": 2016,
+          "min": 1960,
+          "max": 2172,
+          "n": 3
+        },
+        "loadMs": {
+          "median": 2674.5,
+          "min": 2672.5,
+          "max": 2716.699999988079,
+          "n": 3
+        },
+        "longTaskMs": {
+          "median": 1265,
+          "min": 1234,
+          "max": 1332,
+          "n": 3
+        },
+        "labBlockingMs": {
+          "median": 715,
+          "min": 684,
+          "max": 832,
+          "n": 3
+        }
+      },
+      "mainThread": {
+        "TaskDurationMs": {
+          "median": 2462.5910000000003,
+          "min": 2366.963,
+          "max": 2686.4900000000002,
+          "n": 3
+        },
+        "ScriptDurationMs": {
+          "median": 638.737,
+          "min": 597.2800000000001,
+          "max": 653.62,
+          "n": 3
+        },
+        "LayoutDurationMs": {
+          "median": 393.911,
+          "min": 368.558,
+          "max": 457.55899999999997,
+          "n": 3
+        },
+        "RecalcStyleDurationMs": {
+          "median": 247.29000000000002,
+          "min": 215.118,
+          "max": 284.786,
+          "n": 3
+        }
+      }
+    },
+    "before": {
+      "captureWindowChangedLongTaskTotals": false,
+      "originalCaptureMs": {
+        "median": 4831.600000023842,
+        "min": 4811.099999964237,
+        "max": 4936,
+        "n": 3
+      },
+      "fixedCaptureMs": {
+        "median": 8016.799999952316,
+        "min": 8012.800000011921,
+        "max": 8017.100000023842,
+        "n": 3
+      },
+      "metrics": {
+        "lcp": {
+          "median": 3268,
+          "min": 3240,
+          "max": 3296,
+          "n": 3
+        },
+        "loadMs": {
+          "median": 3310.900000035763,
+          "min": 3293.599999964237,
+          "max": 3419.599999964237,
+          "n": 3
+        },
+        "longTaskMs": {
+          "median": 991,
+          "min": 815,
+          "max": 1083,
+          "n": 3
+        },
+        "labBlockingMs": {
+          "median": 583,
+          "min": 515,
+          "max": 591,
+          "n": 3
+        }
+      },
+      "mainThread": {
+        "TaskDurationMs": {
+          "median": 2531.159,
+          "min": 2441.229,
+          "max": 2561.442,
+          "n": 3
+        },
+        "ScriptDurationMs": {
+          "median": 732.808,
+          "min": 716.227,
+          "max": 762.131,
+          "n": 3
+        },
+        "LayoutDurationMs": {
+          "median": 347.036,
+          "min": 291.26800000000003,
+          "max": 364.604,
+          "n": 3
+        },
+        "RecalcStyleDurationMs": {
+          "median": 144.907,
+          "min": 139.994,
+          "max": 151.031,
+          "n": 3
+        }
+      }
+    },
+    "candidate": {
+      "captureWindowChangedLongTaskTotals": false,
+      "originalCaptureMs": {
+        "median": 4195.700000047684,
+        "min": 4194,
+        "max": 4291.5,
+        "n": 3
+      },
+      "fixedCaptureMs": {
+        "median": 8024.299999952316,
+        "min": 8013.400000035763,
+        "max": 8024.400000035763,
+        "n": 3
+      },
+      "metrics": {
+        "lcp": {
+          "median": 1984,
+          "min": 1972,
+          "max": 2464,
+          "n": 3
+        },
+        "loadMs": {
+          "median": 2677.7000000476837,
+          "min": 2670.7999999523163,
+          "max": 2772.5,
+          "n": 3
+        },
+        "longTaskMs": {
+          "median": 1344,
+          "min": 1204,
+          "max": 1361,
+          "n": 3
+        },
+        "labBlockingMs": {
+          "median": 794,
+          "min": 654,
+          "max": 811,
+          "n": 3
+        }
+      },
+      "mainThread": {
+        "TaskDurationMs": {
+          "median": 2532.495,
+          "min": 2387.893,
+          "max": 2546.371,
+          "n": 3
+        },
+        "ScriptDurationMs": {
+          "median": 602.6899999999999,
+          "min": 579.354,
+          "max": 649.174,
+          "n": 3
+        },
+        "LayoutDurationMs": {
+          "median": 479.991,
+          "min": 374.481,
+          "max": 486.919,
+          "n": 3
+        },
+        "RecalcStyleDurationMs": {
+          "median": 238.573,
+          "min": 209.40800000000002,
+          "max": 262.818,
+          "n": 3
+        }
+      }
+    },
+    "diagnostic-ignore-lang": {
+      "captureWindowChangedLongTaskTotals": false,
+      "originalCaptureMs": {
+        "median": 4187.400000035763,
+        "min": 4168.199999988079,
+        "max": 4248.399999976158,
+        "n": 3
+      },
+      "fixedCaptureMs": {
+        "median": 8012.900000035763,
+        "min": 8012.400000035763,
+        "max": 8015.099999964237,
+        "n": 3
+      },
+      "metrics": {
+        "lcp": {
+          "median": 1992,
+          "min": 1972,
+          "max": 2020,
+          "n": 3
+        },
+        "loadMs": {
+          "median": 2672.300000011921,
+          "min": 2655.600000023842,
+          "max": 2734.899999976158,
+          "n": 3
+        },
+        "longTaskMs": {
+          "median": 1127,
+          "min": 1103,
+          "max": 1173,
+          "n": 3
+        },
+        "labBlockingMs": {
+          "median": 653,
+          "min": 627,
+          "max": 673,
+          "n": 3
+        }
+      },
+      "mainThread": {
+        "TaskDurationMs": {
+          "median": 2356.4519999999998,
+          "min": 2239.3830000000003,
+          "max": 2357.406,
+          "n": 3
+        },
+        "ScriptDurationMs": {
+          "median": 592.293,
+          "min": 560.483,
+          "max": 657.504,
+          "n": 3
+        },
+        "LayoutDurationMs": {
+          "median": 385.26500000000004,
+          "min": 366.464,
+          "max": 420.624,
+          "n": 3
+        },
+        "RecalcStyleDurationMs": {
+          "median": 139.18900000000002,
+          "min": 126.95300000000002,
+          "max": 160.73399999999998,
+          "n": 3
+        }
+      }
+    }
+  }
+}

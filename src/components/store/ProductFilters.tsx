@@ -4,7 +4,7 @@
 
 'use client'
 
-import { useState, useCallback, useEffect } from 'react'
+import { useState, useEffect, useRef, useId } from 'react'
 import { Search, SlidersHorizontal, X, ChevronDown } from 'lucide-react'
 import { cn } from '@/lib/utils'
 import type { Locale } from '@/lib/i18n/config'
@@ -28,11 +28,43 @@ export function ProductFilters({
   priceRange,
 }: ProductFiltersProps) {
   const [isOpen, setIsOpen] = useState(false)
-  const [localPriceRange, setLocalPriceRange] = useState<[number, number]>([
-    filters.minPrice || priceRange.min,
-    filters.maxPrice || priceRange.max,
-  ])
-  const [searchQuery, setSearchQuery] = useState(filters.search || '')
+  const minPrice = filters.minPrice ?? priceRange.min
+  const maxPrice = filters.maxPrice ?? priceRange.max
+  const priceKey = `${minPrice}:${maxPrice}`
+  const [priceDraft, setPriceDraft] = useState<{ source: string; value: [number, number] }>({
+    source: priceKey, value: [minPrice, maxPrice],
+  })
+  const localPriceRange: [number, number] = priceDraft.source === priceKey ? priceDraft.value : [minPrice, maxPrice]
+  const setLocalPriceRange = (value: [number, number]) => setPriceDraft({ source: priceKey, value })
+  const [searchDraft, setSearchDraft] = useState({ source: filters.search || '', value: filters.search || '' })
+  const searchQuery = searchDraft.source === (filters.search || '') ? searchDraft.value : filters.search || ''
+  const setSearchQuery = (value: string) => setSearchDraft({ source: filters.search || '', value })
+  // Reset drafts during render when their external source changes, avoiding
+  // an effect-driven extra paint and stale drafts on A -> B -> A navigation.
+  if (searchDraft.source !== (filters.search || '')) {
+    setSearchDraft({ source: filters.search || '', value: filters.search || '' })
+  }
+  if (priceDraft.source !== priceKey) {
+    setPriceDraft({ source: priceKey, value: [minPrice, maxPrice] })
+  }
+  const searchTimeout = useRef<ReturnType<typeof setTimeout> | null>(null)
+  const latestFilters = useRef(filters)
+  const latestOnChange = useRef(onFiltersChange)
+  const filtersId = useId()
+
+  useEffect(() => {
+    latestFilters.current = filters
+    latestOnChange.current = onFiltersChange
+  }, [filters, onFiltersChange])
+
+  // Browser history and deep links must update the visible controls too.
+  useEffect(() => {
+    if (searchTimeout.current) clearTimeout(searchTimeout.current)
+  }, [filters.search])
+
+  useEffect(() => () => {
+    if (searchTimeout.current) clearTimeout(searchTimeout.current)
+  }, [])
 
   // Translations
   const t = {
@@ -43,7 +75,10 @@ export function ProductFilters({
     price: locale === 'lv' ? 'Cena' : locale === 'ru' ? 'Цена' : 'Price',
     inStock: locale === 'lv' ? 'Tikai noliktavā' : locale === 'ru' ? 'Только в наличии' : 'In Stock Only',
     clear: locale === 'lv' ? 'Notīrīt' : locale === 'ru' ? 'Очистить' : 'Clear',
+    clearSearch: locale === 'lv' ? 'Notīrīt meklēšanu' : locale === 'ru' ? 'Очистить поиск' : 'Clear search',
     apply: locale === 'lv' ? 'Lietot' : locale === 'ru' ? 'Применить' : 'Apply',
+    minPrice: locale === 'lv' ? 'Minimālā cena' : locale === 'ru' ? 'Минимальная цена' : 'Minimum price',
+    maxPrice: locale === 'lv' ? 'Maksimālā cena' : locale === 'ru' ? 'Максимальная цена' : 'Maximum price',
   }
 
   // Material display names
@@ -63,23 +98,24 @@ export function ProductFilters({
     leather: locale === 'lv' ? 'Ādas' : locale === 'ru' ? 'Кожаный' : 'Leather',
   }
 
-  // Debounced search
-  useEffect(() => {
-    const timeout = setTimeout(() => {
-      onFiltersChange({ ...filters, search: searchQuery || undefined })
+  // Only user input starts a search. Read the latest filters when the debounce
+  // completes so a checkbox changed while typing cannot be overwritten.
+  const handleSearchChange = (value: string) => {
+    setSearchQuery(value)
+    if (searchTimeout.current) clearTimeout(searchTimeout.current)
+    searchTimeout.current = setTimeout(() => {
+      latestOnChange.current({ ...latestFilters.current, search: value.trim() || undefined })
     }, 300)
-
-    return () => clearTimeout(timeout)
-  }, [searchQuery])
+  }
 
   // Apply price filter
-  const handlePriceChange = useCallback(() => {
+  const handlePriceChange = () => {
     onFiltersChange({
       ...filters,
       minPrice: localPriceRange[0],
       maxPrice: localPriceRange[1],
     })
-  }, [localPriceRange, filters, onFiltersChange])
+  }
 
   // Toggle material filter
   const toggleMaterial = (material: MaterialType) => {
@@ -115,6 +151,7 @@ export function ProductFilters({
 
   // Clear all filters
   const clearFilters = () => {
+    if (searchTimeout.current) clearTimeout(searchTimeout.current)
     setSearchQuery('')
     setLocalPriceRange([priceRange.min, priceRange.max])
     onFiltersChange({})
@@ -143,13 +180,15 @@ export function ProductFilters({
         <input
           type="text"
           value={searchQuery}
-          onChange={(e) => setSearchQuery(e.target.value)}
+          onChange={(e) => handleSearchChange(e.target.value)}
           placeholder={t.search}
+          aria-label={t.search}
           className="w-full pl-10 pr-4 py-3 bg-lago-charcoal border border-lago-gray rounded-lg text-white placeholder-lago-muted focus:outline-none focus:border-lago-gold transition-colors"
         />
         {searchQuery && (
           <button
-            onClick={() => setSearchQuery('')}
+            onClick={() => handleSearchChange('')}
+            aria-label={t.clearSearch}
             className="absolute right-3 top-1/2 -translate-y-1/2 text-lago-muted hover:text-white"
           >
             <X className="w-4 h-4" />
@@ -160,6 +199,8 @@ export function ProductFilters({
       {/* Mobile Filter Toggle */}
       <button
         onClick={() => setIsOpen(!isOpen)}
+        aria-expanded={isOpen}
+        aria-controls={filtersId}
         className="lg:hidden flex items-center gap-2 w-full px-4 py-3 bg-lago-charcoal border border-lago-gray rounded-lg text-white hover:border-lago-gold transition-colors"
       >
         <SlidersHorizontal className="w-5 h-5" />
@@ -177,6 +218,7 @@ export function ProductFilters({
 
       {/* Filters Content */}
       <div
+        id={filtersId}
         className={cn(
           'space-y-6 bg-lago-charcoal rounded-lg p-4',
           !isOpen && 'hidden lg:block'
@@ -199,7 +241,7 @@ export function ProductFilters({
                       onChange={() => toggleMaterial(material)}
                       className="peer sr-only"
                     />
-                    <div className="w-5 h-5 border-2 border-lago-stone rounded peer-checked:bg-lago-gold peer-checked:border-lago-gold transition-colors" />
+                    <div className="w-5 h-5 border-2 border-lago-stone rounded peer-checked:bg-lago-gold peer-checked:border-lago-gold peer-focus-visible:ring-2 peer-focus-visible:ring-lago-gold peer-focus-visible:ring-offset-2 transition-colors" />
                     <svg
                       className="absolute inset-0 w-5 h-5 text-lago-black opacity-0 peer-checked:opacity-100 transition-opacity pointer-events-none"
                       viewBox="0 0 20 20"
@@ -238,7 +280,7 @@ export function ProductFilters({
                       onChange={() => toggleFinish(finish)}
                       className="peer sr-only"
                     />
-                    <div className="w-5 h-5 border-2 border-lago-stone rounded peer-checked:bg-lago-gold peer-checked:border-lago-gold transition-colors" />
+                    <div className="w-5 h-5 border-2 border-lago-stone rounded peer-checked:bg-lago-gold peer-checked:border-lago-gold peer-focus-visible:ring-2 peer-focus-visible:ring-lago-gold peer-focus-visible:ring-offset-2 transition-colors" />
                     <svg
                       className="absolute inset-0 w-5 h-5 text-lago-black opacity-0 peer-checked:opacity-100 transition-opacity pointer-events-none"
                       viewBox="0 0 20 20"
@@ -267,6 +309,9 @@ export function ProductFilters({
             <div className="flex items-center gap-2">
               <input
                 type="number"
+                aria-label={t.minPrice}
+                min={priceRange.min}
+                max={priceRange.max}
                 value={localPriceRange[0]}
                 onChange={(e) =>
                   setLocalPriceRange([Number(e.target.value), localPriceRange[1]])
@@ -278,6 +323,9 @@ export function ProductFilters({
               <span className="text-lago-muted">-</span>
               <input
                 type="number"
+                aria-label={t.maxPrice}
+                min={priceRange.min}
+                max={priceRange.max}
                 value={localPriceRange[1]}
                 onChange={(e) =>
                   setLocalPriceRange([localPriceRange[0], Number(e.target.value)])
@@ -290,6 +338,7 @@ export function ProductFilters({
             </div>
             <input
               type="range"
+              aria-label={t.maxPrice}
               min={priceRange.min}
               max={priceRange.max}
               value={localPriceRange[1]}
@@ -298,6 +347,7 @@ export function ProductFilters({
               }
               onMouseUp={handlePriceChange}
               onTouchEnd={handlePriceChange}
+              onKeyUp={handlePriceChange}
               className="w-full accent-lago-gold"
             />
           </div>
@@ -314,7 +364,7 @@ export function ProductFilters({
               }
               className="peer sr-only"
             />
-            <div className="w-11 h-6 bg-lago-gray rounded-full peer-checked:bg-lago-gold transition-colors" />
+            <div className="w-11 h-6 bg-lago-gray rounded-full peer-checked:bg-lago-gold peer-focus-visible:ring-2 peer-focus-visible:ring-lago-gold peer-focus-visible:ring-offset-2 transition-colors" />
             <div className="absolute left-1 top-1 w-4 h-4 bg-white rounded-full transition-transform peer-checked:translate-x-5" />
           </div>
           <span className="text-sm text-lago-light group-hover:text-white transition-colors">

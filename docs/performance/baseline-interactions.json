@@ -1,0 +1,82 @@
+{
+  "base": "http://127.0.0.1:3100",
+  "recordedAt": "2026-10-22T19:29:35.104Z",
+  "browser": "145.0.7632.6",
+  "conditions": "Same device/CPU/network/reduced-motion as performance-measure.mjs. Fresh context per run; homepage warmed before SPA navigation. Feedback proxy = input/click event to second RAF, not INP. Catalogue database absent: navigation/search report terminal error response readiness, not successful results.",
+  "results": [
+    {
+      "device": "desktop",
+      "run": 1,
+      "loginTogglePaintProxyMs": 51.89999997615814,
+      "navigationReadyMs": 280.0999999642372,
+      "typingPaintProxyMs": 35.40000003576279,
+      "searchTerminalResponseMs": 462,
+      "catalogueStatus": 500,
+      "searchStatus": 500,
+      "initialCatalogueRequests": 3,
+      "documents": 1
+    },
+    {
+      "device": "desktop",
+      "run": 2,
+      "loginTogglePaintProxyMs": 41.80000001192093,
+      "navigationReadyMs": 180.89999997615814,
+      "typingPaintProxyMs": 30.400000035762787,
+      "searchTerminalResponseMs": 422.60000002384186,
+      "catalogueStatus": 500,
+      "searchStatus": 500,
+      "initialCatalogueRequests": 3,
+      "documents": 1
+    },
+    {
+      "device": "desktop",
+      "run": 3,
+      "loginTogglePaintProxyMs": 42.09999996423721,
+      "navigationReadyMs": 205.19999998807907,
+      "typingPaintProxyMs": 23.30000001192093,
+      "searchTerminalResponseMs": 402.5,
+      "catalogueStatus": 500,
+      "searchStatus": 500,
+      "initialCatalogueRequests": 3,
+      "documents": 1
+    },
+    {
+      "device": "mobile",
+      "run": 1,
+      "loginTogglePaintProxyMs": 99.80000001192093,
+      "navigationReadyMs": 608.7000000476837,
+      "typingPaintProxyMs": 43.80000001192093,
+      "searchTerminalResponseMs": 596.8999999761581,
+      "catalogueStatus": 500,
+      "searchStatus": 500,
+      "initialCatalogueRequests": 3,
+      "documents": 1
+    },
+    {
+      "device": "mobile",
+      "run": 2,
+      "loginTogglePaintProxyMs": 84.69999998807907,
+      "navigationReadyMs": 624,
+      "typingPaintProxyMs": 42,
+      "searchTerminalResponseMs": 627,
+      "catalogueStatus": 500,
+      "searchStatus": 500,
+      "initialCatalogueRequests": 3,
+      "documents": 1
+    },
+    {
+      "device": "mobile",
+      "run": 3,
+      "loginTogglePaintProxyMs": 122.10000002384186,
+      "navigationReadyMs": 734.0999999642372,
+      "typingPaintProxyMs": 30.5,
+      "searchTerminalResponseMs": 530.3000000119209,
+      "catalogueStatus": 500,
+      "searchStatus": 500,
+      "initialCatalogueRequests": 3,
+      "documents": 1
+    }
+  ],
+  "sourceCommit": "d511142",
+  "runtimeRelease": "d04bc9abc3b2102dffe20a64ec0441930204a3bb"
+}

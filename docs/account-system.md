@@ -4,11 +4,13 @@ The application account implementation is in place, with the schema in `supabase
 
 ## Migration and administrator bootstrap
 
-The migration was applied through Supabase's scoped Management API migration endpoint. PostgREST now recognizes `profiles`, and unauthenticated requests to read profiles or call the admin-check RPC return permission denied. The Auth user list was empty at inspection, so the first administrator is still pending: the owner must register as `ddabbis@gmail.com` and verify the confirmation email. No invitation or verification was sent. The migration grants the role only once for the exact verified email; if multiple verified accounts exist, it leaves bootstrap pending for review.
+The migration was applied through Supabase's scoped Management API migration endpoint. PostgREST now recognizes `profiles`, and unauthenticated requests to read profiles or call the admin-check RPC return permission denied. The October 22 engineering inspection now confirms one verified Auth user for `ddabbis@gmail.com`, with a profile and an administrator grant attached to that UUID. No personal password was changed and no invitation or verification email was sent by this pass. The original empty-user observation is historical. The migration grants the role only once for the exact verified email; if multiple verified accounts exist, it leaves bootstrap pending for review.
+
+The additive migration `20261022193626_lock_owner_bootstrap.sql` is also applied. It uses the durable grant timestamp to prevent bootstrap replay if the original granted user is later deleted. Isolated PostgreSQL regression tests cover that edge; existing role/profile/audit data were retained.
 
 ## Auth URL configuration
 
-In Supabase Authentication → URL Configuration, set the production Site URL to `https://lago.lv` and allow these redirects:
+The engineering pass configured and read back the production Site URL `https://lago.lv` and narrow callback path patterns (including query parameters), retaining localhost:3000 and 127.0.0.1:3000 development callbacks. See `performance/auth-redirect-configuration.json`. In Supabase Authentication → URL Configuration, maintain:
 
 - `https://lago.lv/auth/callback`
 - `https://www.lago.lv/auth/callback` only if the `www` hostname remains enabled

@@ -82,7 +82,7 @@ function handleGlobalError(
     timestamp: Date.now(),
     message: error?.message || String(message),
     stack: error?.stack,
-    url: typeof window !== 'undefined' ? window.location.href : '',
+    url: getPageUrl(),
     userAgent: typeof navigator !== 'undefined' ? navigator.userAgent : '',
     level: 'error',
     extra: {
@@ -103,7 +103,7 @@ function handleUnhandledRejection(event: PromiseRejectionEvent) {
     timestamp: Date.now(),
     message: event.reason?.message || 'Unhandled Promise Rejection',
     stack: event.reason?.stack,
-    url: typeof window !== 'undefined' ? window.location.href : '',
+    url: getPageUrl(),
     userAgent: typeof navigator !== 'undefined' ? navigator.userAgent : '',
     level: 'error',
   }
@@ -128,9 +128,6 @@ export function clearErrorContext() {
 export function captureError(error: Error, context?: ErrorContext) {
   if (!config.enabled) return
 
-  // Sample rate check
-  if (Math.random() > (config.sampleRate || 1)) return
-
   const mergedContext = { ...currentContext, ...context }
 
   const errorEvent: ErrorEvent = {
@@ -138,7 +135,7 @@ export function captureError(error: Error, context?: ErrorContext) {
     timestamp: Date.now(),
     message: error.message,
     stack: error.stack,
-    url: typeof window !== 'undefined' ? window.location.href : '',
+    url: getPageUrl(),
     userAgent: typeof navigator !== 'undefined' ? navigator.userAgent : '',
     level: 'error',
     user: mergedContext.userId ? { id: mergedContext.userId } : undefined,
@@ -150,11 +147,7 @@ export function captureError(error: Error, context?: ErrorContext) {
     extra: mergedContext.extra,
   }
 
-  // Apply beforeSend hook
-  const finalEvent = config.beforeSend ? config.beforeSend(errorEvent) : errorEvent
-  if (finalEvent) {
-    sendError(finalEvent)
-  }
+  sendError(errorEvent)
 }
 
 export function captureMessage(message: string, level: ErrorEvent['level'] = 'info', context?: ErrorContext) {
@@ -166,7 +159,7 @@ export function captureMessage(message: string, level: ErrorEvent['level'] = 'in
     id: generateErrorId(),
     timestamp: Date.now(),
     message,
-    url: typeof window !== 'undefined' ? window.location.href : '',
+    url: getPageUrl(),
     userAgent: typeof navigator !== 'undefined' ? navigator.userAgent : '',
     level,
     user: mergedContext.userId ? { id: mergedContext.userId } : undefined,
@@ -174,10 +167,7 @@ export function captureMessage(message: string, level: ErrorEvent['level'] = 'in
     extra: mergedContext.extra,
   }
 
-  const finalEvent = config.beforeSend ? config.beforeSend(errorEvent) : errorEvent
-  if (finalEvent) {
-    sendError(finalEvent)
-  }
+  sendError(errorEvent)
 }
 
 export function captureException(error: unknown, context?: ErrorContext) {
@@ -193,35 +183,41 @@ export function captureException(error: unknown, context?: ErrorContext) {
 // ============================================
 
 function sendError(event: ErrorEvent) {
-  // Log to console in development
-  if (process.env.NODE_ENV === 'development') {
-    // eslint-disable-next-line no-console
-    console.error('[Error Reporting]', event)
-    return
-  }
+  // Sampling and redaction hooks apply equally to explicit and global errors.
+  const sampleRate = Math.min(1, Math.max(0, config.sampleRate ?? 1))
+  if (sampleRate === 0 || Math.random() >= sampleRate) return
 
-  // Send to endpoint
-  if (config.endpoint) {
-    const payload = {
-      ...event,
+  try {
+    const finalEvent = config.beforeSend ? config.beforeSend(event) : event
+    if (!finalEvent) return
+
+    if (process.env.NODE_ENV === 'development') {
+      console.error('[Error Reporting]', finalEvent)
+      return
+    }
+
+    if (!config.endpoint) return
+    const payload = JSON.stringify({
+      ...finalEvent,
       apiKey: config.apiKey,
       environment: config.environment,
       release: config.release,
-    }
+    })
 
-    // Use sendBeacon for reliability
-    if (navigator.sendBeacon) {
-      navigator.sendBeacon(config.endpoint, JSON.stringify(payload))
-    } else {
-      fetch(config.endpoint, {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify(payload),
-        keepalive: true,
-      }).catch(() => {
-        // Silent fail
-      })
-    }
+    // sendBeacon can reject a full queue; fall back to fetch in that case.
+    if (typeof navigator !== 'undefined' && typeof navigator.sendBeacon === 'function'
+      && navigator.sendBeacon(config.endpoint, payload)) return
+
+    void fetch(config.endpoint, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: payload,
+      keepalive: true,
+    }).catch(() => {
+      // Reporting is best effort and must not disrupt the original error UI.
+    })
+  } catch {
+    // A transport or serialization failure must never crash the error boundary.
   }
 }
 
@@ -229,8 +225,15 @@ function sendError(event: ErrorEvent) {
 // UTILITIES
 // ============================================
 
+// Auth callbacks can carry credentials in query strings or fragments.
+function getPageUrl(): string {
+  return typeof window !== 'undefined'
+    ? `${window.location.origin}${window.location.pathname}`
+    : ''
+}
+
 function generateErrorId(): string {
-  return `${Date.now()}-${Math.random().toString(36).substr(2, 9)}`
+  return `${Date.now()}-${Math.random().toString(36).slice(2, 11)}`
 }
 
 // ============================================
@@ -333,7 +336,7 @@ export function captureUserFeedback(feedback: UserFeedback) {
     body: JSON.stringify({
       ...feedback,
       timestamp: Date.now(),
-      url: window.location.href,
+      url: getPageUrl(),
     }),
   }).catch(() => {
     // Silent fail

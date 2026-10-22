@@ -12,6 +12,7 @@ import { User, ShoppingBag, MapPin, LogOut, ChevronDown } from 'lucide-react'
 import { useAuth } from '@/hooks/useAuth'
 import { Locale } from '@/lib/i18n/config'
 import { Database } from '@/lib/supabase/database.types'
+import { toast } from 'sonner'
 
 type Profile = Database['public']['Tables']['profiles']['Row']
 
@@ -28,6 +29,7 @@ const labels = {
     addresses: 'Adreses',
     logout: 'Iziet',
     greeting: 'Sveiki',
+    logoutError: 'Neizdevās iziet. Lūdzu, mēģiniet vēlreiz.',
   },
   en: {
     profile: 'Profile',
@@ -35,6 +37,7 @@ const labels = {
     addresses: 'Addresses',
     logout: 'Logout',
     greeting: 'Hello',
+    logoutError: 'Could not sign out. Please try again.',
   },
   ru: {
     profile: 'Профиль',
@@ -42,6 +45,7 @@ const labels = {
     addresses: 'Адреса',
     logout: 'Выйти',
     greeting: 'Здравствуйте',
+    logoutError: 'Не удалось выйти. Попробуйте ещё раз.',
   },
 }
 
@@ -55,6 +59,7 @@ const getAccountPaths = (locale: Locale) => ({
 export function ProfileDropdown({ locale, mobile, profile }: ProfileDropdownProps) {
   const { signOut, user } = useAuth()
   const [isOpen, setIsOpen] = useState(false)
+  const [isSigningOut, setIsSigningOut] = useState(false)
   const dropdownRef = useRef<HTMLDivElement>(null)
   const t = labels[locale]
   const paths = getAccountPaths(locale)
@@ -85,8 +90,16 @@ export function ProfileDropdown({ locale, mobile, profile }: ProfileDropdownProp
   }, [isOpen])
 
   const handleLogout = async () => {
-    await signOut()
-    setIsOpen(false)
+    if (isSigningOut) return
+    setIsSigningOut(true)
+    try {
+      await signOut()
+      setIsOpen(false)
+    } catch {
+      toast.error(t.logoutError)
+    } finally {
+      setIsSigningOut(false)
+    }
   }
 
   if (mobile) {
@@ -142,6 +155,7 @@ export function ProfileDropdown({ locale, mobile, profile }: ProfileDropdownProp
           </Link>
           <button
             onClick={handleLogout}
+                disabled={isSigningOut}
             className="flex items-center gap-3 py-3 text-lago-light hover:text-lago-gold transition-colors font-button w-full text-left"
           >
             <LogOut className="w-5 h-5" />
@@ -230,6 +244,7 @@ export function ProfileDropdown({ locale, mobile, profile }: ProfileDropdownProp
             <div className="border-t border-white/10 pt-2">
               <button
                 onClick={handleLogout}
+                disabled={isSigningOut}
                 className="flex items-center gap-3 px-4 py-2.5 text-lago-light hover:text-lago-gold hover:bg-white/5 transition-all duration-200 w-full text-left"
               >
                 <LogOut className="w-4 h-4" />

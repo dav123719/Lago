@@ -21,6 +21,14 @@ export async function updateSession(request: NextRequest) {
     request,
   })
 
+  // Public anonymous pages have no identity to refresh. Avoid constructing an
+  // auth client (or making an auth request) until a Supabase auth cookie exists.
+  // Protected pages still perform server getUser verification in their layout.
+  const hasAuthCookie = request.cookies.getAll().some(({ name }) =>
+    /^sb-.+-auth-token(?:\.\d+)?$/.test(name)
+  )
+  if (!hasAuthCookie) return { response: supabaseResponse, user: null }
+
   const url = getEnvVar('NEXT_PUBLIC_SUPABASE_URL')
   const key = getEnvVar('NEXT_PUBLIC_SUPABASE_ANON_KEY')
   
@@ -46,6 +54,9 @@ export async function updateSession(request: NextRequest) {
             cookiesToSet.forEach(({ name, value, options }) =>
               supabaseResponse.cookies.set(name, value, options)
             )
+            // Never allow refreshed session cookies to enter a shared cache.
+            supabaseResponse.headers.set('Cache-Control', 'private, no-store, max-age=0')
+            supabaseResponse.headers.set('CDN-Cache-Control', 'no-store')
           },
         },
       }

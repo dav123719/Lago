@@ -12,6 +12,7 @@ import { Database } from '@/lib/supabase/database.types'
 import { toast } from 'sonner'
 import { Locale } from '@/lib/i18n/config'
 import { safeInternalRedirect } from '@/lib/auth/redirect'
+import { clearPasswordRecovery } from '@/lib/auth/recovery'
 
 type Profile = Database['public']['Tables']['profiles']['Row']
 
@@ -19,6 +20,8 @@ interface AuthContextType {
   user: User | null
   profile: Profile | null
   isLoading: boolean
+  isProfileLoading: boolean
+  profileError: string | null
   isAuthenticated: boolean
   signInWithOAuth: (provider: Provider, locale: Locale) => Promise<{ error: AuthError | Error | null }>
   signInWithEmail: (email: string, password: string) => Promise<{ error: AuthError | null }>
@@ -69,8 +72,12 @@ export function AuthProvider({ children }: AuthProviderProps) {
   const [user, setUser] = useState<User | null>(null)
   const [profile, setProfile] = useState<Profile | null>(null)
   const [isLoading, setIsLoading] = useState(true)
+  const [isProfileLoading, setIsProfileLoading] = useState(false)
+  const [profileError, setProfileError] = useState<string | null>(null)
   const supabase = createBrowserSupabaseClient()
   const activeUserId = useRef<string | null>(null)
+  const sessionRevision = useRef(0)
+  const profileRevision = useRef(0)
 
   // Fetch user profile
   const fetchProfile = useCallback(async (userId: string) => {
@@ -80,7 +87,7 @@ export function AuthProvider({ children }: AuthProviderProps) {
       .eq('id', userId)
       .single()
 
-    if (!data && error?.code === 'PGRST116') {
+    if (!data && error?.code === 'PGRST116' && activeUserId.current === userId) {
       const provision = await supabase.rpc('ensure_my_profile')
       if (!provision.error) {
         data = provision.data
@@ -88,46 +95,61 @@ export function AuthProvider({ children }: AuthProviderProps) {
       }
     }
 
-    if (error) {
-      console.error('Error fetching profile:', error)
-      return null
-    }
+    if (error) throw error
 
     return data
   }, [supabase])
 
-  // Refresh profile
-  const refreshProfile = async () => {
-    if (user?.id) {
-      const profile = await fetchProfile(user.id)
-      if (activeUserId.current === user.id) setProfile(profile)
+  // Only the newest request for the current identity may publish private data.
+  const refreshProfile = useCallback(async () => {
+    const userId = activeUserId.current
+    if (!userId) return
+    const session = sessionRevision.current
+    const request = ++profileRevision.current
+    setIsProfileLoading(true)
+    setProfileError(null)
+    try {
+      const nextProfile = await fetchProfile(userId)
+      if (activeUserId.current === userId && sessionRevision.current === session && profileRevision.current === request) {
+        setProfile(nextProfile)
+      }
+    } catch {
+      if (activeUserId.current === userId && sessionRevision.current === session && profileRevision.current === request) {
+        setProfileError('Could not load your profile. Please try again.')
+      }
+    } finally {
+      if (activeUserId.current === userId && sessionRevision.current === session && profileRevision.current === request) {
+        setIsProfileLoading(false)
+      }
     }
-  }
+  }, [fetchProfile])
 
   // Supabase invokes auth callbacks while holding its auth lock. Defer database
   // requests until the callback returns, and ignore results from older sessions.
   useEffect(() => {
     let active = true
-    let revision = 0
     let authEventReceived = false
     let pending: ReturnType<typeof setTimeout> | undefined
 
     const applySession = (sessionUser: User | null) => {
       if (!active) return
-      const currentRevision = ++revision
-      activeUserId.current = sessionUser?.id ?? null
+      const nextId = sessionUser?.id ?? null
+      const identityChanged = activeUserId.current !== nextId
+      activeUserId.current = nextId
       setUser(sessionUser)
-      setProfile(null)
       setIsLoading(false)
+      // Token refresh and tab focus must not blank a profile or repeat its query.
+      if (!identityChanged) return
+      sessionRevision.current++
+      profileRevision.current++
+      setProfile(null)
+      setProfileError(null)
+      setIsProfileLoading(Boolean(sessionUser))
       clearTimeout(pending)
       if (sessionUser) {
-        pending = setTimeout(() => {
-          void fetchProfile(sessionUser.id).then((nextProfile) => {
-            if (active && revision === currentRevision) setProfile(nextProfile)
-          }).catch((error) => {
-            if (active && revision === currentRevision) console.error('Error fetching profile:', error)
-          })
-        }, 0)
+        pending = setTimeout(() => { void refreshProfile() }, 0)
+      } else {
+        clearPasswordRecovery()
       }
     }
 
@@ -151,11 +173,12 @@ export function AuthProvider({ children }: AuthProviderProps) {
     return () => {
       active = false
       activeUserId.current = null
-      revision++
+      sessionRevision.current++
+      profileRevision.current++
       clearTimeout(pending)
       subscription.unsubscribe()
     }
-  }, [supabase, fetchProfile])
+  }, [supabase, refreshProfile])
 
   // OAuth sign in
   const signInWithOAuth = async (provider: Provider, locale: Locale, next = `/${locale}/account`) => {
@@ -283,17 +306,26 @@ export function AuthProvider({ children }: AuthProviderProps) {
 
   // Sign out
   const signOut = async () => {
-    await supabase.auth.signOut()
+    const { error } = await supabase.auth.signOut()
+    if (error) throw error
+    activeUserId.current = null
+    sessionRevision.current++
+    profileRevision.current++
+    clearPasswordRecovery()
     setUser(null)
     setProfile(null)
+    setProfileError(null)
+    setIsProfileLoading(false)
   }
 
   // Update profile
   const updateProfile = async (updates: Partial<Profile>) => {
-    if (!user?.id) {
+    if (!user?.id || activeUserId.current !== user.id) {
       return { error: new Error('No user logged in') }
     }
 
+    const userId = user.id
+    const session = sessionRevision.current
     const safeUpdates: Database['public']['Tables']['profiles']['Update'] = {}
     if (updates.full_name !== undefined) safeUpdates.full_name = updates.full_name?.trim().slice(0, 120) || null
     if (updates.first_name !== undefined) safeUpdates.first_name = updates.first_name?.trim().slice(0, 100) || null
@@ -308,15 +340,23 @@ export function AuthProvider({ children }: AuthProviderProps) {
     if (updates.preferred_language !== undefined) safeUpdates.preferred_language = updates.preferred_language
     if (updates.email_notifications !== undefined) safeUpdates.email_notifications = updates.email_notifications
     if (updates.sms_notifications !== undefined) safeUpdates.sms_notifications = updates.sms_notifications
-    const { error } = await supabase
+    const { data, error } = await supabase
       .from('profiles')
       .update(safeUpdates)
-      .eq('id', user.id)
+      .eq('id', userId)
+      .select()
+      .single()
 
-    if (!error) {
-      await refreshProfile()
+    if (activeUserId.current !== userId || sessionRevision.current !== session) {
+      return { error: new Error('Your session changed. Please sign in and try again.') }
     }
-
+    if (!error) {
+      // Invalidate older reads so they cannot undo a confirmed save.
+      profileRevision.current++
+      setProfile(data)
+      setProfileError(null)
+      setIsProfileLoading(false)
+    }
     return { error }
   }
 
@@ -324,6 +364,8 @@ export function AuthProvider({ children }: AuthProviderProps) {
     user,
     profile,
     isLoading,
+    isProfileLoading,
+    profileError,
     isAuthenticated: !!user,
     signInWithOAuth,
     signInWithEmail,

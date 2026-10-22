@@ -24,15 +24,7 @@ export async function OPTIONS() {
   return new NextResponse(null, { status: 204, headers: { Allow: 'POST, OPTIONS' } })
 }
 
-/**
- * Contact Form API Route
- * 
- * Handles contact form submissions.
- * For now, logs data to console - in production, this would:
- * - Send an email notification
- * - Store in a database
- * - Integrate with a CRM
- */
+/** Validate same-origin enquiries and report actual email delivery failures. */
 export async function POST(request: NextRequest) {
   try {
     if (!requestOriginAllowed(request.headers)) {
@@ -50,7 +42,11 @@ export async function POST(request: NextRequest) {
     const contentType = request.headers.get('content-type')?.split(';', 1)[0].trim().toLowerCase()
     let data: unknown
     if (contentType === 'application/json') {
-      data = JSON.parse(rawBody)
+      try {
+        data = JSON.parse(rawBody)
+      } catch {
+        return NextResponse.json({ error: 'Invalid JSON submission' }, { status: 400 })
+      }
     } else if (contentType === 'application/x-www-form-urlencoded') {
       const fields = new URLSearchParams(rawBody)
       data = {

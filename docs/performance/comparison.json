@@ -1,0 +1,4677 @@
+{
+  "kind": "3-run laboratory medians and observed range; not field percentiles",
+  "beforeSource": "d511142",
+  "afterSource": "e0c30a3",
+  "browser": "145.0.7632.6",
+  "conditions": {
+    "desktop": {
+      "viewport": {
+        "width": 1440,
+        "height": 900
+      },
+      "cpu": 1,
+      "latency": 20,
+      "download": 1250000,
+      "upload": 250000
+    },
+    "mobile": {
+      "viewport": {
+        "width": 390,
+        "height": 844
+      },
+      "cpu": 4,
+      "latency": 80,
+      "download": 200000,
+      "upload": 93750
+    }
+  },
+  "rows": [
+    {
+      "device": "desktop",
+      "cache": "cold",
+      "route": "/lv/",
+      "metrics": {
+        "lcpMs": {
+          "before": {
+            "median": 500,
+            "min": 496,
+            "max": 524,
+            "n": 3
+          },
+          "after": {
+            "median": 332,
+            "min": 324,
+            "max": 384,
+            "n": 3
+          }
+        },
+        "cls": {
+          "before": {
+            "median": 0.0020943834930126884,
+            "min": 0.0020837846418467077,
+            "max": 0.02302479049619824,
+            "n": 3
+          },
+          "after": {
+            "median": 0.0026609393084490738,
+            "min": 0.002489339033631794,
+            "max": 0.0026609393084490738,
+            "n": 3
+          }
+        },
+        "ttfbMs": {
+          "before": {
+            "median": 11.800000011920929,
+            "min": 6.800000011920929,
+            "max": 13.400000035762787,
+            "n": 3
+          },
+          "after": {
+            "median": 12.900000035762787,
+            "min": 8.800000011920929,
+            "max": 13.5,
+            "n": 3
+          }
+        },
+        "domReadyMs": {
+          "before": {
+            "median": 170.9000000357628,
+            "min": 163.30000001192093,
+            "max": 187.5,
+            "n": 3
+          },
+          "after": {
+            "median": 141,
+            "min": 135.80000001192093,
+            "max": 162.19999998807907,
+            "n": 3
+          }
+        },
+        "loadMs": {
+          "before": {
+            "median": 662.3000000119209,
+            "min": 658.5,
+            "max": 678,
+            "n": 3
+          },
+          "after": {
+            "median": 529,
+            "min": 499.80000001192093,
+            "max": 562.6999999880791,
+            "n": 3
+          }
+        },
+        "transferredBytes": {
+          "before": {
+            "median": 881200,
+            "min": 881185,
+            "max": 881213,
+            "n": 3
+          },
+          "after": {
+            "median": 690004,
+            "min": 690004,
+            "max": 690012,
+            "n": 3
+          }
+        },
+        "requests": {
+          "before": {
+            "median": 54,
+            "min": 54,
+            "max": 54,
+            "n": 3
+          },
+          "after": {
+            "median": 53,
+            "min": 53,
+            "max": 53,
+            "n": 3
+          }
+        },
+        "longTaskCount": {
+          "before": {
+            "median": 0,
+            "min": 0,
+            "max": 1,
+            "n": 3
+          },
+          "after": {
+            "median": 1,
+            "min": 1,
+            "max": 2,
+            "n": 3
+          }
+        },
+        "longTaskMs": {
+          "before": {
+            "median": 0,
+            "min": 0,
+            "max": 65,
+            "n": 3
+          },
+          "after": {
+            "median": 123,
+            "min": 93,
+            "max": 148,
+            "n": 3
+          }
+        },
+        "labBlockingMs": {
+          "before": {
+            "median": 0,
+            "min": 0,
+            "max": 15,
+            "n": 3
+          },
+          "after": {
+            "median": 48,
+            "min": 43,
+            "max": 73,
+            "n": 3
+          }
+        },
+        "domNodes": {
+          "before": {
+            "median": 710,
+            "min": 710,
+            "max": 710,
+            "n": 3
+          },
+          "after": {
+            "median": 713,
+            "min": 713,
+            "max": 713,
+            "n": 3
+          }
+        },
+        "ScriptBytes": {
+          "before": {
+            "median": 326781,
+            "min": 326781,
+            "max": 326781,
+            "n": 3
+          },
+          "after": {
+            "median": 322281,
+            "min": 322281,
+            "max": 322281,
+            "n": 3
+          }
+        },
+        "StylesheetBytes": {
+          "before": {
+            "median": 18436,
+            "min": 18436,
+            "max": 18436,
+            "n": 3
+          },
+          "after": {
+            "median": 18676,
+            "min": 18676,
+            "max": 18676,
+            "n": 3
+          }
+        },
+        "ImageBytes": {
+          "before": {
+            "median": 175797,
+            "min": 175797,
+            "max": 175807,
+            "n": 3
+          },
+          "after": {
+            "median": 98138,
+            "min": 98138,
+            "max": 98146,
+            "n": 3
+          }
+        },
+        "FontBytes": {
+          "before": {
+            "median": 278921,
+            "min": 278921,
+            "max": 278921,
+            "n": 3
+          },
+          "after": {
+            "median": 173297,
+            "min": 173297,
+            "max": 173297,
+            "n": 3
+          }
+        }
+      }
+    },
+    {
+      "device": "desktop",
+      "cache": "cold",
+      "route": "/lv/akmens-virsmas/",
+      "metrics": {
+        "lcpMs": {
+          "before": {
+            "median": 468,
+            "min": 216,
+            "max": 500,
+            "n": 3
+          },
+          "after": {
+            "median": 268,
+            "min": 268,
+            "max": 284,
+            "n": 3
+          }
+        },
+        "cls": {
+          "before": {
+            "median": 0.0020943834930126884,
+            "min": 0.0020837846418467077,
+            "max": 0.0025331985034079216,
+            "n": 3
+          },
+          "after": {
+            "median": 0.0020837059743119856,
+            "min": 0.0020837059743119856,
+            "max": 0.00209126077031893,
+            "n": 3
+          }
+        },
+        "ttfbMs": {
+          "before": {
+            "median": 9.699999988079071,
+            "min": 9.400000035762787,
+            "max": 11.199999988079071,
+            "n": 3
+          },
+          "after": {
+            "median": 8.399999976158142,
+            "min": 7.399999976158142,
+            "max": 13.900000035762787,
+            "n": 3
+          }
+        },
+        "domReadyMs": {
+          "before": {
+            "median": 185.80000001192093,
+            "min": 170.5,
+            "max": 196,
+            "n": 3
+          },
+          "after": {
+            "median": 129.5,
+            "min": 120.19999998807907,
+            "max": 132,
+            "n": 3
+          }
+        },
+        "loadMs": {
+          "before": {
+            "median": 588.6000000238419,
+            "min": 568.3999999761581,
+            "max": 589,
+            "n": 3
+          },
+          "after": {
+            "median": 487.30000001192093,
+            "min": 486.10000002384186,
+            "max": 487.89999997615814,
+            "n": 3
+          }
+        },
+        "transferredBytes": {
+          "before": {
+            "median": 762108,
+            "min": 762091,
+            "max": 762109,
+            "n": 3
+          },
+          "after": {
+            "median": 648418,
+            "min": 648418,
+            "max": 648424,
+            "n": 3
+          }
+        },
+        "requests": {
+          "before": {
+            "median": 55,
+            "min": 55,
+            "max": 55,
+            "n": 3
+          },
+          "after": {
+            "median": 55,
+            "min": 55,
+            "max": 55,
+            "n": 3
+          }
+        },
+        "longTaskCount": {
+          "before": {
+            "median": 1,
+            "min": 1,
+            "max": 2,
+            "n": 3
+          },
+          "after": {
+            "median": 1,
+            "min": 1,
+            "max": 2,
+            "n": 3
+          }
+        },
+        "longTaskMs": {
+          "before": {
+            "median": 81,
+            "min": 52,
+            "max": 105,
+            "n": 3
+          },
+          "after": {
+            "median": 71,
+            "min": 62,
+            "max": 119,
+            "n": 3
+          }
+        },
+        "labBlockingMs": {
+          "before": {
+            "median": 5,
+            "min": 2,
+            "max": 31,
+            "n": 3
+          },
+          "after": {
+            "median": 19,
+            "min": 12,
+            "max": 21,
+            "n": 3
+          }
+        },
+        "domNodes": {
+          "before": {
+            "median": 525,
+            "min": 525,
+            "max": 525,
+            "n": 3
+          },
+          "after": {
+            "median": 530,
+            "min": 530,
+            "max": 530,
+            "n": 3
+          }
+        },
+        "ScriptBytes": {
+          "before": {
+            "median": 326781,
+            "min": 326781,
+            "max": 326781,
+            "n": 3
+          },
+          "after": {
+            "median": 322281,
+            "min": 322281,
+            "max": 322281,
+            "n": 3
+          }
+        },
+        "StylesheetBytes": {
+          "before": {
+            "median": 18436,
+            "min": 18436,
+            "max": 18436,
+            "n": 3
+          },
+          "after": {
+            "median": 18676,
+            "min": 18676,
+            "max": 18676,
+            "n": 3
+          }
+        },
+        "ImageBytes": {
+          "before": {
+            "median": 59987,
+            "min": 59987,
+            "max": 59992,
+            "n": 3
+          },
+          "after": {
+            "median": 59987,
+            "min": 59987,
+            "max": 59993,
+            "n": 3
+          }
+        },
+        "FontBytes": {
+          "before": {
+            "median": 278921,
+            "min": 278921,
+            "max": 278921,
+            "n": 3
+          },
+          "after": {
+            "median": 173297,
+            "min": 173297,
+            "max": 173297,
+            "n": 3
+          }
+        }
+      }
+    },
+    {
+      "device": "desktop",
+      "cache": "cold",
+      "route": "/lv/projekti/",
+      "metrics": {
+        "lcpMs": {
+          "before": {
+            "median": 228,
+            "min": 196,
+            "max": 748,
+            "n": 3
+          },
+          "after": {
+            "median": 312,
+            "min": 312,
+            "max": 316,
+            "n": 3
+          }
+        },
+        "cls": {
+          "before": {
+            "median": 0.0020943834930126884,
+            "min": 0.0020837846418467077,
+            "max": 0.0021116310067301096,
+            "n": 3
+          },
+          "after": {
+            "median": 0.0020837059743119856,
+            "min": 0.0020837059743119856,
+            "max": 0.0020837059743119856,
+            "n": 3
+          }
+        },
+        "ttfbMs": {
+          "before": {
+            "median": 10.800000011920929,
+            "min": 9.5,
+            "max": 23.399999976158142,
+            "n": 3
+          },
+          "after": {
+            "median": 7.399999976158142,
+            "min": 7.399999976158142,
+            "max": 10.600000023841858,
+            "n": 3
+          }
+        },
+        "domReadyMs": {
+          "before": {
+            "median": 190.80000001192093,
+            "min": 171.89999997615814,
+            "max": 223.5,
+            "n": 3
+          },
+          "after": {
+            "median": 121.39999997615814,
+            "min": 116.59999996423721,
+            "max": 122.89999997615814,
+            "n": 3
+          }
+        },
+        "loadMs": {
+          "before": {
+            "median": 699.4000000357628,
+            "min": 654.3000000119209,
+            "max": 739.6999999880791,
+            "n": 3
+          },
+          "after": {
+            "median": 545.2999999523163,
+            "min": 544.5999999642372,
+            "max": 562.5,
+            "n": 3
+          }
+        },
+        "transferredBytes": {
+          "before": {
+            "median": 838929,
+            "min": 838916,
+            "max": 838939,
+            "n": 3
+          },
+          "after": {
+            "median": 724892,
+            "min": 724293,
+            "max": 727068,
+            "n": 3
+          }
+        },
+        "requests": {
+          "before": {
+            "median": 68,
+            "min": 68,
+            "max": 68,
+            "n": 3
+          },
+          "after": {
+            "median": 68,
+            "min": 68,
+            "max": 68,
+            "n": 3
+          }
+        },
+        "longTaskCount": {
+          "before": {
+            "median": 2,
+            "min": 1,
+            "max": 3,
+            "n": 3
+          },
+          "after": {
+            "median": 2,
+            "min": 1,
+            "max": 2,
+            "n": 3
+          }
+        },
+        "longTaskMs": {
+          "before": {
+            "median": 125,
+            "min": 68,
+            "max": 161,
+            "n": 3
+          },
+          "after": {
+            "median": 120,
+            "min": 86,
+            "max": 149,
+            "n": 3
+          }
+        },
+        "labBlockingMs": {
+          "before": {
+            "median": 18,
+            "min": 11,
+            "max": 25,
+            "n": 3
+          },
+          "after": {
+            "median": 36,
+            "min": 20,
+            "max": 49,
+            "n": 3
+          }
+        },
+        "domNodes": {
+          "before": {
+            "median": 745,
+            "min": 745,
+            "max": 745,
+            "n": 3
+          },
+          "after": {
+            "median": 750,
+            "min": 750,
+            "max": 750,
+            "n": 3
+          }
+        },
+        "ScriptBytes": {
+          "before": {
+            "median": 326781,
+            "min": 326781,
+            "max": 326781,
+            "n": 3
+          },
+          "after": {
+            "median": 322281,
+            "min": 322281,
+            "max": 322281,
+            "n": 3
+          }
+        },
+        "StylesheetBytes": {
+          "before": {
+            "median": 18436,
+            "min": 18436,
+            "max": 18436,
+            "n": 3
+          },
+          "after": {
+            "median": 18676,
+            "min": 18676,
+            "max": 18676,
+            "n": 3
+          }
+        },
+        "ImageBytes": {
+          "before": {
+            "median": 117421,
+            "min": 117421,
+            "max": 117426,
+            "n": 3
+          },
+          "after": {
+            "median": 117421,
+            "min": 117421,
+            "max": 117426,
+            "n": 3
+          }
+        },
+        "FontBytes": {
+          "before": {
+            "median": 278921,
+            "min": 278921,
+            "max": 278921,
+            "n": 3
+          },
+          "after": {
+            "median": 173297,
+            "min": 173297,
+            "max": 173297,
+            "n": 3
+          }
+        }
+      }
+    },
+    {
+      "device": "desktop",
+      "cache": "cold",
+      "route": "/lv/store/",
+      "metrics": {
+        "lcpMs": {
+          "before": {
+            "median": 648,
+            "min": 604,
+            "max": 680,
+            "n": 3
+          },
+          "after": {
+            "median": 520,
+            "min": 516,
+            "max": 528,
+            "n": 3
+          }
+        },
+        "cls": {
+          "before": {
+            "median": 0.01716910700124314,
+            "min": 0.005000108372985253,
+            "max": 0.01716910700124314,
+            "n": 3
+          },
+          "after": {
+            "median": 0.004422149047014318,
+            "min": 0.004422149047014318,
+            "max": 0.004422149047014318,
+            "n": 3
+          }
+        },
+        "ttfbMs": {
+          "before": {
+            "median": 8.200000047683716,
+            "min": 8.100000023841858,
+            "max": 11.800000011920929,
+            "n": 3
+          },
+          "after": {
+            "median": 7.600000023841858,
+            "min": 7,
+            "max": 7.900000035762787,
+            "n": 3
+          }
+        },
+        "domReadyMs": {
+          "before": {
+            "median": 181.30000001192093,
+            "min": 170.20000004768372,
+            "max": 185,
+            "n": 3
+          },
+          "after": {
+            "median": 119.30000001192093,
+            "min": 118.40000003576279,
+            "max": 123.20000004768372,
+            "n": 3
+          }
+        },
+        "loadMs": {
+          "before": {
+            "median": 585.6000000238419,
+            "min": 567.3000000119209,
+            "max": 607.3999999761581,
+            "n": 3
+          },
+          "after": {
+            "median": 470.10000002384186,
+            "min": 466.4000000357628,
+            "max": 470.30000001192093,
+            "n": 3
+          }
+        },
+        "transferredBytes": {
+          "before": {
+            "median": 689266,
+            "min": 689265,
+            "max": 689272,
+            "n": 3
+          },
+          "after": {
+            "median": 582506,
+            "min": 582506,
+            "max": 587039,
+            "n": 3
+          }
+        },
+        "requests": {
+          "before": {
+            "median": 51,
+            "min": 51,
+            "max": 51,
+            "n": 3
+          },
+          "after": {
+            "median": 51,
+            "min": 51,
+            "max": 52,
+            "n": 3
+          }
+        },
+        "longTaskCount": {
+          "before": {
+            "median": 1,
+            "min": 1,
+            "max": 2,
+            "n": 3
+          },
+          "after": {
+            "median": 0,
+            "min": 0,
+            "max": 0,
+            "n": 3
+          }
+        },
+        "longTaskMs": {
+          "before": {
+            "median": 64,
+            "min": 51,
+            "max": 124,
+            "n": 3
+          },
+          "after": {
+            "median": 0,
+            "min": 0,
+            "max": 0,
+            "n": 3
+          }
+        },
+        "labBlockingMs": {
+          "before": {
+            "median": 14,
+            "min": 1,
+            "max": 24,
+            "n": 3
+          },
+          "after": {
+            "median": 0,
+            "min": 0,
+            "max": 0,
+            "n": 3
+          }
+        },
+        "domNodes": {
+          "before": {
+            "median": 454,
+            "min": 454,
+            "max": 454,
+            "n": 3
+          },
+          "after": {
+            "median": 459,
+            "min": 459,
+            "max": 460,
+            "n": 3
+          }
+        },
+        "ScriptBytes": {
+          "before": {
+            "median": 326781,
+            "min": 326781,
+            "max": 326781,
+            "n": 3
+          },
+          "after": {
+            "median": 322281,
+            "min": 322281,
+            "max": 326814,
+            "n": 3
+          }
+        },
+        "StylesheetBytes": {
+          "before": {
+            "median": 18436,
+            "min": 18436,
+            "max": 18436,
+            "n": 3
+          },
+          "after": {
+            "median": 18676,
+            "min": 18676,
+            "max": 18676,
+            "n": 3
+          }
+        },
+        "ImageBytes": {
+          "before": {
+            "median": 3590,
+            "min": 3590,
+            "max": 3590,
+            "n": 3
+          },
+          "after": {
+            "median": 3590,
+            "min": 3590,
+            "max": 3590,
+            "n": 3
+          }
+        },
+        "FontBytes": {
+          "before": {
+            "median": 278921,
+            "min": 278921,
+            "max": 278921,
+            "n": 3
+          },
+          "after": {
+            "median": 173297,
+            "min": 173297,
+            "max": 173297,
+            "n": 3
+          }
+        }
+      }
+    },
+    {
+      "device": "desktop",
+      "cache": "cold",
+      "route": "/lv/akmens-virsmas/silestone/",
+      "metrics": {
+        "lcpMs": {
+          "before": {
+            "median": 872,
+            "min": 796,
+            "max": 1636,
+            "n": 3
+          },
+          "after": {
+            "median": 652,
+            "min": 628,
+            "max": 672,
+            "n": 3
+          }
+        },
+        "cls": {
+          "before": {
+            "median": 0.002114071341306584,
+            "min": 0.0020837846418467077,
+            "max": 0.006159304085353438,
+            "n": 3
+          },
+          "after": {
+            "median": 0.005988224602007244,
+            "min": 0.005988224602007244,
+            "max": 0.005988224602007244,
+            "n": 3
+          }
+        },
+        "ttfbMs": {
+          "before": {
+            "median": 14.5,
+            "min": 8.699999988079071,
+            "max": 21.19999998807907,
+            "n": 3
+          },
+          "after": {
+            "median": 7,
+            "min": 6.800000011920929,
+            "max": 7.800000011920929,
+            "n": 3
+          }
+        },
+        "domReadyMs": {
+          "before": {
+            "median": 185.10000002384186,
+            "min": 161.80000001192093,
+            "max": 279.30000001192093,
+            "n": 3
+          },
+          "after": {
+            "median": 119.40000003576279,
+            "min": 115.59999996423721,
+            "max": 125.39999997615814,
+            "n": 3
+          }
+        },
+        "loadMs": {
+          "before": {
+            "median": 713.1999999880791,
+            "min": 564.8999999761581,
+            "max": 830.6999999880791,
+            "n": 3
+          },
+          "after": {
+            "median": 598.1999999880791,
+            "min": 584.5,
+            "max": 600.1000000238419,
+            "n": 3
+          }
+        },
+        "transferredBytes": {
+          "before": {
+            "median": 901940,
+            "min": 901932,
+            "max": 901949,
+            "n": 3
+          },
+          "after": {
+            "median": 788262,
+            "min": 788262,
+            "max": 788274,
+            "n": 3
+          }
+        },
+        "requests": {
+          "before": {
+            "median": 58,
+            "min": 58,
+            "max": 58,
+            "n": 3
+          },
+          "after": {
+            "median": 58,
+            "min": 58,
+            "max": 58,
+            "n": 3
+          }
+        },
+        "longTaskCount": {
+          "before": {
+            "median": 3,
+            "min": 1,
+            "max": 5,
+            "n": 3
+          },
+          "after": {
+            "median": 1,
+            "min": 1,
+            "max": 1,
+            "n": 3
+          }
+        },
+        "longTaskMs": {
+          "before": {
+            "median": 259,
+            "min": 50,
+            "max": 357,
+            "n": 3
+          },
+          "after": {
+            "median": 53,
+            "min": 50,
+            "max": 60,
+            "n": 3
+          }
+        },
+        "labBlockingMs": {
+          "before": {
+            "median": 107,
+            "min": 0,
+            "max": 109,
+            "n": 3
+          },
+          "after": {
+            "median": 3,
+            "min": 0,
+            "max": 10,
+            "n": 3
+          }
+        },
+        "domNodes": {
+          "before": {
+            "median": 612,
+            "min": 612,
+            "max": 612,
+            "n": 3
+          },
+          "after": {
+            "median": 617,
+            "min": 617,
+            "max": 617,
+            "n": 3
+          }
+        },
+        "ScriptBytes": {
+          "before": {
+            "median": 326781,
+            "min": 326781,
+            "max": 326781,
+            "n": 3
+          },
+          "after": {
+            "median": 322281,
+            "min": 322281,
+            "max": 322281,
+            "n": 3
+          }
+        },
+        "StylesheetBytes": {
+          "before": {
+            "median": 18436,
+            "min": 18436,
+            "max": 18436,
+            "n": 3
+          },
+          "after": {
+            "median": 18676,
+            "min": 18676,
+            "max": 18676,
+            "n": 3
+          }
+        },
+        "ImageBytes": {
+          "before": {
+            "median": 197580,
+            "min": 197580,
+            "max": 197586,
+            "n": 3
+          },
+          "after": {
+            "median": 197580,
+            "min": 197580,
+            "max": 197592,
+            "n": 3
+          }
+        },
+        "FontBytes": {
+          "before": {
+            "median": 278921,
+            "min": 278921,
+            "max": 278921,
+            "n": 3
+          },
+          "after": {
+            "median": 173297,
+            "min": 173297,
+            "max": 173297,
+            "n": 3
+          }
+        }
+      }
+    },
+    {
+      "device": "desktop",
+      "cache": "warm",
+      "route": "/lv/",
+      "metrics": {
+        "lcpMs": {
+          "before": {
+            "median": 124,
+            "min": 116,
+            "max": 212,
+            "n": 3
+          },
+          "after": {
+            "median": 156,
+            "min": 156,
+            "max": 332,
+            "n": 3
+          }
+        },
+        "cls": {
+          "before": {
+            "median": 0.0020494855967078188,
+            "min": 0.0020494855967078188,
+            "max": 0.0020494855967078188,
+            "n": 3
+          },
+          "after": {
+            "median": 0.0020494855967078188,
+            "min": 0.0020494855967078188,
+            "max": 0.0020494855967078188,
+            "n": 3
+          }
+        },
+        "ttfbMs": {
+          "before": {
+            "median": 7.200000047683716,
+            "min": 6.699999988079071,
+            "max": 7.600000023841858,
+            "n": 3
+          },
+          "after": {
+            "median": 8.5,
+            "min": 7.5,
+            "max": 123.89999997615814,
+            "n": 3
+          }
+        },
+        "domReadyMs": {
+          "before": {
+            "median": 43.5,
+            "min": 43.200000047683716,
+            "max": 104.60000002384186,
+            "n": 3
+          },
+          "after": {
+            "median": 46.60000002384186,
+            "min": 44.40000003576279,
+            "max": 206.30000001192093,
+            "n": 3
+          }
+        },
+        "loadMs": {
+          "before": {
+            "median": 100.60000002384186,
+            "min": 73.59999996423721,
+            "max": 104.90000003576279,
+            "n": 3
+          },
+          "after": {
+            "median": 79,
+            "min": 76.40000003576279,
+            "max": 238.5,
+            "n": 3
+          }
+        },
+        "transferredBytes": {
+          "before": {
+            "median": 59011,
+            "min": 59011,
+            "max": 59013,
+            "n": 3
+          },
+          "after": {
+            "median": 56429,
+            "min": 56429,
+            "max": 56429,
+            "n": 3
+          }
+        },
+        "requests": {
+          "before": {
+            "median": 53,
+            "min": 53,
+            "max": 53,
+            "n": 3
+          },
+          "after": {
+            "median": 53,
+            "min": 53,
+            "max": 53,
+            "n": 3
+          }
+        },
+        "longTaskCount": {
+          "before": {
+            "median": 0,
+            "min": 0,
+            "max": 0,
+            "n": 3
+          },
+          "after": {
+            "median": 0,
+            "min": 0,
+            "max": 0,
+            "n": 3
+          }
+        },
+        "longTaskMs": {
+          "before": {
+            "median": 0,
+            "min": 0,
+            "max": 0,
+            "n": 3
+          },
+          "after": {
+            "median": 0,
+            "min": 0,
+            "max": 0,
+            "n": 3
+          }
+        },
+        "labBlockingMs": {
+          "before": {
+            "median": 0,
+            "min": 0,
+            "max": 0,
+            "n": 3
+          },
+          "after": {
+            "median": 0,
+            "min": 0,
+            "max": 0,
+            "n": 3
+          }
+        },
+        "domNodes": {
+          "before": {
+            "median": 710,
+            "min": 710,
+            "max": 710,
+            "n": 3
+          },
+          "after": {
+            "median": 713,
+            "min": 713,
+            "max": 713,
+            "n": 3
+          }
+        },
+        "ScriptBytes": {
+          "before": {
+            "median": 0,
+            "min": 0,
+            "max": 0,
+            "n": 3
+          },
+          "after": {
+            "median": 0,
+            "min": 0,
+            "max": 0,
+            "n": 3
+          }
+        },
+        "StylesheetBytes": {
+          "before": {
+            "median": 0,
+            "min": 0,
+            "max": 0,
+            "n": 3
+          },
+          "after": {
+            "median": 0,
+            "min": 0,
+            "max": 0,
+            "n": 3
+          }
+        },
+        "ImageBytes": {
+          "before": {
+            "median": 0,
+            "min": 0,
+            "max": 0,
+            "n": 3
+          },
+          "after": {
+            "median": 0,
+            "min": 0,
+            "max": 0,
+            "n": 3
+          }
+        },
+        "FontBytes": {
+          "before": {
+            "median": 0,
+            "min": 0,
+            "max": 0,
+            "n": 3
+          },
+          "after": {
+            "median": 486,
+            "min": 486,
+            "max": 486,
+            "n": 3
+          }
+        }
+      }
+    },
+    {
+      "device": "desktop",
+      "cache": "warm",
+      "route": "/lv/akmens-virsmas/",
+      "metrics": {
+        "lcpMs": {
+          "before": {
+            "median": 108,
+            "min": 100,
+            "max": 112,
+            "n": 3
+          },
+          "after": {
+            "median": 120,
+            "min": 116,
+            "max": 124,
+            "n": 3
+          }
+        },
+        "cls": {
+          "before": {
+            "median": 0.0020494855967078188,
+            "min": 0.0020494855967078188,
+            "max": 0.0020494855967078188,
+            "n": 3
+          },
+          "after": {
+            "median": 0.0020494855967078188,
+            "min": 0.0020494855967078188,
+            "max": 0.0020494855967078188,
+            "n": 3
+          }
+        },
+        "ttfbMs": {
+          "before": {
+            "median": 7.599999964237213,
+            "min": 6.300000011920929,
+            "max": 10.5,
+            "n": 3
+          },
+          "after": {
+            "median": 7.800000011920929,
+            "min": 5.400000035762787,
+            "max": 8.299999952316284,
+            "n": 3
+          }
+        },
+        "domReadyMs": {
+          "before": {
+            "median": 41.90000003576279,
+            "min": 39,
+            "max": 42.69999998807907,
+            "n": 3
+          },
+          "after": {
+            "median": 40.19999998807907,
+            "min": 39.30000001192093,
+            "max": 45.10000002384186,
+            "n": 3
+          }
+        },
+        "loadMs": {
+          "before": {
+            "median": 68.5,
+            "min": 67.69999998807907,
+            "max": 103.59999996423721,
+            "n": 3
+          },
+          "after": {
+            "median": 66.90000003576279,
+            "min": 64.39999997615814,
+            "max": 73,
+            "n": 3
+          }
+        },
+        "transferredBytes": {
+          "before": {
+            "median": 63041,
+            "min": 63040,
+            "max": 63043,
+            "n": 3
+          },
+          "after": {
+            "median": 60260,
+            "min": 60260,
+            "max": 60260,
+            "n": 3
+          }
+        },
+        "requests": {
+          "before": {
+            "median": 54,
+            "min": 54,
+            "max": 54,
+            "n": 3
+          },
+          "after": {
+            "median": 55,
+            "min": 55,
+            "max": 55,
+            "n": 3
+          }
+        },
+        "longTaskCount": {
+          "before": {
+            "median": 0,
+            "min": 0,
+            "max": 0,
+            "n": 3
+          },
+          "after": {
+            "median": 0,
+            "min": 0,
+            "max": 0,
+            "n": 3
+          }
+        },
+        "longTaskMs": {
+          "before": {
+            "median": 0,
+            "min": 0,
+            "max": 0,
+            "n": 3
+          },
+          "after": {
+            "median": 0,
+            "min": 0,
+            "max": 0,
+            "n": 3
+          }
+        },
+        "labBlockingMs": {
+          "before": {
+            "median": 0,
+            "min": 0,
+            "max": 0,
+            "n": 3
+          },
+          "after": {
+            "median": 0,
+            "min": 0,
+            "max": 0,
+            "n": 3
+          }
+        },
+        "domNodes": {
+          "before": {
+            "median": 525,
+            "min": 525,
+            "max": 525,
+            "n": 3
+          },
+          "after": {
+            "median": 530,
+            "min": 530,
+            "max": 530,
+            "n": 3
+          }
+        },
+        "ScriptBytes": {
+          "before": {
+            "median": 0,
+            "min": 0,
+            "max": 0,
+            "n": 3
+          },
+          "after": {
+            "median": 0,
+            "min": 0,
+            "max": 0,
+            "n": 3
+          }
+        },
+        "StylesheetBytes": {
+          "before": {
+            "median": 0,
+            "min": 0,
+            "max": 0,
+            "n": 3
+          },
+          "after": {
+            "median": 0,
+            "min": 0,
+            "max": 0,
+            "n": 3
+          }
+        },
+        "ImageBytes": {
+          "before": {
+            "median": 0,
+            "min": 0,
+            "max": 0,
+            "n": 3
+          },
+          "after": {
+            "median": 0,
+            "min": 0,
+            "max": 0,
+            "n": 3
+          }
+        },
+        "FontBytes": {
+          "before": {
+            "median": 0,
+            "min": 0,
+            "max": 0,
+            "n": 3
+          },
+          "after": {
+            "median": 486,
+            "min": 486,
+            "max": 486,
+            "n": 3
+          }
+        }
+      }
+    },
+    {
+      "device": "desktop",
+      "cache": "warm",
+      "route": "/lv/projekti/",
+      "metrics": {
+        "lcpMs": {
+          "before": {
+            "median": 172,
+            "min": 160,
+            "max": 180,
+            "n": 3
+          },
+          "after": {
+            "median": 164,
+            "min": 156,
+            "max": 176,
+            "n": 3
+          }
+        },
+        "cls": {
+          "before": {
+            "median": 0.0020494855967078188,
+            "min": 0.0020494855967078188,
+            "max": 0.0020494855967078188,
+            "n": 3
+          },
+          "after": {
+            "median": 0.0020494855967078188,
+            "min": 0.0020494855967078188,
+            "max": 0.0020494855967078188,
+            "n": 3
+          }
+        },
+        "ttfbMs": {
+          "before": {
+            "median": 6.800000011920929,
+            "min": 6.399999976158142,
+            "max": 12.699999988079071,
+            "n": 3
+          },
+          "after": {
+            "median": 5.900000035762787,
+            "min": 5.399999976158142,
+            "max": 7.5,
+            "n": 3
+          }
+        },
+        "domReadyMs": {
+          "before": {
+            "median": 44.89999997615814,
+            "min": 43.299999952316284,
+            "max": 46.10000002384186,
+            "n": 3
+          },
+          "after": {
+            "median": 46.69999998807907,
+            "min": 43.69999998807907,
+            "max": 49.10000002384186,
+            "n": 3
+          }
+        },
+        "loadMs": {
+          "before": {
+            "median": 78,
+            "min": 68.19999998807907,
+            "max": 91.29999995231628,
+            "n": 3
+          },
+          "after": {
+            "median": 76,
+            "min": 71.19999998807907,
+            "max": 85.19999998807907,
+            "n": 3
+          }
+        },
+        "transferredBytes": {
+          "before": {
+            "median": 83158,
+            "min": 83157,
+            "max": 83161,
+            "n": 3
+          },
+          "after": {
+            "median": 79411,
+            "min": 78807,
+            "max": 83944,
+            "n": 3
+          }
+        },
+        "requests": {
+          "before": {
+            "median": 67,
+            "min": 67,
+            "max": 67,
+            "n": 3
+          },
+          "after": {
+            "median": 68,
+            "min": 68,
+            "max": 69,
+            "n": 3
+          }
+        },
+        "longTaskCount": {
+          "before": {
+            "median": 0,
+            "min": 0,
+            "max": 0,
+            "n": 3
+          },
+          "after": {
+            "median": 0,
+            "min": 0,
+            "max": 0,
+            "n": 3
+          }
+        },
+        "longTaskMs": {
+          "before": {
+            "median": 0,
+            "min": 0,
+            "max": 0,
+            "n": 3
+          },
+          "after": {
+            "median": 0,
+            "min": 0,
+            "max": 0,
+            "n": 3
+          }
+        },
+        "labBlockingMs": {
+          "before": {
+            "median": 0,
+            "min": 0,
+            "max": 0,
+            "n": 3
+          },
+          "after": {
+            "median": 0,
+            "min": 0,
+            "max": 0,
+            "n": 3
+          }
+        },
+        "domNodes": {
+          "before": {
+            "median": 745,
+            "min": 745,
+            "max": 745,
+            "n": 3
+          },
+          "after": {
+            "median": 750,
+            "min": 750,
+            "max": 751,
+            "n": 3
+          }
+        },
+        "ScriptBytes": {
+          "before": {
+            "median": 0,
+            "min": 0,
+            "max": 0,
+            "n": 3
+          },
+          "after": {
+            "median": 0,
+            "min": 0,
+            "max": 4533,
+            "n": 3
+          }
+        },
+        "StylesheetBytes": {
+          "before": {
+            "median": 0,
+            "min": 0,
+            "max": 0,
+            "n": 3
+          },
+          "after": {
+            "median": 0,
+            "min": 0,
+            "max": 0,
+            "n": 3
+          }
+        },
+        "ImageBytes": {
+          "before": {
+            "median": 0,
+            "min": 0,
+            "max": 0,
+            "n": 3
+          },
+          "after": {
+            "median": 0,
+            "min": 0,
+            "max": 0,
+            "n": 3
+          }
+        },
+        "FontBytes": {
+          "before": {
+            "median": 0,
+            "min": 0,
+            "max": 0,
+            "n": 3
+          },
+          "after": {
+            "median": 486,
+            "min": 486,
+            "max": 486,
+            "n": 3
+          }
+        }
+      }
+    },
+    {
+      "device": "desktop",
+      "cache": "warm",
+      "route": "/lv/store/",
+      "metrics": {
+        "lcpMs": {
+          "before": {
+            "median": 168,
+            "min": 132,
+            "max": 196,
+            "n": 3
+          },
+          "after": {
+            "median": 168,
+            "min": 148,
+            "max": 188,
+            "n": 3
+          }
+        },
+        "cls": {
+          "before": {
+            "median": 0.017134807956104253,
+            "min": 0.017134807956104253,
+            "max": 0.017134807956104253,
+            "n": 3
+          },
+          "after": {
+            "median": 0.004387928669410151,
+            "min": 0.004387928669410151,
+            "max": 0.004387928669410151,
+            "n": 3
+          }
+        },
+        "ttfbMs": {
+          "before": {
+            "median": 7.099999964237213,
+            "min": 6.5,
+            "max": 11.100000023841858,
+            "n": 3
+          },
+          "after": {
+            "median": 4.5,
+            "min": 4.400000035762787,
+            "max": 4.800000011920929,
+            "n": 3
+          }
+        },
+        "domReadyMs": {
+          "before": {
+            "median": 49.5,
+            "min": 42.39999997615814,
+            "max": 49.80000001192093,
+            "n": 3
+          },
+          "after": {
+            "median": 40.40000003576279,
+            "min": 40.10000002384186,
+            "max": 44.69999998807907,
+            "n": 3
+          }
+        },
+        "loadMs": {
+          "before": {
+            "median": 112.59999996423721,
+            "min": 99.89999997615814,
+            "max": 122.39999997615814,
+            "n": 3
+          },
+          "after": {
+            "median": 94.40000003576279,
+            "min": 87.69999998807907,
+            "max": 118.60000002384186,
+            "n": 3
+          }
+        },
+        "transferredBytes": {
+          "before": {
+            "median": 49616,
+            "min": 49615,
+            "max": 49618,
+            "n": 3
+          },
+          "after": {
+            "median": 53785,
+            "min": 53785,
+            "max": 53785,
+            "n": 3
+          }
+        },
+        "requests": {
+          "before": {
+            "median": 50,
+            "min": 50,
+            "max": 50,
+            "n": 3
+          },
+          "after": {
+            "median": 51,
+            "min": 51,
+            "max": 51,
+            "n": 3
+          }
+        },
+        "longTaskCount": {
+          "before": {
+            "median": 0,
+            "min": 0,
+            "max": 0,
+            "n": 3
+          },
+          "after": {
+            "median": 0,
+            "min": 0,
+            "max": 0,
+            "n": 3
+          }
+        },
+        "longTaskMs": {
+          "before": {
+            "median": 0,
+            "min": 0,
+            "max": 0,
+            "n": 3
+          },
+          "after": {
+            "median": 0,
+            "min": 0,
+            "max": 0,
+            "n": 3
+          }
+        },
+        "labBlockingMs": {
+          "before": {
+            "median": 0,
+            "min": 0,
+            "max": 0,
+            "n": 3
+          },
+          "after": {
+            "median": 0,
+            "min": 0,
+            "max": 0,
+            "n": 3
+          }
+        },
+        "domNodes": {
+          "before": {
+            "median": 454,
+            "min": 454,
+            "max": 454,
+            "n": 3
+          },
+          "after": {
+            "median": 459,
+            "min": 459,
+            "max": 459,
+            "n": 3
+          }
+        },
+        "ScriptBytes": {
+          "before": {
+            "median": 0,
+            "min": 0,
+            "max": 0,
+            "n": 3
+          },
+          "after": {
+            "median": 0,
+            "min": 0,
+            "max": 0,
+            "n": 3
+          }
+        },
+        "StylesheetBytes": {
+          "before": {
+            "median": 0,
+            "min": 0,
+            "max": 0,
+            "n": 3
+          },
+          "after": {
+            "median": 0,
+            "min": 0,
+            "max": 0,
+            "n": 3
+          }
+        },
+        "ImageBytes": {
+          "before": {
+            "median": 0,
+            "min": 0,
+            "max": 0,
+            "n": 3
+          },
+          "after": {
+            "median": 0,
+            "min": 0,
+            "max": 0,
+            "n": 3
+          }
+        },
+        "FontBytes": {
+          "before": {
+            "median": 0,
+            "min": 0,
+            "max": 0,
+            "n": 3
+          },
+          "after": {
+            "median": 486,
+            "min": 486,
+            "max": 486,
+            "n": 3
+          }
+        }
+      }
+    },
+    {
+      "device": "desktop",
+      "cache": "warm",
+      "route": "/lv/akmens-virsmas/silestone/",
+      "metrics": {
+        "lcpMs": {
+          "before": {
+            "median": 124,
+            "min": 100,
+            "max": 140,
+            "n": 3
+          },
+          "after": {
+            "median": 128,
+            "min": 124,
+            "max": 128,
+            "n": 3
+          }
+        },
+        "cls": {
+          "before": {
+            "median": 0.0020494855967078188,
+            "min": 0.0020494855967078188,
+            "max": 0.0020494855967078188,
+            "n": 3
+          },
+          "after": {
+            "median": 0.0020494855967078188,
+            "min": 0.0020494855967078188,
+            "max": 0.0020494855967078188,
+            "n": 3
+          }
+        },
+        "ttfbMs": {
+          "before": {
+            "median": 8.299999952316284,
+            "min": 5.700000047683716,
+            "max": 13.600000023841858,
+            "n": 3
+          },
+          "after": {
+            "median": 7,
+            "min": 5.400000035762787,
+            "max": 7.600000023841858,
+            "n": 3
+          }
+        },
+        "domReadyMs": {
+          "before": {
+            "median": 50.30000001192093,
+            "min": 43.30000001192093,
+            "max": 73.39999997615814,
+            "n": 3
+          },
+          "after": {
+            "median": 44.09999996423721,
+            "min": 42.90000003576279,
+            "max": 48.60000002384186,
+            "n": 3
+          }
+        },
+        "loadMs": {
+          "before": {
+            "median": 99.20000004768372,
+            "min": 83.20000004768372,
+            "max": 106.59999996423721,
+            "n": 3
+          },
+          "after": {
+            "median": 69.80000001192093,
+            "min": 69.19999998807907,
+            "max": 76.60000002384186,
+            "n": 3
+          }
+        },
+        "transferredBytes": {
+          "before": {
+            "median": 63087,
+            "min": 63084,
+            "max": 63089,
+            "n": 3
+          },
+          "after": {
+            "median": 60292,
+            "min": 60292,
+            "max": 60292,
+            "n": 3
+          }
+        },
+        "requests": {
+          "before": {
+            "median": 57,
+            "min": 57,
+            "max": 57,
+            "n": 3
+          },
+          "after": {
+            "median": 58,
+            "min": 58,
+            "max": 58,
+            "n": 3
+          }
+        },
+        "longTaskCount": {
+          "before": {
+            "median": 0,
+            "min": 0,
+            "max": 0,
+            "n": 3
+          },
+          "after": {
+            "median": 0,
+            "min": 0,
+            "max": 0,
+            "n": 3
+          }
+        },
+        "longTaskMs": {
+          "before": {
+            "median": 0,
+            "min": 0,
+            "max": 0,
+            "n": 3
+          },
+          "after": {
+            "median": 0,
+            "min": 0,
+            "max": 0,
+            "n": 3
+          }
+        },
+        "labBlockingMs": {
+          "before": {
+            "median": 0,
+            "min": 0,
+            "max": 0,
+            "n": 3
+          },
+          "after": {
+            "median": 0,
+            "min": 0,
+            "max": 0,
+            "n": 3
+          }
+        },
+        "domNodes": {
+          "before": {
+            "median": 612,
+            "min": 612,
+            "max": 612,
+            "n": 3
+          },
+          "after": {
+            "median": 617,
+            "min": 617,
+            "max": 617,
+            "n": 3
+          }
+        },
+        "ScriptBytes": {
+          "before": {
+            "median": 0,
+            "min": 0,
+            "max": 0,
+            "n": 3
+          },
+          "after": {
+            "median": 0,
+            "min": 0,
+            "max": 0,
+            "n": 3
+          }
+        },
+        "StylesheetBytes": {
+          "before": {
+            "median": 0,
+            "min": 0,
+            "max": 0,
+            "n": 3
+          },
+          "after": {
+            "median": 0,
+            "min": 0,
+            "max": 0,
+            "n": 3
+          }
+        },
+        "ImageBytes": {
+          "before": {
+            "median": 0,
+            "min": 0,
+            "max": 0,
+            "n": 3
+          },
+          "after": {
+            "median": 0,
+            "min": 0,
+            "max": 0,
+            "n": 3
+          }
+        },
+        "FontBytes": {
+          "before": {
+            "median": 0,
+            "min": 0,
+            "max": 0,
+            "n": 3
+          },
+          "after": {
+            "median": 486,
+            "min": 486,
+            "max": 486,
+            "n": 3
+          }
+        }
+      }
+    },
+    {
+      "device": "mobile",
+      "cache": "cold",
+      "route": "/lv/",
+      "metrics": {
+        "lcpMs": {
+          "before": {
+            "median": 2648,
+            "min": 2580,
+            "max": 2648,
+            "n": 3
+          },
+          "after": {
+            "median": 1268,
+            "min": 1172,
+            "max": 1312,
+            "n": 3
+          }
+        },
+        "cls": {
+          "before": {
+            "median": 0.0026386522247280027,
+            "min": 0.0026386522247280027,
+            "max": 0.0026386522247280027,
+            "n": 3
+          },
+          "after": {
+            "median": 0.001185004202856733,
+            "min": 0.001185004202856733,
+            "max": 0.001185004202856733,
+            "n": 3
+          }
+        },
+        "ttfbMs": {
+          "before": {
+            "median": 9.899999976158142,
+            "min": 9.300000011920929,
+            "max": 11.599999964237213,
+            "n": 3
+          },
+          "after": {
+            "median": 9.300000011920929,
+            "min": 7.399999976158142,
+            "max": 10.899999976158142,
+            "n": 3
+          }
+        },
+        "domReadyMs": {
+          "before": {
+            "median": 1012,
+            "min": 926.5,
+            "max": 1022.2999999523163,
+            "n": 3
+          },
+          "after": {
+            "median": 744.6999999880791,
+            "min": 733.8000000119209,
+            "max": 748.0999999642372,
+            "n": 3
+          }
+        },
+        "loadMs": {
+          "before": {
+            "median": 3565.5,
+            "min": 3561.599999964237,
+            "max": 3596.5,
+            "n": 3
+          },
+          "after": {
+            "median": 2916.699999988079,
+            "min": 2816.400000035763,
+            "max": 2937.899999976158,
+            "n": 3
+          }
+        },
+        "transferredBytes": {
+          "before": {
+            "median": 779661,
+            "min": 779639,
+            "max": 779662,
+            "n": 3
+          },
+          "after": {
+            "median": 627176,
+            "min": 627174,
+            "max": 627176,
+            "n": 3
+          }
+        },
+        "requests": {
+          "before": {
+            "median": 51,
+            "min": 51,
+            "max": 51,
+            "n": 3
+          },
+          "after": {
+            "median": 49,
+            "min": 49,
+            "max": 49,
+            "n": 3
+          }
+        },
+        "longTaskCount": {
+          "before": {
+            "median": 9,
+            "min": 7,
+            "max": 10,
+            "n": 3
+          },
+          "after": {
+            "median": 9,
+            "min": 9,
+            "max": 10,
+            "n": 3
+          }
+        },
+        "longTaskMs": {
+          "before": {
+            "median": 1068,
+            "min": 1052,
+            "max": 1250,
+            "n": 3
+          },
+          "after": {
+            "median": 1145,
+            "min": 1113,
+            "max": 1203,
+            "n": 3
+          }
+        },
+        "labBlockingMs": {
+          "before": {
+            "median": 718,
+            "min": 602,
+            "max": 750,
+            "n": 3
+          },
+          "after": {
+            "median": 663,
+            "min": 645,
+            "max": 753,
+            "n": 3
+          }
+        },
+        "domNodes": {
+          "before": {
+            "median": 710,
+            "min": 710,
+            "max": 710,
+            "n": 3
+          },
+          "after": {
+            "median": 712,
+            "min": 712,
+            "max": 712,
+            "n": 3
+          }
+        },
+        "ScriptBytes": {
+          "before": {
+            "median": 326781,
+            "min": 326781,
+            "max": 326781,
+            "n": 3
+          },
+          "after": {
+            "median": 322281,
+            "min": 322281,
+            "max": 322281,
+            "n": 3
+          }
+        },
+        "StylesheetBytes": {
+          "before": {
+            "median": 18436,
+            "min": 18436,
+            "max": 18436,
+            "n": 3
+          },
+          "after": {
+            "median": 18676,
+            "min": 18676,
+            "max": 18676,
+            "n": 3
+          }
+        },
+        "ImageBytes": {
+          "before": {
+            "median": 93450,
+            "min": 93450,
+            "max": 93452,
+            "n": 3
+          },
+          "after": {
+            "median": 75292,
+            "min": 75290,
+            "max": 75292,
+            "n": 3
+          }
+        },
+        "FontBytes": {
+          "before": {
+            "median": 278921,
+            "min": 278921,
+            "max": 278921,
+            "n": 3
+          },
+          "after": {
+            "median": 151847,
+            "min": 151847,
+            "max": 151847,
+            "n": 3
+          }
+        }
+      }
+    },
+    {
+      "device": "mobile",
+      "cache": "cold",
+      "route": "/lv/akmens-virsmas/",
+      "metrics": {
+        "lcpMs": {
+          "before": {
+            "median": 1244,
+            "min": 1240,
+            "max": 1300,
+            "n": 3
+          },
+          "after": {
+            "median": 1052,
+            "min": 980,
+            "max": 1060,
+            "n": 3
+          }
+        },
+        "cls": {
+          "before": {
+            "median": 0.00226980180485268,
+            "min": 0.00226980180485268,
+            "max": 0.00226980180485268,
+            "n": 3
+          },
+          "after": {
+            "median": 0,
+            "min": 0,
+            "max": 0,
+            "n": 3
+          }
+        },
+        "ttfbMs": {
+          "before": {
+            "median": 10.5,
+            "min": 8,
+            "max": 11.100000023841858,
+            "n": 3
+          },
+          "after": {
+            "median": 7.800000011920929,
+            "min": 6.199999988079071,
+            "max": 12.5,
+            "n": 3
+          }
+        },
+        "domReadyMs": {
+          "before": {
+            "median": 887.6999999880791,
+            "min": 839.0999999642372,
+            "max": 956.1999999880791,
+            "n": 3
+          },
+          "after": {
+            "median": 689.6000000238419,
+            "min": 685.0999999642372,
+            "max": 715.5999999642372,
+            "n": 3
+          }
+        },
+        "loadMs": {
+          "before": {
+            "median": 3416.2999999523163,
+            "min": 3388.199999988079,
+            "max": 3473.199999988079,
+            "n": 3
+          },
+          "after": {
+            "median": 2807.399999976158,
+            "min": 2733.599999964237,
+            "max": 2846.100000023842,
+            "n": 3
+          }
+        },
+        "transferredBytes": {
+          "before": {
+            "median": 716787,
+            "min": 716785,
+            "max": 716790,
+            "n": 3
+          },
+          "after": {
+            "median": 582536,
+            "min": 582532,
+            "max": 587065,
+            "n": 3
+          }
+        },
+        "requests": {
+          "before": {
+            "median": 48,
+            "min": 48,
+            "max": 48,
+            "n": 3
+          },
+          "after": {
+            "median": 47,
+            "min": 47,
+            "max": 48,
+            "n": 3
+          }
+        },
+        "longTaskCount": {
+          "before": {
+            "median": 6,
+            "min": 5,
+            "max": 6,
+            "n": 3
+          },
+          "after": {
+            "median": 9,
+            "min": 7,
+            "max": 9,
+            "n": 3
+          }
+        },
+        "longTaskMs": {
+          "before": {
+            "median": 753,
+            "min": 617,
+            "max": 921,
+            "n": 3
+          },
+          "after": {
+            "median": 1005,
+            "min": 726,
+            "max": 1021,
+            "n": 3
+          }
+        },
+        "labBlockingMs": {
+          "before": {
+            "median": 453,
+            "min": 367,
+            "max": 621,
+            "n": 3
+          },
+          "after": {
+            "median": 555,
+            "min": 376,
+            "max": 571,
+            "n": 3
+          }
+        },
+        "domNodes": {
+          "before": {
+            "median": 525,
+            "min": 525,
+            "max": 525,
+            "n": 3
+          },
+          "after": {
+            "median": 529,
+            "min": 529,
+            "max": 530,
+            "n": 3
+          }
+        },
+        "ScriptBytes": {
+          "before": {
+            "median": 326781,
+            "min": 326781,
+            "max": 326781,
+            "n": 3
+          },
+          "after": {
+            "median": 322281,
+            "min": 322281,
+            "max": 326814,
+            "n": 3
+          }
+        },
+        "StylesheetBytes": {
+          "before": {
+            "median": 18436,
+            "min": 18436,
+            "max": 18436,
+            "n": 3
+          },
+          "after": {
+            "median": 18676,
+            "min": 18676,
+            "max": 18676,
+            "n": 3
+          }
+        },
+        "ImageBytes": {
+          "before": {
+            "median": 37914,
+            "min": 37914,
+            "max": 37914,
+            "n": 3
+          },
+          "after": {
+            "median": 37914,
+            "min": 37914,
+            "max": 37918,
+            "n": 3
+          }
+        },
+        "FontBytes": {
+          "before": {
+            "median": 278921,
+            "min": 278921,
+            "max": 278921,
+            "n": 3
+          },
+          "after": {
+            "median": 151847,
+            "min": 151847,
+            "max": 151847,
+            "n": 3
+          }
+        }
+      }
+    },
+    {
+      "device": "mobile",
+      "cache": "cold",
+      "route": "/lv/projekti/",
+      "metrics": {
+        "lcpMs": {
+          "before": {
+            "median": 2612,
+            "min": 2588,
+            "max": 2652,
+            "n": 3
+          },
+          "after": {
+            "median": 1540,
+            "min": 1516,
+            "max": 1728,
+            "n": 3
+          }
+        },
+        "cls": {
+          "before": {
+            "median": 0,
+            "min": 0,
+            "max": 0,
+            "n": 3
+          },
+          "after": {
+            "median": 0.00010438750022317328,
+            "min": 0.00010438750022317328,
+            "max": 0.00010438750022317328,
+            "n": 3
+          }
+        },
+        "ttfbMs": {
+          "before": {
+            "median": 9.300000011920929,
+            "min": 8.100000023841858,
+            "max": 12.5,
+            "n": 3
+          },
+          "after": {
+            "median": 8.399999976158142,
+            "min": 6.800000011920929,
+            "max": 8.799999952316284,
+            "n": 3
+          }
+        },
+        "domReadyMs": {
+          "before": {
+            "median": 930.4000000357628,
+            "min": 864.1999999880791,
+            "max": 941,
+            "n": 3
+          },
+          "after": {
+            "median": 711.2999999523163,
+            "min": 699,
+            "max": 715.6999999880791,
+            "n": 3
+          }
+        },
+        "loadMs": {
+          "before": {
+            "median": 3696.5,
+            "min": 3618.300000011921,
+            "max": 3714.100000023842,
+            "n": 3
+          },
+          "after": {
+            "median": 2990,
+            "min": 2984.800000011921,
+            "max": 3023.599999964237,
+            "n": 3
+          }
+        },
+        "transferredBytes": {
+          "before": {
+            "median": 761836,
+            "min": 761819,
+            "max": 761836,
+            "n": 3
+          },
+          "after": {
+            "median": 627270,
+            "min": 627270,
+            "max": 627274,
+            "n": 3
+          }
+        },
+        "requests": {
+          "before": {
+            "median": 52,
+            "min": 52,
+            "max": 52,
+            "n": 3
+          },
+          "after": {
+            "median": 51,
+            "min": 51,
+            "max": 51,
+            "n": 3
+          }
+        },
+        "longTaskCount": {
+          "before": {
+            "median": 8,
+            "min": 6,
+            "max": 8,
+            "n": 3
+          },
+          "after": {
+            "median": 9,
+            "min": 9,
+            "max": 10,
+            "n": 3
+          }
+        },
+        "longTaskMs": {
+          "before": {
+            "median": 936,
+            "min": 885,
+            "max": 1015,
+            "n": 3
+          },
+          "after": {
+            "median": 1122,
+            "min": 998,
+            "max": 1127,
+            "n": 3
+          }
+        },
+        "labBlockingMs": {
+          "before": {
+            "median": 585,
+            "min": 536,
+            "max": 615,
+            "n": 3
+          },
+          "after": {
+            "median": 627,
+            "min": 548,
+            "max": 672,
+            "n": 3
+          }
+        },
+        "domNodes": {
+          "before": {
+            "median": 745,
+            "min": 745,
+            "max": 745,
+            "n": 3
+          },
+          "after": {
+            "median": 749,
+            "min": 749,
+            "max": 749,
+            "n": 3
+          }
+        },
+        "ScriptBytes": {
+          "before": {
+            "median": 326781,
+            "min": 326781,
+            "max": 326781,
+            "n": 3
+          },
+          "after": {
+            "median": 322281,
+            "min": 322281,
+            "max": 322281,
+            "n": 3
+          }
+        },
+        "StylesheetBytes": {
+          "before": {
+            "median": 18436,
+            "min": 18436,
+            "max": 18436,
+            "n": 3
+          },
+          "after": {
+            "median": 18676,
+            "min": 18676,
+            "max": 18676,
+            "n": 3
+          }
+        },
+        "ImageBytes": {
+          "before": {
+            "median": 75096,
+            "min": 75096,
+            "max": 75100,
+            "n": 3
+          },
+          "after": {
+            "median": 75096,
+            "min": 75096,
+            "max": 75100,
+            "n": 3
+          }
+        },
+        "FontBytes": {
+          "before": {
+            "median": 278921,
+            "min": 278921,
+            "max": 278921,
+            "n": 3
+          },
+          "after": {
+            "median": 151847,
+            "min": 151847,
+            "max": 151847,
+            "n": 3
+          }
+        }
+      }
+    },
+    {
+      "device": "mobile",
+      "cache": "cold",
+      "route": "/lv/store/",
+      "metrics": {
+        "lcpMs": {
+          "before": {
+            "median": 3588,
+            "min": 3552,
+            "max": 3744,
+            "n": 3
+          },
+          "after": {
+            "median": 3272,
+            "min": 3224,
+            "max": 3272,
+            "n": 3
+          }
+        },
+        "cls": {
+          "before": {
+            "median": 0,
+            "min": 0,
+            "max": 0.0067708756282687695,
+            "n": 3
+          },
+          "after": {
+            "median": 0,
+            "min": 0,
+            "max": 0,
+            "n": 3
+          }
+        },
+        "ttfbMs": {
+          "before": {
+            "median": 8.300000011920929,
+            "min": 7.299999952316284,
+            "max": 9.200000047683716,
+            "n": 3
+          },
+          "after": {
+            "median": 7.100000023841858,
+            "min": 6.199999988079071,
+            "max": 18.19999998807907,
+            "n": 3
+          }
+        },
+        "domReadyMs": {
+          "before": {
+            "median": 902.3999999761581,
+            "min": 892.2000000476837,
+            "max": 916.8999999761581,
+            "n": 3
+          },
+          "after": {
+            "median": 708.9000000357628,
+            "min": 682.3999999761581,
+            "max": 711.5,
+            "n": 3
+          }
+        },
+        "loadMs": {
+          "before": {
+            "median": 3329.5,
+            "min": 3318.300000011921,
+            "max": 3341.7000000476837,
+            "n": 3
+          },
+          "after": {
+            "median": 2838.199999988079,
+            "min": 2699.900000035763,
+            "max": 2857.900000035763,
+            "n": 3
+          }
+        },
+        "transferredBytes": {
+          "before": {
+            "median": 680412,
+            "min": 680395,
+            "max": 680418,
+            "n": 3
+          },
+          "after": {
+            "median": 545484,
+            "min": 545484,
+            "max": 545486,
+            "n": 3
+          }
+        },
+        "requests": {
+          "before": {
+            "median": 49,
+            "min": 49,
+            "max": 49,
+            "n": 3
+          },
+          "after": {
+            "median": 46,
+            "min": 46,
+            "max": 46,
+            "n": 3
+          }
+        },
+        "longTaskCount": {
+          "before": {
+            "median": 4,
+            "min": 4,
+            "max": 6,
+            "n": 3
+          },
+          "after": {
+            "median": 6,
+            "min": 5,
+            "max": 6,
+            "n": 3
+          }
+        },
+        "longTaskMs": {
+          "before": {
+            "median": 696,
+            "min": 614,
+            "max": 850,
+            "n": 3
+          },
+          "after": {
+            "median": 784,
+            "min": 749,
+            "max": 812,
+            "n": 3
+          }
+        },
+        "labBlockingMs": {
+          "before": {
+            "median": 496,
+            "min": 414,
+            "max": 550,
+            "n": 3
+          },
+          "after": {
+            "median": 499,
+            "min": 484,
+            "max": 512,
+            "n": 3
+          }
+        },
+        "domNodes": {
+          "before": {
+            "median": 454,
+            "min": 454,
+            "max": 454,
+            "n": 3
+          },
+          "after": {
+            "median": 458,
+            "min": 458,
+            "max": 458,
+            "n": 3
+          }
+        },
+        "ScriptBytes": {
+          "before": {
+            "median": 326781,
+            "min": 326781,
+            "max": 326781,
+            "n": 3
+          },
+          "after": {
+            "median": 322281,
+            "min": 322281,
+            "max": 322281,
+            "n": 3
+          }
+        },
+        "StylesheetBytes": {
+          "before": {
+            "median": 18436,
+            "min": 18436,
+            "max": 18436,
+            "n": 3
+          },
+          "after": {
+            "median": 18676,
+            "min": 18676,
+            "max": 18676,
+            "n": 3
+          }
+        },
+        "ImageBytes": {
+          "before": {
+            "median": 3590,
+            "min": 3590,
+            "max": 3592,
+            "n": 3
+          },
+          "after": {
+            "median": 3590,
+            "min": 3590,
+            "max": 3592,
+            "n": 3
+          }
+        },
+        "FontBytes": {
+          "before": {
+            "median": 278921,
+            "min": 278921,
+            "max": 278921,
+            "n": 3
+          },
+          "after": {
+            "median": 151847,
+            "min": 151847,
+            "max": 151847,
+            "n": 3
+          }
+        }
+      }
+    },
+    {
+      "device": "mobile",
+      "cache": "cold",
+      "route": "/lv/akmens-virsmas/silestone/",
+      "metrics": {
+        "lcpMs": {
+          "before": {
+            "median": 3284,
+            "min": 3256,
+            "max": 3312,
+            "n": 3
+          },
+          "after": {
+            "median": 1980,
+            "min": 1944,
+            "max": 2016,
+            "n": 3
+          }
+        },
+        "cls": {
+          "before": {
+            "median": 0,
+            "min": 0,
+            "max": 0,
+            "n": 3
+          },
+          "after": {
+            "median": 0,
+            "min": 0,
+            "max": 0,
+            "n": 3
+          }
+        },
+        "ttfbMs": {
+          "before": {
+            "median": 10,
+            "min": 7.5,
+            "max": 12,
+            "n": 3
+          },
+          "after": {
+            "median": 10.100000023841858,
+            "min": 9.799999952316284,
+            "max": 10.600000023841858,
+            "n": 3
+          }
+        },
+        "domReadyMs": {
+          "before": {
+            "median": 893.1999999880791,
+            "min": 887.2000000476837,
+            "max": 900.6000000238419,
+            "n": 3
+          },
+          "after": {
+            "median": 701.5,
+            "min": 694.6000000238419,
+            "max": 724.1999999880791,
+            "n": 3
+          }
+        },
+        "loadMs": {
+          "before": {
+            "median": 3297.300000011921,
+            "min": 3296.2000000476837,
+            "max": 3398.399999976158,
+            "n": 3
+          },
+          "after": {
+            "median": 2762.5,
+            "min": 2682.2999999523163,
+            "max": 2779.199999988079,
+            "n": 3
+          }
+        },
+        "transferredBytes": {
+          "before": {
+            "median": 700719,
+            "min": 700704,
+            "max": 700727,
+            "n": 3
+          },
+          "after": {
+            "median": 566463,
+            "min": 566463,
+            "max": 566465,
+            "n": 3
+          }
+        },
+        "requests": {
+          "before": {
+            "median": 47,
+            "min": 47,
+            "max": 47,
+            "n": 3
+          },
+          "after": {
+            "median": 46,
+            "min": 46,
+            "max": 46,
+            "n": 3
+          }
+        },
+        "longTaskCount": {
+          "before": {
+            "median": 7,
+            "min": 7,
+            "max": 7,
+            "n": 3
+          },
+          "after": {
+            "median": 10,
+            "min": 9,
+            "max": 10,
+            "n": 3
+          }
+        },
+        "longTaskMs": {
+          "before": {
+            "median": 890,
+            "min": 842,
+            "max": 920,
+            "n": 3
+          },
+          "after": {
+            "median": 1033,
+            "min": 1014,
+            "max": 1124,
+            "n": 3
+          }
+        },
+        "labBlockingMs": {
+          "before": {
+            "median": 540,
+            "min": 492,
+            "max": 570,
+            "n": 3
+          },
+          "after": {
+            "median": 564,
+            "min": 533,
+            "max": 624,
+            "n": 3
+          }
+        },
+        "domNodes": {
+          "before": {
+            "median": 612,
+            "min": 612,
+            "max": 612,
+            "n": 3
+          },
+          "after": {
+            "median": 616,
+            "min": 616,
+            "max": 616,
+            "n": 3
+          }
+        },
+        "ScriptBytes": {
+          "before": {
+            "median": 326781,
+            "min": 326781,
+            "max": 326781,
+            "n": 3
+          },
+          "after": {
+            "median": 322281,
+            "min": 322281,
+            "max": 322281,
+            "n": 3
+          }
+        },
+        "StylesheetBytes": {
+          "before": {
+            "median": 18436,
+            "min": 18436,
+            "max": 18436,
+            "n": 3
+          },
+          "after": {
+            "median": 18676,
+            "min": 18676,
+            "max": 18676,
+            "n": 3
+          }
+        },
+        "ImageBytes": {
+          "before": {
+            "median": 19625,
+            "min": 19625,
+            "max": 19627,
+            "n": 3
+          },
+          "after": {
+            "median": 19625,
+            "min": 19625,
+            "max": 19627,
+            "n": 3
+          }
+        },
+        "FontBytes": {
+          "before": {
+            "median": 278921,
+            "min": 278921,
+            "max": 278921,
+            "n": 3
+          },
+          "after": {
+            "median": 151847,
+            "min": 151847,
+            "max": 151847,
+            "n": 3
+          }
+        }
+      }
+    },
+    {
+      "device": "mobile",
+      "cache": "warm",
+      "route": "/lv/",
+      "metrics": {
+        "lcpMs": {
+          "before": {
+            "median": 744,
+            "min": 708,
+            "max": 744,
+            "n": 3
+          },
+          "after": {
+            "median": 776,
+            "min": 716,
+            "max": 804,
+            "n": 3
+          }
+        },
+        "cls": {
+          "before": {
+            "median": 0,
+            "min": 0,
+            "max": 0,
+            "n": 3
+          },
+          "after": {
+            "median": 0,
+            "min": 0,
+            "max": 0,
+            "n": 3
+          }
+        },
+        "ttfbMs": {
+          "before": {
+            "median": 8.900000035762787,
+            "min": 7.299999952316284,
+            "max": 11.899999976158142,
+            "n": 3
+          },
+          "after": {
+            "median": 6.300000011920929,
+            "min": 5.899999976158142,
+            "max": 12.600000023841858,
+            "n": 3
+          }
+        },
+        "domReadyMs": {
+          "before": {
+            "median": 503.60000002384186,
+            "min": 490.5,
+            "max": 523,
+            "n": 3
+          },
+          "after": {
+            "median": 502.19999998807907,
+            "min": 455.69999998807907,
+            "max": 536.8999999761581,
+            "n": 3
+          }
+        },
+        "loadMs": {
+          "before": {
+            "median": 504.60000002384186,
+            "min": 492.69999998807907,
+            "max": 525.6999999880791,
+            "n": 3
+          },
+          "after": {
+            "median": 503.10000002384186,
+            "min": 456.69999998807907,
+            "max": 537.8000000119209,
+            "n": 3
+          }
+        },
+        "transferredBytes": {
+          "before": {
+            "median": 39815,
+            "min": 39815,
+            "max": 39817,
+            "n": 3
+          },
+          "after": {
+            "median": 37654,
+            "min": 37654,
+            "max": 37654,
+            "n": 3
+          }
+        },
+        "requests": {
+          "before": {
+            "median": 50,
+            "min": 50,
+            "max": 50,
+            "n": 3
+          },
+          "after": {
+            "median": 49,
+            "min": 49,
+            "max": 49,
+            "n": 3
+          }
+        },
+        "longTaskCount": {
+          "before": {
+            "median": 2,
+            "min": 2,
+            "max": 3,
+            "n": 3
+          },
+          "after": {
+            "median": 3,
+            "min": 2,
+            "max": 3,
+            "n": 3
+          }
+        },
+        "longTaskMs": {
+          "before": {
+            "median": 234,
+            "min": 228,
+            "max": 264,
+            "n": 3
+          },
+          "after": {
+            "median": 317,
+            "min": 210,
+            "max": 347,
+            "n": 3
+          }
+        },
+        "labBlockingMs": {
+          "before": {
+            "median": 128,
+            "min": 114,
+            "max": 134,
+            "n": 3
+          },
+          "after": {
+            "median": 167,
+            "min": 110,
+            "max": 197,
+            "n": 3
+          }
+        },
+        "domNodes": {
+          "before": {
+            "median": 710,
+            "min": 710,
+            "max": 710,
+            "n": 3
+          },
+          "after": {
+            "median": 712,
+            "min": 712,
+            "max": 712,
+            "n": 3
+          }
+        },
+        "ScriptBytes": {
+          "before": {
+            "median": 0,
+            "min": 0,
+            "max": 0,
+            "n": 3
+          },
+          "after": {
+            "median": 0,
+            "min": 0,
+            "max": 0,
+            "n": 3
+          }
+        },
+        "StylesheetBytes": {
+          "before": {
+            "median": 0,
+            "min": 0,
+            "max": 0,
+            "n": 3
+          },
+          "after": {
+            "median": 0,
+            "min": 0,
+            "max": 0,
+            "n": 3
+          }
+        },
+        "ImageBytes": {
+          "before": {
+            "median": 0,
+            "min": 0,
+            "max": 0,
+            "n": 3
+          },
+          "after": {
+            "median": 0,
+            "min": 0,
+            "max": 0,
+            "n": 3
+          }
+        },
+        "FontBytes": {
+          "before": {
+            "median": 0,
+            "min": 0,
+            "max": 0,
+            "n": 3
+          },
+          "after": {
+            "median": 243,
+            "min": 243,
+            "max": 243,
+            "n": 3
+          }
+        }
+      }
+    },
+    {
+      "device": "mobile",
+      "cache": "warm",
+      "route": "/lv/akmens-virsmas/",
+      "metrics": {
+        "lcpMs": {
+          "before": {
+            "median": 692,
+            "min": 692,
+            "max": 696,
+            "n": 3
+          },
+          "after": {
+            "median": 688,
+            "min": 676,
+            "max": 700,
+            "n": 3
+          }
+        },
+        "cls": {
+          "before": {
+            "median": 0,
+            "min": 0,
+            "max": 0,
+            "n": 3
+          },
+          "after": {
+            "median": 0,
+            "min": 0,
+            "max": 0,
+            "n": 3
+          }
+        },
+        "ttfbMs": {
+          "before": {
+            "median": 7.699999988079071,
+            "min": 6.800000011920929,
+            "max": 11.5,
+            "n": 3
+          },
+          "after": {
+            "median": 6.399999976158142,
+            "min": 5.300000011920929,
+            "max": 6.699999988079071,
+            "n": 3
+          }
+        },
+        "domReadyMs": {
+          "before": {
+            "median": 498.89999997615814,
+            "min": 487.5,
+            "max": 525.4000000357628,
+            "n": 3
+          },
+          "after": {
+            "median": 497.89999997615814,
+            "min": 491.19999998807907,
+            "max": 500.89999997615814,
+            "n": 3
+          }
+        },
+        "loadMs": {
+          "before": {
+            "median": 499.89999997615814,
+            "min": 488.39999997615814,
+            "max": 526.5,
+            "n": 3
+          },
+          "after": {
+            "median": 498.0999999642372,
+            "min": 492.0999999642372,
+            "max": 501.60000002384186,
+            "n": 3
+          }
+        },
+        "transferredBytes": {
+          "before": {
+            "median": 39812,
+            "min": 39809,
+            "max": 39815,
+            "n": 3
+          },
+          "after": {
+            "median": 37654,
+            "min": 37654,
+            "max": 37654,
+            "n": 3
+          }
+        },
+        "requests": {
+          "before": {
+            "median": 47,
+            "min": 47,
+            "max": 47,
+            "n": 3
+          },
+          "after": {
+            "median": 47,
+            "min": 47,
+            "max": 47,
+            "n": 3
+          }
+        },
+        "longTaskCount": {
+          "before": {
+            "median": 2,
+            "min": 2,
+            "max": 2,
+            "n": 3
+          },
+          "after": {
+            "median": 2,
+            "min": 2,
+            "max": 2,
+            "n": 3
+          }
+        },
+        "longTaskMs": {
+          "before": {
+            "median": 213,
+            "min": 195,
+            "max": 227,
+            "n": 3
+          },
+          "after": {
+            "median": 219,
+            "min": 216,
+            "max": 237,
+            "n": 3
+          }
+        },
+        "labBlockingMs": {
+          "before": {
+            "median": 113,
+            "min": 95,
+            "max": 127,
+            "n": 3
+          },
+          "after": {
+            "median": 119,
+            "min": 116,
+            "max": 137,
+            "n": 3
+          }
+        },
+        "domNodes": {
+          "before": {
+            "median": 525,
+            "min": 525,
+            "max": 525,
+            "n": 3
+          },
+          "after": {
+            "median": 529,
+            "min": 529,
+            "max": 529,
+            "n": 3
+          }
+        },
+        "ScriptBytes": {
+          "before": {
+            "median": 0,
+            "min": 0,
+            "max": 0,
+            "n": 3
+          },
+          "after": {
+            "median": 0,
+            "min": 0,
+            "max": 0,
+            "n": 3
+          }
+        },
+        "StylesheetBytes": {
+          "before": {
+            "median": 0,
+            "min": 0,
+            "max": 0,
+            "n": 3
+          },
+          "after": {
+            "median": 0,
+            "min": 0,
+            "max": 0,
+            "n": 3
+          }
+        },
+        "ImageBytes": {
+          "before": {
+            "median": 0,
+            "min": 0,
+            "max": 0,
+            "n": 3
+          },
+          "after": {
+            "median": 0,
+            "min": 0,
+            "max": 0,
+            "n": 3
+          }
+        },
+        "FontBytes": {
+          "before": {
+            "median": 0,
+            "min": 0,
+            "max": 0,
+            "n": 3
+          },
+          "after": {
+            "median": 243,
+            "min": 243,
+            "max": 243,
+            "n": 3
+          }
+        }
+      }
+    },
+    {
+      "device": "mobile",
+      "cache": "warm",
+      "route": "/lv/projekti/",
+      "metrics": {
+        "lcpMs": {
+          "before": {
+            "median": 180,
+            "min": 180,
+            "max": 216,
+            "n": 3
+          },
+          "after": {
+            "median": 416,
+            "min": 404,
+            "max": 424,
+            "n": 3
+          }
+        },
+        "cls": {
+          "before": {
+            "median": 0,
+            "min": 0,
+            "max": 0,
+            "n": 3
+          },
+          "after": {
+            "median": 0,
+            "min": 0,
+            "max": 0,
+            "n": 3
+          }
+        },
+        "ttfbMs": {
+          "before": {
+            "median": 8.600000023841858,
+            "min": 7.399999976158142,
+            "max": 8.900000035762787,
+            "n": 3
+          },
+          "after": {
+            "median": 7.400000035762787,
+            "min": 5.900000035762787,
+            "max": 9.800000011920929,
+            "n": 3
+          }
+        },
+        "domReadyMs": {
+          "before": {
+            "median": 488.80000001192093,
+            "min": 468.5,
+            "max": 495.5999999642372,
+            "n": 3
+          },
+          "after": {
+            "median": 474.60000002384186,
+            "min": 468.69999998807907,
+            "max": 480,
+            "n": 3
+          }
+        },
+        "loadMs": {
+          "before": {
+            "median": 489.39999997615814,
+            "min": 468.69999998807907,
+            "max": 497.0999999642372,
+            "n": 3
+          },
+          "after": {
+            "median": 474.69999998807907,
+            "min": 469.30000001192093,
+            "max": 480.10000002384186,
+            "n": 3
+          }
+        },
+        "transferredBytes": {
+          "before": {
+            "median": 47774,
+            "min": 47772,
+            "max": 47777,
+            "n": 3
+          },
+          "after": {
+            "median": 45321,
+            "min": 45321,
+            "max": 45321,
+            "n": 3
+          }
+        },
+        "requests": {
+          "before": {
+            "median": 51,
+            "min": 51,
+            "max": 51,
+            "n": 3
+          },
+          "after": {
+            "median": 51,
+            "min": 51,
+            "max": 51,
+            "n": 3
+          }
+        },
+        "longTaskCount": {
+          "before": {
+            "median": 3,
+            "min": 2,
+            "max": 3,
+            "n": 3
+          },
+          "after": {
+            "median": 3,
+            "min": 2,
+            "max": 4,
+            "n": 3
+          }
+        },
+        "longTaskMs": {
+          "before": {
+            "median": 290,
+            "min": 222,
+            "max": 315,
+            "n": 3
+          },
+          "after": {
+            "median": 292,
+            "min": 246,
+            "max": 380,
+            "n": 3
+          }
+        },
+        "labBlockingMs": {
+          "before": {
+            "median": 140,
+            "min": 122,
+            "max": 165,
+            "n": 3
+          },
+          "after": {
+            "median": 146,
+            "min": 142,
+            "max": 180,
+            "n": 3
+          }
+        },
+        "domNodes": {
+          "before": {
+            "median": 745,
+            "min": 745,
+            "max": 745,
+            "n": 3
+          },
+          "after": {
+            "median": 749,
+            "min": 749,
+            "max": 749,
+            "n": 3
+          }
+        },
+        "ScriptBytes": {
+          "before": {
+            "median": 0,
+            "min": 0,
+            "max": 0,
+            "n": 3
+          },
+          "after": {
+            "median": 0,
+            "min": 0,
+            "max": 0,
+            "n": 3
+          }
+        },
+        "StylesheetBytes": {
+          "before": {
+            "median": 0,
+            "min": 0,
+            "max": 0,
+            "n": 3
+          },
+          "after": {
+            "median": 0,
+            "min": 0,
+            "max": 0,
+            "n": 3
+          }
+        },
+        "ImageBytes": {
+          "before": {
+            "median": 0,
+            "min": 0,
+            "max": 0,
+            "n": 3
+          },
+          "after": {
+            "median": 0,
+            "min": 0,
+            "max": 0,
+            "n": 3
+          }
+        },
+        "FontBytes": {
+          "before": {
+            "median": 0,
+            "min": 0,
+            "max": 0,
+            "n": 3
+          },
+          "after": {
+            "median": 243,
+            "min": 243,
+            "max": 243,
+            "n": 3
+          }
+        }
+      }
+    },
+    {
+      "device": "mobile",
+      "cache": "warm",
+      "route": "/lv/store/",
+      "metrics": {
+        "lcpMs": {
+          "before": {
+            "median": 760,
+            "min": 728,
+            "max": 860,
+            "n": 3
+          },
+          "after": {
+            "median": 808,
+            "min": 716,
+            "max": 844,
+            "n": 3
+          }
+        },
+        "cls": {
+          "before": {
+            "median": 0,
+            "min": 0,
+            "max": 0.0067708756282687695,
+            "n": 3
+          },
+          "after": {
+            "median": 0,
+            "min": 0,
+            "max": 0,
+            "n": 3
+          }
+        },
+        "ttfbMs": {
+          "before": {
+            "median": 8.399999976158142,
+            "min": 7.199999988079071,
+            "max": 10.300000011920929,
+            "n": 3
+          },
+          "after": {
+            "median": 6.200000047683716,
+            "min": 4.699999988079071,
+            "max": 6.799999952316284,
+            "n": 3
+          }
+        },
+        "domReadyMs": {
+          "before": {
+            "median": 322.30000001192093,
+            "min": 257.19999998807907,
+            "max": 504,
+            "n": 3
+          },
+          "after": {
+            "median": 428.9000000357628,
+            "min": 233.39999997615814,
+            "max": 482.19999998807907,
+            "n": 3
+          }
+        },
+        "loadMs": {
+          "before": {
+            "median": 464.19999998807907,
+            "min": 431.80000001192093,
+            "max": 504.89999997615814,
+            "n": 3
+          },
+          "after": {
+            "median": 484.7999999523163,
+            "min": 441.89999997615814,
+            "max": 588.8000000119209,
+            "n": 3
+          }
+        },
+        "transferredBytes": {
+          "before": {
+            "median": 40763,
+            "min": 40758,
+            "max": 40765,
+            "n": 3
+          },
+          "after": {
+            "median": 37970,
+            "min": 37970,
+            "max": 42503,
+            "n": 3
+          }
+        },
+        "requests": {
+          "before": {
+            "median": 48,
+            "min": 48,
+            "max": 48,
+            "n": 3
+          },
+          "after": {
+            "median": 46,
+            "min": 46,
+            "max": 47,
+            "n": 3
+          }
+        },
+        "longTaskCount": {
+          "before": {
+            "median": 1,
+            "min": 1,
+            "max": 2,
+            "n": 3
+          },
+          "after": {
+            "median": 1,
+            "min": 1,
+            "max": 3,
+            "n": 3
+          }
+        },
+        "longTaskMs": {
+          "before": {
+            "median": 83,
+            "min": 66,
+            "max": 196,
+            "n": 3
+          },
+          "after": {
+            "median": 148,
+            "min": 112,
+            "max": 238,
+            "n": 3
+          }
+        },
+        "labBlockingMs": {
+          "before": {
+            "median": 33,
+            "min": 16,
+            "max": 96,
+            "n": 3
+          },
+          "after": {
+            "median": 88,
+            "min": 62,
+            "max": 98,
+            "n": 3
+          }
+        },
+        "domNodes": {
+          "before": {
+            "median": 454,
+            "min": 454,
+            "max": 454,
+            "n": 3
+          },
+          "after": {
+            "median": 458,
+            "min": 458,
+            "max": 459,
+            "n": 3
+          }
+        },
+        "ScriptBytes": {
+          "before": {
+            "median": 0,
+            "min": 0,
+            "max": 0,
+            "n": 3
+          },
+          "after": {
+            "median": 0,
+            "min": 0,
+            "max": 4533,
+            "n": 3
+          }
+        },
+        "StylesheetBytes": {
+          "before": {
+            "median": 0,
+            "min": 0,
+            "max": 0,
+            "n": 3
+          },
+          "after": {
+            "median": 0,
+            "min": 0,
+            "max": 0,
+            "n": 3
+          }
+        },
+        "ImageBytes": {
+          "before": {
+            "median": 0,
+            "min": 0,
+            "max": 0,
+            "n": 3
+          },
+          "after": {
+            "median": 0,
+            "min": 0,
+            "max": 0,
+            "n": 3
+          }
+        },
+        "FontBytes": {
+          "before": {
+            "median": 0,
+            "min": 0,
+            "max": 0,
+            "n": 3
+          },
+          "after": {
+            "median": 243,
+            "min": 243,
+            "max": 243,
+            "n": 3
+          }
+        }
+      }
+    },
+    {
+      "device": "mobile",
+      "cache": "warm",
+      "route": "/lv/akmens-virsmas/silestone/",
+      "metrics": {
+        "lcpMs": {
+          "before": {
+            "median": 204,
+            "min": 196,
+            "max": 416,
+            "n": 3
+          },
+          "after": {
+            "median": 428,
+            "min": 412,
+            "max": 432,
+            "n": 3
+          }
+        },
+        "cls": {
+          "before": {
+            "median": 0,
+            "min": 0,
+            "max": 0,
+            "n": 3
+          },
+          "after": {
+            "median": 0,
+            "min": 0,
+            "max": 0,
+            "n": 3
+          }
+        },
+        "ttfbMs": {
+          "before": {
+            "median": 9,
+            "min": 8,
+            "max": 18.30000001192093,
+            "n": 3
+          },
+          "after": {
+            "median": 6.800000011920929,
+            "min": 4.399999976158142,
+            "max": 7.299999952316284,
+            "n": 3
+          }
+        },
+        "domReadyMs": {
+          "before": {
+            "median": 596.3999999761581,
+            "min": 448.9000000357628,
+            "max": 710.6000000238419,
+            "n": 3
+          },
+          "after": {
+            "median": 490.89999997615814,
+            "min": 471.89999997615814,
+            "max": 520.5,
+            "n": 3
+          }
+        },
+        "loadMs": {
+          "before": {
+            "median": 602.0999999642372,
+            "min": 449.60000002384186,
+            "max": 749.7000000476837,
+            "n": 3
+          },
+          "after": {
+            "median": 492.5,
+            "min": 473,
+            "max": 522.0999999642372,
+            "n": 3
+          }
+        },
+        "transferredBytes": {
+          "before": {
+            "median": 39811,
+            "min": 39810,
+            "max": 39816,
+            "n": 3
+          },
+          "after": {
+            "median": 37655,
+            "min": 37655,
+            "max": 37655,
+            "n": 3
+          }
+        },
+        "requests": {
+          "before": {
+            "median": 46,
+            "min": 46,
+            "max": 46,
+            "n": 3
+          },
+          "after": {
+            "median": 46,
+            "min": 46,
+            "max": 46,
+            "n": 3
+          }
+        },
+        "longTaskCount": {
+          "before": {
+            "median": 3,
+            "min": 3,
+            "max": 4,
+            "n": 3
+          },
+          "after": {
+            "median": 2,
+            "min": 2,
+            "max": 2,
+            "n": 3
+          }
+        },
+        "longTaskMs": {
+          "before": {
+            "median": 354,
+            "min": 253,
+            "max": 417,
+            "n": 3
+          },
+          "after": {
+            "median": 228,
+            "min": 213,
+            "max": 270,
+            "n": 3
+          }
+        },
+        "labBlockingMs": {
+          "before": {
+            "median": 204,
+            "min": 103,
+            "max": 217,
+            "n": 3
+          },
+          "after": {
+            "median": 128,
+            "min": 113,
+            "max": 170,
+            "n": 3
+          }
+        },
+        "domNodes": {
+          "before": {
+            "median": 612,
+            "min": 612,
+            "max": 612,
+            "n": 3
+          },
+          "after": {
+            "median": 616,
+            "min": 616,
+            "max": 616,
+            "n": 3
+          }
+        },
+        "ScriptBytes": {
+          "before": {
+            "median": 0,
+            "min": 0,
+            "max": 0,
+            "n": 3
+          },
+          "after": {
+            "median": 0,
+            "min": 0,
+            "max": 0,
+            "n": 3
+          }
+        },
+        "StylesheetBytes": {
+          "before": {
+            "median": 0,
+            "min": 0,
+            "max": 0,
+            "n": 3
+          },
+          "after": {
+            "median": 0,
+            "min": 0,
+            "max": 0,
+            "n": 3
+          }
+        },
+        "ImageBytes": {
+          "before": {
+            "median": 0,
+            "min": 0,
+            "max": 0,
+            "n": 3
+          },
+          "after": {
+            "median": 0,
+            "min": 0,
+            "max": 0,
+            "n": 3
+          }
+        },
+        "FontBytes": {
+          "before": {
+            "median": 0,
+            "min": 0,
+            "max": 0,
+            "n": 3
+          },
+          "after": {
+            "median": 243,
+            "min": 243,
+            "max": 243,
+            "n": 3
+          }
+        }
+      }
+    }
+  ],
+  "api": [
+    {
+      "route": "/api/health/",
+      "before": {
+        "median": 7.157834999990882,
+        "min": 6.651313999987906,
+        "max": 30.435636000009254,
+        "n": 3
+      },
+      "after": {
+        "median": 8.147223999985727,
+        "min": 5.718590000004042,
+        "max": 27.79209100001026,
+        "n": 3
+      },
+      "beforeStatus": [
+        200,
+        200,
+        200
+      ],
+      "afterStatus": [
+        200,
+        200,
+        200
+      ]
+    },
+    {
+      "route": "/api/products/?limit=12",
+      "before": {
+        "median": 134.46202100001392,
+        "min": 89.76061900000786,
+        "max": 180.85025399998995,
+        "n": 3
+      },
+      "after": {
+        "median": 172.06989199999953,
+        "min": 171.88494499999797,
+        "max": 178.76779499999247,
+        "n": 3
+      },
+      "beforeStatus": [
+        500,
+        500,
+        500
+      ],
+      "afterStatus": [
+        500,
+        500,
+        500
+      ]
+    },
+    {
+      "route": "/api/admin/profiles/",
+      "before": {
+        "median": 10.914042999997037,
+        "min": 8.33342999999877,
+        "max": 29.874065000010887,
+        "n": 3
+      },
+      "after": {
+        "median": 9.462719000002835,
+        "min": 8.352352999994764,
+        "max": 9.919874999992317,
+        "n": 3
+      },
+      "beforeStatus": [
+        401,
+        401,
+        401
+      ],
+      "afterStatus": [
+        401,
+        401,
+        401
+      ]
+    },
+    {
+      "route": "/lv/account/",
+      "before": {
+        "median": 43.22125900001265,
+        "min": 11.67561599999317,
+        "max": 51.80157000001054,
+        "n": 3
+      },
+      "after": {
+        "median": 5.2370780000055674,
+        "min": 5.101464000006672,
+        "max": 5.77846000000136,
+        "n": 3
+      },
+      "beforeStatus": [
+        307,
+        307,
+        307
+      ],
+      "afterStatus": [
+        307,
+        307,
+        307
+      ]
+    },
+    {
+      "route": "/admin/profiles/",
+      "before": {
+        "median": 31.33745099999942,
+        "min": 19.590647000004537,
+        "max": 43.96850099999574,
+        "n": 3
+      },
+      "after": {
+        "median": 24.561963999993168,
+        "min": 24.130576999974437,
+        "max": 25.63255000000936,
+        "n": 3
+      },
+      "beforeStatus": [
+        307,
+        307,
+        307
+      ],
+      "afterStatus": [
+        307,
+        307,
+        307
+      ]
+    }
+  ],
+  "interactions": [
+    {
+      "device": "desktop",
+      "metrics": {
+        "loginTogglePaintProxyMs": {
+          "before": {
+            "median": 42.09999996423721,
+            "min": 41.80000001192093,
+            "max": 51.89999997615814,
+            "n": 3
+          },
+          "after": {
+            "median": 43.10000002384186,
+            "min": 37.5,
+            "max": 50.89999997615814,
+            "n": 3
+          }
+        },
+        "navigationReadyMs": {
+          "before": {
+            "median": 205.19999998807907,
+            "min": 180.89999997615814,
+            "max": 280.0999999642372,
+            "n": 3
+          },
+          "after": {
+            "median": 235.4000000357628,
+            "min": 168.5,
+            "max": 242.30000001192093,
+            "n": 3
+          }
+        },
+        "typingPaintProxyMs": {
+          "before": {
+            "median": 30.400000035762787,
+            "min": 23.30000001192093,
+            "max": 35.40000003576279,
+            "n": 3
+          },
+          "after": {
+            "median": 31.700000047683716,
+            "min": 25.099999964237213,
+            "max": 32.89999997615814,
+            "n": 3
+          }
+        },
+        "searchTerminalResponseMs": {
+          "before": {
+            "median": 422.60000002384186,
+            "min": 402.5,
+            "max": 462,
+            "n": 3
+          },
+          "after": {
+            "median": 443.0999999642372,
+            "min": 427.5,
+            "max": 491.4000000357628,
+            "n": 3
+          }
+        },
+        "initialCatalogueRequests": {
+          "before": {
+            "median": 3,
+            "min": 3,
+            "max": 3,
+            "n": 3
+          },
+          "after": {
+            "median": 1,
+            "min": 1,
+            "max": 1,
+            "n": 3
+          }
+        },
+        "documents": {
+          "before": {
+            "median": 1,
+            "min": 1,
+            "max": 1,
+            "n": 3
+          },
+          "after": {
+            "median": 1,
+            "min": 1,
+            "max": 1,
+            "n": 3
+          }
+        }
+      }
+    },
+    {
+      "device": "mobile",
+      "metrics": {
+        "loginTogglePaintProxyMs": {
+          "before": {
+            "median": 99.80000001192093,
+            "min": 84.69999998807907,
+            "max": 122.10000002384186,
+            "n": 3
+          },
+          "after": {
+            "median": 84.69999998807907,
+            "min": 66.69999998807907,
+            "max": 89.40000003576279,
+            "n": 3
+          }
+        },
+        "navigationReadyMs": {
+          "before": {
+            "median": 624,
+            "min": 608.7000000476837,
+            "max": 734.0999999642372,
+            "n": 3
+          },
+          "after": {
+            "median": 651.3000000119209,
+            "min": 569.9000000357628,
+            "max": 761.1999999880791,
+            "n": 3
+          }
+        },
+        "typingPaintProxyMs": {
+          "before": {
+            "median": 42,
+            "min": 30.5,
+            "max": 43.80000001192093,
+            "n": 3
+          },
+          "after": {
+            "median": 35.5,
+            "min": 26.80000001192093,
+            "max": 36.59999996423721,
+            "n": 3
+          }
+        },
+        "searchTerminalResponseMs": {
+          "before": {
+            "median": 596.8999999761581,
+            "min": 530.3000000119209,
+            "max": 627,
+            "n": 3
+          },
+          "after": {
+            "median": 583.2000000476837,
+            "min": 564.5999999642372,
+            "max": 598.6000000238419,
+            "n": 3
+          }
+        },
+        "initialCatalogueRequests": {
+          "before": {
+            "median": 3,
+            "min": 3,
+            "max": 3,
+            "n": 3
+          },
+          "after": {
+            "median": 1,
+            "min": 1,
+            "max": 1,
+            "n": 3
+          }
+        },
+        "documents": {
+          "before": {
+            "median": 1,
+            "min": 1,
+            "max": 1,
+            "n": 3
+          },
+          "after": {
+            "median": 1,
+            "min": 1,
+            "max": 1,
+            "n": 3
+          }
+        }
+      }
+    }
+  ]
+}

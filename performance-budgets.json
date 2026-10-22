@@ -1,0 +1,28 @@
+{
+  "description": "Initial prerendered-route gzip budgets, checked by scripts/analyze.js in CI. October22 optimized home JS 282979B, projects 305952B, store 327068B, shared CSS 18285B. Approximately10% JS/CSS headroom;40kB HTML ceiling. Browser performance is measured separately.",
+  "defaults": {
+    "jsGzipBytes": 340000,
+    "cssGzipBytes": 20500,
+    "htmlGzipBytes": 40000
+  },
+  "routes": [
+    {
+      "pattern": "^/(lv|en|ru)$",
+      "budgets": {
+        "jsGzipBytes": 312000
+      }
+    },
+    {
+      "pattern": "^/(lv/projekti|en/projects|ru/proekty)(/|$)",
+      "budgets": {
+        "jsGzipBytes": 337000
+      }
+    },
+    {
+      "pattern": "^/(lv|en|ru)/store$",
+      "budgets": {
+        "jsGzipBytes": 360000
+      }
+    }
+  ]
+}

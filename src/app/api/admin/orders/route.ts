@@ -12,9 +12,46 @@ import { checkAdminRole } from '@/lib/admin/auth'
 
 // CORS headers for API routes
 const corsHeaders = {
-  'Access-Control-Allow-Origin': '*',
   'Access-Control-Allow-Methods': 'GET, POST, OPTIONS',
   'Access-Control-Allow-Headers': 'Content-Type, Authorization',
+  'Cache-Control': 'private, no-store',
+}
+
+const ORDER_STATUSES = new Set(['pending', 'paid', 'processing', 'shipped', 'delivered', 'cancelled', 'refunded', 'ready_for_pickup'])
+const SORT_COLUMNS = new Set(['created_at', 'updated_at', 'order_number', 'total', 'status'])
+// List responses omit Stripe identifiers, notes and full item snapshots. Detail
+// endpoints remain responsible for loading the complete selected order.
+const LIST_COLUMNS = 'id,order_number,user_id,guest_email,status,total,currency,shipping_address,created_at,updated_at,items:order_items(id)'
+
+class InvalidFilter extends Error {}
+
+function parsePage(value: string | null, fallback: number, maximum: number): number {
+  if (value === null) return fallback
+  if (!/^[1-9]\d*$/.test(value)) throw new InvalidFilter('Invalid pagination')
+  const number = Number(value)
+  if (!Number.isSafeInteger(number)) throw new InvalidFilter('Invalid pagination')
+  return Math.min(number, maximum)
+}
+
+function parseSearch(value: string | null): string | null {
+  const search = value?.trim() || null
+  // PostgREST OR strings have their own filter grammar. Keep its delimiters and
+  // wildcard syntax out of interpolated values while allowing normal names and
+  // email addresses, including apostrophes, plus signs and Latvian letters.
+  if (search && (search.length > 120 || !/^[\p{L}\p{N} @._+'-]+$/u.test(search))) {
+    throw new InvalidFilter('Invalid search')
+  }
+  return search?.replaceAll('_', '\\_') || null
+}
+
+function parseDate(value: string | null): string | null {
+  if (!value) return null
+  if (!/^\d{4}-\d{2}-\d{2}(?:T\d{2}:\d{2}:\d{2}(?:\.\d{1,3})?(?:Z|[+-]\d{2}:\d{2}))?$/.test(value) || !Number.isFinite(Date.parse(value))) {
+    throw new InvalidFilter('Invalid date')
+  }
+  // Reject normalized impossible calendar dates such as February 30.
+  if (new Date(value.slice(0, 10)).toISOString().slice(0, 10) !== value.slice(0, 10)) throw new InvalidFilter('Invalid date')
+  return value
 }
 
 // Environment variable validation
@@ -48,25 +85,24 @@ export async function GET(request: NextRequest) {
 
     const { searchParams } = new URL(request.url)
     
-    // Parse filters
     const status = searchParams.get('status')
-    const dateFrom = searchParams.get('dateFrom')
-    const dateTo = searchParams.get('dateTo')
-    const search = searchParams.get('search')
-    const customer = searchParams.get('customer')
+    if (status && status !== 'all' && !ORDER_STATUSES.has(status)) throw new InvalidFilter('Invalid status')
+    const dateFrom = parseDate(searchParams.get('dateFrom'))
+    const dateTo = parseDate(searchParams.get('dateTo'))
+    if (dateFrom && dateTo && Date.parse(dateFrom) > Date.parse(dateTo)) throw new InvalidFilter('Invalid date range')
+    const search = parseSearch(searchParams.get('search'))
+    const customer = parseSearch(searchParams.get('customer'))
     const sortBy = searchParams.get('sortBy') || 'created_at'
     const sortOrder = searchParams.get('sortOrder') || 'desc'
-    const page = parseInt(searchParams.get('page') || '1')
-    const limit = parseInt(searchParams.get('limit') || '50')
+    if (!SORT_COLUMNS.has(sortBy) || !['asc', 'desc'].includes(sortOrder)) throw new InvalidFilter('Invalid sort')
+    const page = parsePage(searchParams.get('page'), 1, 10_000)
+    const limit = parsePage(searchParams.get('limit'), 50, 100)
 
     const supabase = await createServerClient()
     
     let query = supabase
       .from('orders')
-      .select(`
-        *,
-        items:order_items(*)
-      `, { count: 'exact' })
+      .select(LIST_COLUMNS, { count: 'exact' })
 
     // Apply filters
     if (status && status !== 'all') {
@@ -84,13 +120,11 @@ export async function GET(request: NextRequest) {
       )
     }
     if (customer) {
-      query = query.or(
-        `guest_email.ilike.%${customer}%`
-      )
+      query = query.ilike('guest_email', `%${customer}%`)
     }
 
     // Apply sorting
-    query = query.order(sortBy, { ascending: sortOrder === 'asc' })
+    query = query.order(sortBy, { ascending: sortOrder === 'asc' }).order('id', { ascending: true })
 
     // Apply pagination
     const from = (page - 1) * limit
@@ -117,6 +151,7 @@ export async function GET(request: NextRequest) {
       },
     }, { headers: corsHeaders })
   } catch (error) {
+    if (error instanceof InvalidFilter) return NextResponse.json({ error: error.message }, { status: 400, headers: corsHeaders })
     console.error('Error in GET /api/admin/orders:', error)
     
     // Check if it's an environment variable error

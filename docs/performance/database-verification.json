@@ -1,0 +1,238 @@
+{
+  "verified_owner": {
+    "http": 201,
+    "result": [
+      {
+        "verified_owner_accounts": 1,
+        "verified_owner_admins": 1,
+        "verified_owner_profiles": 1
+      }
+    ]
+  },
+  "role_context": {
+    "http": 201,
+    "result": [
+      {
+        "current_user": "authenticated",
+        "read_only": "off"
+      }
+    ]
+  },
+  "profile_rls_plan": {
+    "http": 201,
+    "result": [
+      {
+        "QUERY PLAN": [
+          {
+            "Plan": {
+              "Node Type": "Result",
+              "Parallel Aware": false,
+              "Async Capable": false,
+              "Startup Cost": 0.21,
+              "Total Cost": 2.43,
+              "Plan Rows": 1,
+              "Plan Width": 48,
+              "Actual Startup Time": 0.034,
+              "Actual Total Time": 0.034,
+              "Actual Rows": 0,
+              "Actual Loops": 1,
+              "One-Time Filter": "((InitPlan 2).col1 = (InitPlan 1).col1)",
+              "Shared Hit Blocks": 1,
+              "Shared Read Blocks": 0,
+              "Shared Dirtied Blocks": 0,
+              "Shared Written Blocks": 0,
+              "Local Hit Blocks": 0,
+              "Local Read Blocks": 0,
+              "Local Dirtied Blocks": 0,
+              "Local Written Blocks": 0,
+              "Temp Read Blocks": 0,
+              "Temp Written Blocks": 0,
+              "Plans": [
+                {
+                  "Node Type": "Result",
+                  "Parent Relationship": "InitPlan",
+                  "Subplan Name": "InitPlan 1",
+                  "Parallel Aware": false,
+                  "Async Capable": false,
+                  "Startup Cost": 0,
+                  "Total Cost": 0.03,
+                  "Plan Rows": 1,
+                  "Plan Width": 16,
+                  "Actual Startup Time": 0.001,
+                  "Actual Total Time": 0.001,
+                  "Actual Rows": 1,
+                  "Actual Loops": 1,
+                  "Shared Hit Blocks": 0,
+                  "Shared Read Blocks": 0,
+                  "Shared Dirtied Blocks": 0,
+                  "Shared Written Blocks": 0,
+                  "Local Hit Blocks": 0,
+                  "Local Read Blocks": 0,
+                  "Local Dirtied Blocks": 0,
+                  "Local Written Blocks": 0,
+                  "Temp Read Blocks": 0,
+                  "Temp Written Blocks": 0
+                },
+                {
+                  "Node Type": "Result",
+                  "Parent Relationship": "InitPlan",
+                  "Subplan Name": "InitPlan 2",
+                  "Parallel Aware": false,
+                  "Async Capable": false,
+                  "Startup Cost": 0,
+                  "Total Cost": 0.03,
+                  "Plan Rows": 1,
+                  "Plan Width": 16,
+                  "Actual Startup Time": 0.01,
+                  "Actual Total Time": 0.01,
+                  "Actual Rows": 1,
+                  "Actual Loops": 1,
+                  "Shared Hit Blocks": 0,
+                  "Shared Read Blocks": 0,
+                  "Shared Dirtied Blocks": 0,
+                  "Shared Written Blocks": 0,
+                  "Local Hit Blocks": 0,
+                  "Local Read Blocks": 0,
+                  "Local Dirtied Blocks": 0,
+                  "Local Written Blocks": 0,
+                  "Temp Read Blocks": 0,
+                  "Temp Written Blocks": 0
+                },
+                {
+                  "Node Type": "Index Scan",
+                  "Parent Relationship": "Outer",
+                  "Parallel Aware": false,
+                  "Async Capable": false,
+                  "Scan Direction": "Forward",
+                  "Index Name": "profiles_pkey",
+                  "Relation Name": "profiles",
+                  "Alias": "profiles",
+                  "Startup Cost": 0.21,
+                  "Total Cost": 2.43,
+                  "Plan Rows": 1,
+                  "Plan Width": 48,
+                  "Actual Startup Time": 0.018,
+                  "Actual Total Time": 0.019,
+                  "Actual Rows": 0,
+                  "Actual Loops": 1,
+                  "Index Cond": "(id = (InitPlan 1).col1)",
+                  "Rows Removed by Index Recheck": 0,
+                  "Shared Hit Blocks": 1,
+                  "Shared Read Blocks": 0,
+                  "Shared Dirtied Blocks": 0,
+                  "Shared Written Blocks": 0,
+                  "Local Hit Blocks": 0,
+                  "Local Read Blocks": 0,
+                  "Local Dirtied Blocks": 0,
+                  "Local Written Blocks": 0,
+                  "Temp Read Blocks": 0,
+                  "Temp Written Blocks": 0
+                }
+              ]
+            },
+            "Planning": {
+              "Shared Hit Blocks": 144,
+              "Shared Read Blocks": 0,
+              "Shared Dirtied Blocks": 0,
+              "Shared Written Blocks": 0,
+              "Local Hit Blocks": 0,
+              "Local Read Blocks": 0,
+              "Local Dirtied Blocks": 0,
+              "Local Written Blocks": 0,
+              "Temp Read Blocks": 0,
+              "Temp Written Blocks": 0
+            },
+            "Planning Time": 9.255,
+            "Triggers": [],
+            "Execution Time": 0.102
+          }
+        ]
+      }
+    ]
+  },
+  "admin_check_plan": {
+    "http": 201,
+    "result": [
+      {
+        "QUERY PLAN": [
+          {
+            "Plan": {
+              "Node Type": "Result",
+              "Parallel Aware": false,
+              "Async Capable": false,
+              "Startup Cost": 0,
+              "Total Cost": 0.26,
+              "Plan Rows": 1,
+              "Plan Width": 1,
+              "Actual Startup Time": 1.329,
+              "Actual Total Time": 1.33,
+              "Actual Rows": 1,
+              "Actual Loops": 1,
+              "Shared Hit Blocks": 277,
+              "Shared Read Blocks": 0,
+              "Shared Dirtied Blocks": 0,
+              "Shared Written Blocks": 0,
+              "Local Hit Blocks": 0,
+              "Local Read Blocks": 0,
+              "Local Dirtied Blocks": 0,
+              "Local Written Blocks": 0,
+              "Temp Read Blocks": 0,
+              "Temp Written Blocks": 0
+            },
+            "Planning": {
+              "Shared Hit Blocks": 0,
+              "Shared Read Blocks": 0,
+              "Shared Dirtied Blocks": 0,
+              "Shared Written Blocks": 0,
+              "Local Hit Blocks": 0,
+              "Local Read Blocks": 0,
+              "Local Dirtied Blocks": 0,
+              "Local Written Blocks": 0,
+              "Temp Read Blocks": 0,
+              "Temp Written Blocks": 0
+            },
+            "Planning Time": 0.02,
+            "Triggers": [],
+            "Execution Time": 1.344
+          }
+        ]
+      }
+    ]
+  },
+  "auth_configuration": {
+    "http": 200,
+    "site_url": "http://localhost:3000",
+    "redirects": "",
+    "email_confirmation_required": true,
+    "custom_smtp_configured": false,
+    "google_enabled": false,
+    "facebook_enabled": false
+  },
+  "migration_apply": {
+    "http": 200,
+    "result": []
+  },
+  "migration_history": {
+    "http": 200,
+    "result": [
+      {
+        "version": "20261022170145",
+        "name": "lago_account_system"
+      },
+      {
+        "version": "20261022193626",
+        "name": "lock_owner_bootstrap"
+      }
+    ]
+  },
+  "bootstrap_guard_verified": {
+    "http": 201,
+    "result": [
+      {
+        "durable_guard_present": true,
+        "admin_grants": 1,
+        "auth_users": 1
+      }
+    ]
+  }
+}

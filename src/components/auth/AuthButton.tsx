@@ -6,14 +6,20 @@
 'use client'
 
 import { useState } from 'react'
+import dynamic from 'next/dynamic'
 import { User, LogIn } from 'lucide-react'
 import { useAuth } from '@/hooks/useAuth'
 import { Locale } from '@/lib/i18n/config'
 import { AuthDropdown } from './AuthDropdown'
-import { ProfileDropdown } from './ProfileDropdown'
-import { LoginModal } from './LoginModal'
-import { SignupModal } from './SignupModal'
-import { ForgotPasswordModal } from './ForgotPasswordModal'
+
+function LoadingDialog() {
+  return <div role="status" aria-label="Loading" className="fixed inset-0 z-[60] flex items-center justify-center bg-black/80"><span className="h-8 w-8 animate-spin rounded-full border-2 border-lago-gold border-t-transparent" /></div>
+}
+
+const ProfileDropdown = dynamic(() => import('./ProfileDropdown').then(module => module.ProfileDropdown))
+const LoginModal = dynamic(() => import('./LoginModal').then(module => module.LoginModal), { loading: LoadingDialog })
+const SignupModal = dynamic(() => import('./SignupModal').then(module => module.SignupModal), { loading: LoadingDialog })
+const ForgotPasswordModal = dynamic(() => import('./ForgotPasswordModal').then(module => module.ForgotPasswordModal), { loading: LoadingDialog })
 
 interface AuthButtonProps {
   locale: Locale
@@ -97,7 +103,7 @@ export function AuthButton({ locale, mobile = false }: AuthButtonProps) {
         )}
       </div>
 
-      <LoginModal
+      {showLoginModal && <LoginModal
         locale={locale}
         isOpen={showLoginModal}
         onClose={() => setShowLoginModal(false)}
@@ -109,9 +115,9 @@ export function AuthButton({ locale, mobile = false }: AuthButtonProps) {
           setShowLoginModal(false)
           setShowSignupModal(true)
         }}
-      />
+      />}
 
-      <SignupModal
+      {showSignupModal && <SignupModal
         locale={locale}
         isOpen={showSignupModal}
         onClose={() => setShowSignupModal(false)}
@@ -119,8 +125,8 @@ export function AuthButton({ locale, mobile = false }: AuthButtonProps) {
           setShowSignupModal(false)
           setShowLoginModal(true)
         }}
-      />
-      <ForgotPasswordModal
+      />}
+      {showForgotPasswordModal && <ForgotPasswordModal
         locale={locale}
         isOpen={showForgotPasswordModal}
         onClose={() => setShowForgotPasswordModal(false)}
@@ -128,7 +134,7 @@ export function AuthButton({ locale, mobile = false }: AuthButtonProps) {
           setShowForgotPasswordModal(false)
           setShowLoginModal(true)
         }}
-      />
+      />}
     </>
   )
 }

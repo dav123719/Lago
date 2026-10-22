@@ -1,8 +1,9 @@
 // AGENT slave-8 v1.0.1 - Final optimization complete
 import type { Metadata, Viewport } from 'next'
-// Next.js serves the compiled stylesheet normally; critical CSS is inlined in [locale]/layout.tsx.
+// Next.js serves the compiled stylesheet before rendering localized content.
 import './globals.css'
 import { headingFont, bodyFont, buttonFont } from '@/lib/fonts'
+import { WebVitalsReporter } from '@/components/performance/WebVitalsReporter'
 
 export const metadata: Metadata = {
   title: {
@@ -79,6 +80,6 @@ export default function RootLayout({
 }: {
   children: React.ReactNode
 }) {
-  return <html lang="lv" className={`dark ${headingFont.variable} ${bodyFont.variable} ${buttonFont.variable}`}><body className={`min-h-screen bg-lago-black text-lago-light antialiased ${bodyFont.className}`}>{children}</body></html>
+  return <html lang="lv" className={`dark ${headingFont.variable} ${bodyFont.variable} ${buttonFont.variable}`}><body className={`min-h-screen bg-lago-black text-lago-light antialiased ${bodyFont.className}`}><WebVitalsReporter />{children}</body></html>
 }
 

@@ -1,0 +1,108 @@
+{
+  "tables": {
+    "http": 201,
+    "result": [
+      {
+        "schemaname": "private",
+        "tablename": "admin_profile_audit",
+        "rowsecurity": true
+      },
+      {
+        "schemaname": "private",
+        "tablename": "pending_admin_bootstrap",
+        "rowsecurity": true
+      },
+      {
+        "schemaname": "private",
+        "tablename": "user_roles",
+        "rowsecurity": true
+      },
+      {
+        "schemaname": "public",
+        "tablename": "profiles",
+        "rowsecurity": true
+      }
+    ]
+  },
+  "indexes": {
+    "http": 201,
+    "result": [
+      {
+        "schemaname": "private",
+        "tablename": "admin_profile_audit",
+        "indexname": "admin_profile_audit_pkey",
+        "indexdef": "CREATE UNIQUE INDEX admin_profile_audit_pkey ON private.admin_profile_audit USING btree (id)"
+      },
+      {
+        "schemaname": "private",
+        "tablename": "pending_admin_bootstrap",
+        "indexname": "pending_admin_bootstrap_granted_to_key",
+        "indexdef": "CREATE UNIQUE INDEX pending_admin_bootstrap_granted_to_key ON private.pending_admin_bootstrap USING btree (granted_to)"
+      },
+      {
+        "schemaname": "private",
+        "tablename": "pending_admin_bootstrap",
+        "indexname": "pending_admin_bootstrap_pkey",
+        "indexdef": "CREATE UNIQUE INDEX pending_admin_bootstrap_pkey ON private.pending_admin_bootstrap USING btree (singleton)"
+      },
+      {
+        "schemaname": "private",
+        "tablename": "user_roles",
+        "indexname": "user_roles_pkey",
+        "indexdef": "CREATE UNIQUE INDEX user_roles_pkey ON private.user_roles USING btree (user_id, role)"
+      },
+      {
+        "schemaname": "public",
+        "tablename": "profiles",
+        "indexname": "profiles_pkey",
+        "indexdef": "CREATE UNIQUE INDEX profiles_pkey ON public.profiles USING btree (id)"
+      }
+    ]
+  },
+  "policies": {
+    "http": 201,
+    "result": [
+      {
+        "schemaname": "public",
+        "tablename": "profiles",
+        "policyname": "lago_profiles_read_self",
+        "roles": "{authenticated}",
+        "cmd": "SELECT",
+        "qual": "(id = ( SELECT auth.uid() AS uid))",
+        "with_check": null
+      },
+      {
+        "schemaname": "public",
+        "tablename": "profiles",
+        "policyname": "lago_profiles_update_self",
+        "roles": "{authenticated}",
+        "cmd": "UPDATE",
+        "qual": "(id = ( SELECT auth.uid() AS uid))",
+        "with_check": "(id = ( SELECT auth.uid() AS uid))"
+      }
+    ]
+  },
+  "account_counts": {
+    "http": 201,
+    "result": [
+      {
+        "auth_users": 1,
+        "profiles": 1,
+        "admin_grants": 1,
+        "consumed_bootstrap": 1
+      }
+    ]
+  },
+  "role_context": {
+    "http": 400,
+    "error": "{\"message\":\"Failed to run sql query: ERROR:  42501: permission denied to set role \\\"authenticated\\\"\\n\"}"
+  },
+  "profile_rls_plan": {
+    "http": 400,
+    "error": "{\"message\":\"Failed to run sql query: ERROR:  42501: permission denied to set role \\\"authenticated\\\"\\n\"}"
+  },
+  "admin_check_plan": {
+    "http": 400,
+    "error": "{\"message\":\"Failed to run sql query: ERROR:  42501: permission denied to set role \\\"authenticated\\\"\\n\"}"
+  }
+}

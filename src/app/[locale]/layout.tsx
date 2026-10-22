@@ -3,8 +3,9 @@ import { locales, Locale, localeHtmlLang } from '@/lib/i18n/config'
 import { Header, Footer } from '@/components/layout'
 import { AuthProvider } from '@/contexts/AuthContext'
 import { CartProvider } from '@/contexts/CartContext'
-import { CartDrawer } from '@/components/cart/CartDrawer'
+import { DeferredCartDrawer } from '@/components/cart/DeferredCartDrawer'
 import { Toaster } from 'sonner'
+import { LocaleDocumentLanguage } from '@/components/layout/LocaleDocumentLanguage'
 
 interface LocaleLayoutProps {
   children: React.ReactNode
@@ -31,30 +32,10 @@ export default async function LocaleLayout({
 
   return (
     <>
-      <>
-        {/* PERFORMANCE: Inline critical CSS to eliminate render-blocking (minified) */}
-        <style dangerouslySetInnerHTML={{ __html: `
-          :root{--lago-black:#0a0a0a;--lago-dark:#111111;--lago-charcoal:#1a1a1a;--lago-gray:#2a2a2a;--lago-stone:#4a4a4a;--lago-muted:#a0a0a0;--lago-light:#e8e8e8;--lago-white:#ffffff;--lago-gold:#c9a962;--lago-gold-light:#d4bc7d;--lago-gold-dark:#a8893f}
-          *{box-sizing:border-box;padding:0;margin:0}
-          html{scroll-behavior:smooth}
-          body{font-family:var(--font-body),system-ui,sans-serif;color:var(--lago-light);background:var(--lago-black);line-height:1.7;font-weight:400;-webkit-font-smoothing:antialiased;-moz-osx-font-smoothing:grayscale}
-          h1,h2,h3,h4,h5,h6{font-family:var(--font-heading),Georgia,serif;font-weight:500;line-height:1.15;letter-spacing:-0.02em;color:var(--lago-white);text-shadow:0 2px 10px rgba(0,0,0,0.5)}
-          .min-h-screen{min-height:100vh}
-          .flex{display:flex}
-          .flex-col{flex-direction:column}
-          .items-center{align-items:center}
-          .justify-center{justify-content:center}
-          .relative{position:relative}
-          .absolute{position:absolute}
-          .inset-0{top:0;right:0;bottom:0;left:0}
-          .overflow-hidden{overflow:hidden}
-          .bg-lago-black{background-color:var(--lago-black)}
-          .text-lago-light{color:var(--lago-light)}
-          .text-white{color:var(--lago-white)}
-          .antialiased{-webkit-font-smoothing:antialiased;-moz-osx-font-smoothing:grayscale}
-        `}} />
-      </>
-      <div className="min-h-screen flex flex-col">
+      <link rel="preload" as="font" href={validLocale === 'ru' ? '/fonts/cormorant-garamond-cyrillic.woff2' : '/fonts/cormorant-garamond-latin.woff2'} type="font/woff2" crossOrigin="anonymous" />
+      {validLocale === 'lv' && <link rel="preload" as="font" href="/fonts/cormorant-garamond-latvian.82f6c1b716c1.woff2" type="font/woff2" crossOrigin="anonymous" />}
+      <div className="min-h-screen flex flex-col" lang={localeHtmlLang[validLocale]}>
+        <LocaleDocumentLanguage locale={validLocale} />
         <AuthProvider>
           <CartProvider>
             <Header locale={validLocale} />
@@ -62,7 +43,7 @@ export default async function LocaleLayout({
               {children}
             </main>
             <Footer locale={validLocale} />
-            <CartDrawer locale={validLocale} />
+            <DeferredCartDrawer locale={validLocale} />
           </CartProvider>
         </AuthProvider>
         <Toaster 

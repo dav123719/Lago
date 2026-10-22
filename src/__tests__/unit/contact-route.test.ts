@@ -57,3 +57,13 @@ describe('contact API route', () => {
     expect(sendEmail).toHaveBeenCalledWith(expect.objectContaining({ text: 'Ada\nada@example.com\n\n\nPlease call me' }))
   })
 })
+
+it('rejects malformed contact JSON without attempting delivery', async () => {
+  sendEmail.mockClear()
+  process.env.NEXT_PUBLIC_SITE_URL = 'https://lago.lv'
+  const response = await POST(new NextRequest('https://lago.lv/api/contact', {
+    method: 'POST', headers: { origin: 'https://lago.lv', 'content-type': 'application/json' }, body: '{',
+  }))
+  expect(response.status).toBe(400)
+  expect(sendEmail).not.toHaveBeenCalled()
+})

@@ -31,6 +31,9 @@ export function ProductCard({ product, locale, priority = false }: ProductCardPr
     productId: product.id,
     initialStock: product.stockQuantity,
     initialStatus: product.stockStatus,
+    // The listing already supplies stock. Keep realtime and explicit refresh,
+    // without another REST round trip for every visible card.
+    fetchOnMount: false,
   })
 
   // Get localized name

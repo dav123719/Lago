@@ -1,140 +1,92 @@
-// AGENT slave-3 v1.0.1 - API routes verified
-
-// ===================================
-export const dynamic = "force-dynamic"
-
-// API Route: Get Shipping Rates
-// ===================================
+export const dynamic = 'force-dynamic'
 
 import { NextRequest, NextResponse } from 'next/server'
-import { calculateRates, getCachedRates, cacheRates } from '@/lib/shipping/rates'
-import type { ShippingAddress } from '@/types/checkout'
+import { calculateRates } from '@/lib/shipping/rates'
+import type { RateCalculationInput } from '@/lib/shipping/rates'
 
-// CORS headers for API routes
-const corsHeaders = {
+const MAX_BODY_BYTES = 4096
+const responseHeaders = {
   'Access-Control-Allow-Origin': '*',
   'Access-Control-Allow-Methods': 'GET, POST, OPTIONS',
   'Access-Control-Allow-Headers': 'Content-Type, Authorization',
+  // Quotes are advisory and must be recalculated for each submitted cart.
+  'Cache-Control': 'no-store',
+}
+
+class InvalidInput extends Error {}
+
+function parseAmount(value: unknown, fallback?: number): number {
+  if (value === undefined || value === null) {
+    if (fallback !== undefined) return fallback
+    throw new InvalidInput('Missing subtotal')
+  }
+  if (typeof value !== 'number' && typeof value !== 'string') throw new InvalidInput('Invalid amount')
+  if (typeof value === 'string' && !/^\d+(?:\.\d+)?$/.test(value)) throw new InvalidInput('Invalid amount')
+  const amount = Number(value)
+  if (!Number.isFinite(amount) || amount < 0 || amount > 99_999_999) throw new InvalidInput('Invalid amount')
+  return amount
+}
+
+function buildInput(country: unknown, subtotal: unknown, weightKg: unknown): RateCalculationInput {
+  if (typeof country !== 'string' || !/^[a-z]{2}$/i.test(country)) {
+    throw new InvalidInput('Country must be a two-letter code')
+  }
+  return {
+    // Current configured methods use country, subtotal and weight only. Do not
+    // retain address/contact fields in a process cache or log submitted data.
+    address: {
+      firstName: '', lastName: '', email: '', phone: '', city: '', postalCode: '',
+      addressLine1: '', country: country.toUpperCase(),
+    },
+    subtotal: parseAmount(subtotal),
+    weightKg: parseAmount(weightKg, 0),
+  }
+}
+
+async function quote(input: RateCalculationInput) {
+  // This is a small in-process calculation over configured methods, not an
+  // upstream request. Caching arbitrary postal codes/subtotals only grew memory.
+  const { rates } = await calculateRates(input)
+  return NextResponse.json({ rates }, { headers: responseHeaders })
+}
+
+function handleError(error: unknown) {
+  if (error instanceof InvalidInput) {
+    return NextResponse.json({ error: error.message }, { status: 400, headers: responseHeaders })
+  }
+  console.error('Shipping rate calculation failed')
+  return NextResponse.json({ error: 'Failed to calculate shipping rates' }, { status: 500, headers: responseHeaders })
 }
 
 export async function OPTIONS() {
-  return NextResponse.json({}, { headers: corsHeaders })
+  return new NextResponse(null, { status: 204, headers: responseHeaders })
 }
 
 export async function POST(request: NextRequest) {
   try {
-    const body = await request.json()
-    const { address, subtotal, weightKg } = body
-
-    // Validate required fields
-    if (!address || !address.country || subtotal === undefined) {
-      return NextResponse.json(
-        { error: 'Missing required fields: address.country and subtotal' },
-        { status: 400, headers: corsHeaders }
-      )
+    if (Number(request.headers.get('content-length') || 0) > MAX_BODY_BYTES) {
+      return NextResponse.json({ error: 'Submission is too large' }, { status: 413, headers: responseHeaders })
     }
-
-    // Validate address structure
-    const shippingAddress: ShippingAddress = {
-      firstName: address.firstName || '',
-      lastName: address.lastName || '',
-      email: address.email || '',
-      phone: address.phone || '',
-      country: address.country,
-      city: address.city || '',
-      postalCode: address.postalCode || '',
-      addressLine1: address.addressLine1 || '',
-      addressLine2: address.addressLine2,
-      companyName: address.companyName,
-      vatNumber: address.vatNumber,
+    const rawBody = await request.text()
+    if (new TextEncoder().encode(rawBody).byteLength > MAX_BODY_BYTES) {
+      return NextResponse.json({ error: 'Submission is too large' }, { status: 413, headers: responseHeaders })
     }
-
-    const input = {
-      address: shippingAddress,
-      subtotal: Number(subtotal),
-      weightKg: weightKg ? Number(weightKg) : 0,
-    }
-
-    // Check cache first
-    let rates = getCachedRates(input)
-
-    if (!rates) {
-      // Calculate rates
-      const result = await calculateRates(input)
-      rates = result.rates
-      
-      // Cache the results
-      cacheRates(input, rates)
-
-      // Log any calculation errors (but don't fail)
-      if (result.errors) {
-        console.warn('Shipping rate calculation warnings:', result.errors)
-      }
-    }
-
-    return NextResponse.json({ rates }, { headers: corsHeaders })
+    let body: unknown
+    try { body = JSON.parse(rawBody) } catch { throw new InvalidInput('Invalid JSON submission') }
+    if (!body || typeof body !== 'object' || Array.isArray(body)) throw new InvalidInput('Invalid submission')
+    const { address, subtotal, weightKg } = body as Record<string, unknown>
+    if (!address || typeof address !== 'object' || Array.isArray(address)) throw new InvalidInput('Missing address')
+    return await quote(buildInput((address as Record<string, unknown>).country, subtotal, weightKg))
   } catch (error) {
-    console.error('Error calculating shipping rates:', error)
-    
-    return NextResponse.json(
-      { 
-        error: 'Failed to calculate shipping rates',
-        message: error instanceof Error ? error.message : 'Unknown error'
-      },
-      { status: 500, headers: corsHeaders }
-    )
+    return handleError(error)
   }
 }
 
-// Also allow GET for simple country-based queries
 export async function GET(request: NextRequest) {
   try {
     const { searchParams } = new URL(request.url)
-    const country = searchParams.get('country')
-    const subtotal = searchParams.get('subtotal')
-
-    if (!country) {
-      return NextResponse.json(
-        { error: 'Missing required parameter: country' },
-        { status: 400, headers: corsHeaders }
-      )
-    }
-
-    const address: ShippingAddress = {
-      firstName: '',
-      lastName: '',
-      email: '',
-      phone: '',
-      country,
-      city: '',
-      postalCode: '',
-      addressLine1: '',
-    }
-
-    const input = {
-      address,
-      subtotal: Number(subtotal) || 0,
-      weightKg: 0,
-    }
-
-    let rates = getCachedRates(input)
-
-    if (!rates) {
-      const result = await calculateRates(input)
-      rates = result.rates
-      cacheRates(input, rates)
-    }
-
-    return NextResponse.json({ rates }, { headers: corsHeaders })
+    return await quote(buildInput(searchParams.get('country'), searchParams.get('subtotal') ?? 0, searchParams.get('weightKg')))
   } catch (error) {
-    console.error('Error getting shipping rates:', error)
-    
-    return NextResponse.json(
-      { 
-        error: 'Failed to get shipping rates',
-        message: error instanceof Error ? error.message : 'Unknown error'
-      },
-      { status: 500, headers: corsHeaders }
-    )
+    return handleError(error)
   }
 }

@@ -10,3 +10,6 @@ dist/
 coverage/
 playwright-report/
 test-results/
+
+# Detailed laboratory waterfalls are versioned as compressed JSON evidence.
+docs/performance/*-origin.json

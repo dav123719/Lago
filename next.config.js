@@ -48,13 +48,18 @@ const nextConfig = {
     contentSecurityPolicy: "default-src 'self'; script-src 'none'; sandbox;",
   },
   
-  // NOTE: Custom headers are not supported with static export (output: 'export').
-  // Configure headers in your web server (nginx, Apache, Vercel, etc.) instead.
-  // Removed headers() function to prevent build warnings.
-  
   compress: true,
   reactStrictMode: true,
   productionBrowserSourceMaps: false,
+  async headers() {
+    const privateHeaders = [{ key: 'Cache-Control', value: 'private, no-store, max-age=0, must-revalidate' }]
+    return [
+      ...['/:locale/account/:path*', '/admin/:path*', '/auth/:path*', '/studio/:path*', '/api/admin/:path*', '/api/cart/:path*', '/api/checkout/:path*', '/api/profile/:path*'].map(source => ({ source, headers: privateHeaders })),
+      // Only content-addressed local font overlays are immutable. Original
+      // public/CMS filenames retain revalidation-compatible freshness.
+      { source: '/fonts/:file([a-z-]+\\.[a-f0-9]{12}\\.woff2)', headers: [{ key: 'Cache-Control', value: 'public, max-age=31536000, immutable' }] },
+    ]
+  },
 }
 
 module.exports = nextConfig

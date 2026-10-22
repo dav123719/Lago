@@ -16,7 +16,9 @@
     "type-check": "tsc --noEmit",
     "format": "prettier --write .",
     "format:check": "prettier --check .",
-    "analyze": "ANALYZE=true next build"
+    "analyze": "node scripts/analyze.js",
+    "check:budgets": "node scripts/analyze.js --check",
+    "measure:performance": "node scripts/performance-measure.mjs"
   },
   "dependencies": {
     "@sanity/client": "^7.14.1",

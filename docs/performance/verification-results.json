@@ -1,0 +1,145 @@
+{
+  "sourceCommit": "e0c30a3",
+  "productionCandidate": "http://127.0.0.1:3200",
+  "browser": "Chromium 145.0.7632.6",
+  "playwright": "1.58.2",
+  "auth": "anonymous; auth submission/catalog interactions intercepted for controlled tests",
+  "smoke": {
+    "passed": 25,
+    "failed": 0,
+    "durationSeconds": 33.0,
+    "workers": 1
+  },
+  "visualConditions": {
+    "deviceScaleFactor": 1,
+    "networkThrottle": "none",
+    "cpuThrottle": "none",
+    "reducedMotion": "reduce",
+    "height": 900
+  },
+  "visualReview": [
+    {
+      "name": "home-desktop",
+      "path": "/lv/",
+      "width": 1440,
+      "status": 200,
+      "documentWidth": 1440,
+      "viewportWidth": 1440,
+      "lang": "lv",
+      "contentLang": "lv",
+      "h1Count": 1,
+      "h1": "Akmens virsmas un m\u0113beles p\u0113c pas\u016bt\u012bjuma",
+      "errors": [],
+      "failures": []
+    },
+    {
+      "name": "home-mobile",
+      "path": "/lv/",
+      "width": 390,
+      "status": 200,
+      "documentWidth": 390,
+      "viewportWidth": 390,
+      "lang": "lv",
+      "contentLang": "lv",
+      "h1Count": 1,
+      "h1": "Akmens virsmas un m\u0113beles p\u0113c pas\u016bt\u012bjuma",
+      "errors": [],
+      "failures": []
+    },
+    {
+      "name": "guide-mobile",
+      "path": "/lv/akmens-virsmas/",
+      "width": 390,
+      "status": 200,
+      "documentWidth": 390,
+      "viewportWidth": 390,
+      "lang": "lv",
+      "contentLang": "lv",
+      "h1Count": 1,
+      "h1": "S\u0101ciet ar telpu. Materi\u0101lu izv\u0113lieties p\u0113c tam.",
+      "errors": [],
+      "failures": []
+    },
+    {
+      "name": "about-mobile",
+      "path": "/lv/par-mums/",
+      "width": 390,
+      "status": 200,
+      "documentWidth": 390,
+      "viewportWidth": 390,
+      "lang": "lv",
+      "contentLang": "lv",
+      "h1Count": 1,
+      "h1": "Par LAGO",
+      "errors": [],
+      "failures": []
+    },
+    {
+      "name": "ru-mobile",
+      "path": "/ru/",
+      "width": 390,
+      "status": 200,
+      "documentWidth": 390,
+      "viewportWidth": 390,
+      "lang": "ru",
+      "contentLang": "ru",
+      "h1Count": 1,
+      "h1": "\u041a\u0430\u043c\u0435\u043d\u043d\u044b\u0435 \u043f\u043e\u0432\u0435\u0440\u0445\u043d\u043e\u0441\u0442\u0438 \u0438 \u043c\u0435\u0431\u0435\u043b\u044c \u043d\u0430 \u0437\u0430\u043a\u0430\u0437",
+      "errors": [],
+      "failures": []
+    },
+    {
+      "name": "store-desktop",
+      "path": "/en/store/",
+      "width": 1440,
+      "status": 200,
+      "documentWidth": 1440,
+      "viewportWidth": 1440,
+      "lang": "en",
+      "contentLang": "en",
+      "h1Count": 1,
+      "h1": "All Products",
+      "errors": [],
+      "failures": [
+        {
+          "status": 500,
+          "path": "/api/products/"
+        }
+      ]
+    },
+    {
+      "name": "store-mobile",
+      "path": "/en/store/",
+      "width": 390,
+      "status": 200,
+      "documentWidth": 390,
+      "viewportWidth": 390,
+      "lang": "en",
+      "contentLang": "en",
+      "h1Count": 1,
+      "h1": "All Products",
+      "errors": [],
+      "failures": [
+        {
+          "status": 500,
+          "path": "/api/products/"
+        }
+      ]
+    }
+  ],
+  "limitations": [
+    "Authenticated live flows and mailbox delivery were not verified.",
+    "Commerce tables are unavailable; real catalog API returns500.",
+    "Shared SSR html lang remainslv; localized wrapper declares correct language and document lang updates beforepaint."
+  ],
+  "visualSourceCommit": "160f77c",
+  "independentFocusedTests": {
+    "securityTests": 23,
+    "languageTests": 4,
+    "failed": 0
+  },
+  "leadFullUnitSuite": {
+    "passed": 233,
+    "note": "Executed by lead; not repeated by independent reviewer."
+  }
+}

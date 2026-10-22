@@ -20,6 +20,7 @@ interface UseProductStockOptions {
   variantId?: string
   initialStock?: number
   initialStatus?: StockStatus
+  fetchOnMount?: boolean
 }
 
 export function useProductStock({
@@ -27,6 +28,7 @@ export function useProductStock({
   variantId,
   initialStock = 0,
   initialStatus = 'out_of_stock',
+  fetchOnMount = true,
 }: UseProductStockOptions) {
   const [stock, setStock] = useState<StockData>({
     productId,
@@ -36,6 +38,13 @@ export function useProductStock({
   })
   const [isLoading, setIsLoading] = useState(false)
   const [error, setError] = useState<Error | null>(null)
+
+  useEffect(() => {
+    if (fetchOnMount) return
+    setStock(current => current.productId === productId && current.variantId === variantId && current.stockQuantity === initialStock && current.stockStatus === initialStatus
+      ? current
+      : { productId, variantId, stockQuantity: initialStock, stockStatus: initialStatus })
+  }, [productId, variantId, initialStock, initialStatus, fetchOnMount])
 
   // Fetch initial stock
   const fetchStock = useCallback(async () => {
@@ -115,13 +124,13 @@ export function useProductStock({
       .subscribe()
 
     // Initial fetch
-    fetchStock()
+    if (fetchOnMount) void fetchStock()
 
     // Cleanup subscription
     return () => {
       supabase.removeChannel(channel)
     }
-  }, [productId, variantId, fetchStock])
+  }, [productId, variantId, fetchStock, fetchOnMount])
 
   return {
     ...stock,

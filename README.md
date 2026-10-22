@@ -1,26 +1,18 @@
-# LAGO E-Commerce Platform
+# LAGO — stone surfaces and custom furniture
 
-A premium e-commerce platform for LAGO Stone & Furniture, built with Next.js 16, Supabase, Sanity, and Stripe.
+The existing multilingual LAGO website, built with Next.js, Supabase and Sanity. The repository also contains commerce integrations that are not ready for live checkout.
 
 ![LAGO Banner](https://lago.lv/images/logo/lago-logo.png)
 
-> **Build Status:** ✅ SUCCESS (167 pages generated)  
-> **System Version:** 1.0.1  
-> **Last Updated:** 2026-02-12  
-> **All Agents:** Completed
->
-> See [BUILD_STATUS.md](BUILD_STATUS.md) for detailed build information.
+Current engineering evidence (22 October 2026): **233 unit tests**, **25 production browser smoke checks**, TypeScript and production build pass; lint has **0 errors / 60 warnings**. Build budgets cover **125 prerendered routes**. See [performance and subsystem coverage](docs/performance/README.md), [measured comparisons](docs/performance/results.md), and [account rollout](docs/account-system.md). Historical build reports below are not current acceptance evidence.
 
-## Features
+## Features and configuration status
 
-- **Multi-Language**: Latvian (LV), English (EN), Russian (RU)
-- **Authentication**: Google OAuth, Facebook OAuth, Email/Password
-- **E-Commerce**: Full shopping cart, checkout, and order management
-- **Payments**: Secure Stripe integration with webhook support
-- **Shipping**: Baltic carrier integration (Omniva, DPD, Latvijas Pasts)
-- **CMS**: Sanity-powered content with inline editing
-- **Real-time**: Live stock updates, order status tracking
-- **Admin Dashboard**: Order management, status updates, tracking
+- **Content**: Latvian, English and Russian; application/material guidance, projects and contact information.
+- **Accounts**: Supabase email/password, confirmation/recovery, UUID profiles and audited administrator profile management. One verified reserved owner now has the admin grant; actual credentialed browser edits and mail-delivery flows still need controlled acceptance tests.
+- **OAuth**: Application flows exist; Google/Facebook are disabled pending provider credentials/configuration.
+- **CMS**: Sanity content/images, protected Studio and project editing paths. No live CMS mutation was performed by the optimization pass.
+- **Commerce**: Store/cart/checkout/orders/Stripe/realtime/shipping code retained. Commerce database tables are absent, catalog requests fail, payments remain disabled and carrier mock/fallback data is not verified production service.
 
 ## Tech Stack
 
@@ -36,8 +28,8 @@ A premium e-commerce platform for LAGO Stone & Furniture, built with Next.js 16,
 
 ```bash
 # Clone repository
-git clone <repo-url>
-cd lago
+git clone https://github.com/dav123719/Lago.git
+cd Lago
 
 # Install dependencies
 npm ci
@@ -104,11 +96,10 @@ NEXT_PUBLIC_STRIPE_PUBLISHABLE_KEY=
 STRIPE_SECRET_KEY=
 STRIPE_WEBHOOK_SECRET=
 
-# OAuth
-GOOGLE_CLIENT_ID=
-GOOGLE_CLIENT_SECRET=
-FACEBOOK_APP_ID=
-FACEBOOK_APP_SECRET=
+# Optional browser provider controls; configure provider secrets inside Supabase Auth.
+NEXT_PUBLIC_GOOGLE_OAUTH_ENABLED=false
+NEXT_PUBLIC_FACEBOOK_OAUTH_ENABLED=false
+NEXT_PUBLIC_MANUAL_IDENTITY_LINKING_ENABLED=false
 ```
 
 ## Available Scripts
@@ -118,10 +109,11 @@ npm run dev           # Development server
 npm run build         # Production build
 npm run start         # Start production server
 npm run lint          # ESLint
-npm run test          # Run all tests
+npm run test          # Unit + legacy E2E (see safe testing guidance below)
 npm run test:unit     # Unit tests (Vitest)
 npm run test:e2e      # E2E tests (Playwright)
 npm run type-check    # TypeScript check
+npm run check:budgets # Initial production route JS/CSS/HTML gzip limits
 npm run format        # Format code with Prettier
 ```
 
@@ -132,17 +124,15 @@ npm run format        # Format code with Prettier
 npm run test:unit
 ```
 
-### E2E Tests
+### Safe production-build browser checks
+
 ```bash
-# Install Playwright browsers
-npx playwright install
-
-# Run E2E tests
-npm run test:e2e
-
-# Debug mode
-npm run test:e2e:debug
+npx playwright install chromium
+# Start the separately built standalone candidate first.
+PLAYWRIGHT_BASE_URL=http://127.0.0.1:3200 npx playwright test -c playwright.smoke.config.ts
 ```
+
+These checks intercept auth submissions and test safe public/anonymous paths. They do not prove real confirmation/recovery email delivery or authenticated edits. The legacy `src/__tests__/e2e/` suite assumes missing selectors, uncontrolled credentials and fictional fixtures; do not run its registration/password/payment mutations against production. See the [cleanup review](docs/performance/cleanup.md) and [independent verification](docs/performance/independent-verification.md).
 
 ## Deployment
 
@@ -154,8 +144,7 @@ npm run build
 Output uses Next.js standalone server mode. See [production deployment](docs/DEPLOYMENT.md) and [integration acceptance gates](docs/INTEGRATION_STATUS.md). Do not serve `dist/` as static HTML.
 
 ### Database Migrations
-Run SQL in Supabase Dashboard → SQL Editor:
-- `docs/schema/supabase-schema.sql`
+The account foundation `supabase/migrations/20261022170145_lago_account_system.sql` and additive bootstrap guard `20261022193626_lock_owner_bootstrap.sql` are applied. Check actual migration history before applying anything. Historical commerce SQL contains competing schemas; do not run all files or blindly push them to production. See [database findings and isolated tests](docs/performance/backend.md).
 
 ### Stripe Webhooks
 For local development:
@@ -170,7 +159,8 @@ For production, configure webhook endpoint in Stripe Dashboard.
 1. Create feature branch: `git checkout -b feature/my-feature`
 2. Commit changes: `git commit -m 'Add feature'`
 3. Push to branch: `git push origin feature/my-feature`
-4. Open Pull Request
+4. Follow the intended branch permissions/protection rules. Direct commits do not require a fork; use a review only where needed.
+5. The production workflow is manual and main-only; advancing a working branch does not automatically deploy it. Use the reviewed immutable-release process in [deployment evidence](docs/performance/README.md).
 
 ## License
 
@@ -178,4 +168,4 @@ Private - All rights reserved
 
 ## Support
 
-For support, email support@lago.lv or visit [lago.lv](https://lago.lv)
+Use the verified contact information published at [lago.lv](https://lago.lv).

@@ -40,6 +40,7 @@ jobs:
       - run: npm run lint
       - run: npm run test:unit
       - run: npm run build
+      - run: npm run check:budgets
       - run: npm run type-check
       - name: Package standalone release without secrets
         run: |

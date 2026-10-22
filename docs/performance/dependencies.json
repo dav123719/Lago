@@ -1,0 +1,19 @@
+{
+  "full": {
+    "info": 0,
+    "low": 0,
+    "moderate": 8,
+    "high": 13,
+    "critical": 0,
+    "total": 21
+  },
+  "productionDependencyGraph": {
+    "info": 0,
+    "low": 0,
+    "moderate": 6,
+    "high": 10,
+    "critical": 0,
+    "total": 16
+  },
+  "decision": "No critical advisories;13high/8moderate total,10high/6moderate production dependency graph. These include Sanity tool dependencies retained in dependencies, so this is not an exploitability assessment. No mass fix/overrides or framework-major changes. Review compatible targeted patches and advisories separately; critical-level CI gate retained. No application dependency or lockfile changed."
+}

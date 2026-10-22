@@ -1,0 +1,339 @@
+{
+  "before-2": [
+    {
+      "startMs": 634.929,
+      "event": "UpdateLayoutTree",
+      "durationMs": 63.9,
+      "elements": 406,
+      "dirtyObjects": null,
+      "totalObjects": null
+    },
+    {
+      "startMs": 699.02,
+      "event": "Layout",
+      "durationMs": 99.037,
+      "elements": null,
+      "dirtyObjects": 321,
+      "totalObjects": 321
+    },
+    {
+      "startMs": 1135.291,
+      "event": "UpdateLayoutTree",
+      "durationMs": 33.043,
+      "elements": 318,
+      "dirtyObjects": null,
+      "totalObjects": null
+    },
+    {
+      "startMs": 1168.36,
+      "event": "Layout",
+      "durationMs": 61.831,
+      "elements": null,
+      "dirtyObjects": 288,
+      "totalObjects": 591
+    },
+    {
+      "startMs": 2423.518,
+      "event": "RemoteFontLoaded",
+      "font": "roboto-latin.woff2"
+    },
+    {
+      "startMs": 2430.846,
+      "event": "RemoteFontLoaded",
+      "font": "cormorant-garamond-latin.woff2"
+    },
+    {
+      "startMs": 2435.057,
+      "event": "RemoteFontLoaded",
+      "font": "inter-latin.woff2"
+    },
+    {
+      "startMs": 2439.215,
+      "event": "Layout",
+      "durationMs": 54.395,
+      "elements": null,
+      "dirtyObjects": 586,
+      "totalObjects": 591
+    },
+    {
+      "startMs": 3106.657,
+      "event": "RemoteFontLoaded",
+      "font": "roboto-latin-ext.woff2"
+    },
+    {
+      "startMs": 3109.338,
+      "event": "RemoteFontLoaded",
+      "font": "cormorant-garamond-latin-ext.woff2"
+    },
+    {
+      "startMs": 3128.272,
+      "event": "Layout",
+      "durationMs": 38.647,
+      "elements": null,
+      "dirtyObjects": 586,
+      "totalObjects": 591
+    },
+    {
+      "startMs": 3292.874,
+      "event": "RemoteFontLoaded",
+      "font": "inter-latin-ext.woff2"
+    },
+    {
+      "startMs": 3298.236,
+      "event": "Layout",
+      "durationMs": 30.05,
+      "elements": null,
+      "dirtyObjects": 586,
+      "totalObjects": 591
+    }
+  ],
+  "after-2": [
+    {
+      "startMs": 702.081,
+      "event": "UpdateLayoutTree",
+      "durationMs": 52.737,
+      "elements": 411,
+      "dirtyObjects": null,
+      "totalObjects": null
+    },
+    {
+      "startMs": 781.831,
+      "event": "UpdateLayoutTree",
+      "durationMs": 32.996,
+      "elements": 318,
+      "dirtyObjects": null,
+      "totalObjects": null
+    },
+    {
+      "startMs": 814.845,
+      "event": "Layout",
+      "durationMs": 205.737,
+      "elements": null,
+      "dirtyObjects": 591,
+      "totalObjects": 591
+    },
+    {
+      "startMs": 1153.081,
+      "event": "RemoteFontLoaded",
+      "font": "cormorant-garamond-latin.woff2"
+    },
+    {
+      "startMs": 1167.992,
+      "event": "Layout",
+      "durationMs": 32.031,
+      "elements": null,
+      "dirtyObjects": 586,
+      "totalObjects": 591
+    },
+    {
+      "startMs": 1434.853,
+      "event": "RemoteFontLoaded",
+      "font": "inter-latvian.cee074a92976.woff2"
+    },
+    {
+      "startMs": 1449.087,
+      "event": "Layout",
+      "durationMs": 37.457,
+      "elements": null,
+      "dirtyObjects": 586,
+      "totalObjects": 591
+    },
+    {
+      "startMs": 1623.383,
+      "event": "RemoteFontLoaded",
+      "font": "roboto-latvian.d59b939ae4b4.woff2"
+    },
+    {
+      "startMs": 1633.46,
+      "event": "Layout",
+      "durationMs": 35.043,
+      "elements": null,
+      "dirtyObjects": 586,
+      "totalObjects": 591
+    },
+    {
+      "startMs": 2061.274,
+      "event": "RemoteFontLoaded",
+      "font": "roboto-latin.woff2"
+    },
+    {
+      "startMs": 2068.77,
+      "event": "Layout",
+      "durationMs": 35.708,
+      "elements": null,
+      "dirtyObjects": 586,
+      "totalObjects": 591
+    },
+    {
+      "startMs": 2204.501,
+      "event": "RemoteFontLoaded",
+      "font": "inter-latin.woff2"
+    },
+    {
+      "startMs": 2209.695,
+      "event": "Layout",
+      "durationMs": 40.83,
+      "elements": null,
+      "dirtyObjects": 586,
+      "totalObjects": 591
+    },
+    {
+      "startMs": 3001.066,
+      "event": "UpdateLayoutTree",
+      "durationMs": 86.498,
+      "elements": 717,
+      "dirtyObjects": null,
+      "totalObjects": null
+    }
+  ],
+  "candidate-1": [
+    {
+      "startMs": 715.658,
+      "event": "UpdateLayoutTree",
+      "durationMs": 52.844,
+      "elements": 411,
+      "dirtyObjects": null,
+      "totalObjects": null
+    },
+    {
+      "startMs": 799.121,
+      "event": "Layout",
+      "durationMs": 262.354,
+      "elements": null,
+      "dirtyObjects": 591,
+      "totalObjects": 591
+    },
+    {
+      "startMs": 1145.475,
+      "event": "RemoteFontLoaded",
+      "font": "cormorant-garamond-latin.woff2"
+    },
+    {
+      "startMs": 1888.9,
+      "event": "RemoteFontLoaded",
+      "font": "inter-latvian.cee074a92976.woff2"
+    },
+    {
+      "startMs": 1899.953,
+      "event": "Layout",
+      "durationMs": 37.554,
+      "elements": null,
+      "dirtyObjects": 586,
+      "totalObjects": 591
+    },
+    {
+      "startMs": 1991.481,
+      "event": "RemoteFontLoaded",
+      "font": "roboto-latvian.d59b939ae4b4.woff2"
+    },
+    {
+      "startMs": 1996.92,
+      "event": "Layout",
+      "durationMs": 31.361,
+      "elements": null,
+      "dirtyObjects": 586,
+      "totalObjects": 591
+    },
+    {
+      "startMs": 2067.817,
+      "event": "RemoteFontLoaded",
+      "font": "roboto-latin.woff2"
+    },
+    {
+      "startMs": 2077.231,
+      "event": "Layout",
+      "durationMs": 58.329,
+      "elements": null,
+      "dirtyObjects": 586,
+      "totalObjects": 591
+    },
+    {
+      "startMs": 2315.123,
+      "event": "RemoteFontLoaded",
+      "font": "inter-latin.woff2"
+    },
+    {
+      "startMs": 2326.244,
+      "event": "Layout",
+      "durationMs": 57.733,
+      "elements": null,
+      "dirtyObjects": 586,
+      "totalObjects": 591
+    },
+    {
+      "startMs": 3153.374,
+      "event": "UpdateLayoutTree",
+      "durationMs": 94.297,
+      "elements": 717,
+      "dirtyObjects": null,
+      "totalObjects": null
+    }
+  ],
+  "diagnostic-ignore-lang-1": [
+    {
+      "startMs": 704.501,
+      "event": "UpdateLayoutTree",
+      "durationMs": 72.143,
+      "elements": 411,
+      "dirtyObjects": null,
+      "totalObjects": null
+    },
+    {
+      "startMs": 818.349,
+      "event": "Layout",
+      "durationMs": 254.668,
+      "elements": null,
+      "dirtyObjects": 591,
+      "totalObjects": 591
+    },
+    {
+      "startMs": 1153.517,
+      "event": "RemoteFontLoaded",
+      "font": "cormorant-garamond-latin.woff2"
+    },
+    {
+      "startMs": 1430.104,
+      "event": "RemoteFontLoaded",
+      "font": "inter-latvian.cee074a92976.woff2"
+    },
+    {
+      "startMs": 1444.847,
+      "event": "Layout",
+      "durationMs": 30.997,
+      "elements": null,
+      "dirtyObjects": 586,
+      "totalObjects": 591
+    },
+    {
+      "startMs": 1635.226,
+      "event": "RemoteFontLoaded",
+      "font": "roboto-latvian.d59b939ae4b4.woff2"
+    },
+    {
+      "startMs": 2048.003,
+      "event": "RemoteFontLoaded",
+      "font": "roboto-latin.woff2"
+    },
+    {
+      "startMs": 2063.289,
+      "event": "Layout",
+      "durationMs": 31.803,
+      "elements": null,
+      "dirtyObjects": 586,
+      "totalObjects": 591
+    },
+    {
+      "startMs": 2213.907,
+      "event": "RemoteFontLoaded",
+      "font": "inter-latin.woff2"
+    },
+    {
+      "startMs": 2220.234,
+      "event": "Layout",
+      "durationMs": 46.108,
+      "elements": null,
+      "dirtyObjects": 586,
+      "totalObjects": 591
+    }
+  ]
+}

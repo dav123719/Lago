@@ -1,0 +1,80 @@
+{
+  "base": "http://127.0.0.1:3200",
+  "recordedAt": "2026-10-22T19:51:13.138Z",
+  "browser": "145.0.7632.6",
+  "conditions": "Same device/CPU/network/reduced-motion as performance-measure.mjs. Fresh context per run; homepage warmed before SPA navigation. Feedback proxy = input/click event to second RAF, not INP. Catalogue database absent: navigation/search report terminal error response readiness, not successful results.",
+  "results": [
+    {
+      "device": "desktop",
+      "run": 1,
+      "loginTogglePaintProxyMs": 42,
+      "navigationReadyMs": 269.5,
+      "typingPaintProxyMs": 26.400000035762787,
+      "searchTerminalResponseMs": 480.5,
+      "catalogueStatus": 500,
+      "searchStatus": 500,
+      "initialCatalogueRequests": 1,
+      "documents": 1
+    },
+    {
+      "device": "desktop",
+      "run": 2,
+      "loginTogglePaintProxyMs": 45.59999996423721,
+      "navigationReadyMs": 236.4000000357628,
+      "typingPaintProxyMs": 35.700000047683716,
+      "searchTerminalResponseMs": 428.10000002384186,
+      "catalogueStatus": 500,
+      "searchStatus": 500,
+      "initialCatalogueRequests": 1,
+      "documents": 1
+    },
+    {
+      "device": "desktop",
+      "run": 3,
+      "loginTogglePaintProxyMs": 41.90000003576279,
+      "navigationReadyMs": 226.80000001192093,
+      "typingPaintProxyMs": 30.900000035762787,
+      "searchTerminalResponseMs": 893,
+      "catalogueStatus": 500,
+      "searchStatus": 500,
+      "initialCatalogueRequests": 1,
+      "documents": 1
+    },
+    {
+      "device": "mobile",
+      "run": 1,
+      "loginTogglePaintProxyMs": 80.19999998807907,
+      "navigationReadyMs": 715.9000000357628,
+      "typingPaintProxyMs": 46.60000002384186,
+      "searchTerminalResponseMs": 623.4000000357628,
+      "catalogueStatus": 500,
+      "searchStatus": 500,
+      "initialCatalogueRequests": 1,
+      "documents": 1
+    },
+    {
+      "device": "mobile",
+      "run": 2,
+      "loginTogglePaintProxyMs": 78.80000001192093,
+      "navigationReadyMs": 598.8999999761581,
+      "typingPaintProxyMs": 36.80000001192093,
+      "searchTerminalResponseMs": 537.1999999880791,
+      "catalogueStatus": 500,
+      "searchStatus": 500,
+      "initialCatalogueRequests": 1,
+      "documents": 1
+    },
+    {
+      "device": "mobile",
+      "run": 3,
+      "loginTogglePaintProxyMs": 86.39999997615814,
+      "navigationReadyMs": 699.1000000238419,
+      "typingPaintProxyMs": 40,
+      "searchTerminalResponseMs": 595.2000000476837,
+      "catalogueStatus": 500,
+      "searchStatus": 500,
+      "initialCatalogueRequests": 1,
+      "documents": 1
+    }
+  ]
+}

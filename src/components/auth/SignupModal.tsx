@@ -5,11 +5,12 @@
 
 'use client'
 
-import { useState, useEffect, useCallback } from 'react'
+import { useState, useEffect } from 'react'
 import { X, Mail, Lock, Eye, EyeOff, Loader2, User } from 'lucide-react'
 import { useAuth } from '@/hooks/useAuth'
 import { Locale } from '@/lib/i18n/config'
 import { toast } from 'sonner'
+import { useModalDialog } from '@/hooks/useModalDialog'
 
 interface SignupModalProps {
   locale: Locale
@@ -100,21 +101,7 @@ export function SignupModal({ locale, isOpen, onClose, onLoginClick }: SignupMod
   const [confirmationSent, setConfirmationSent] = useState(false)
   const t = labels[locale]
 
-  // Handle escape key
-  const handleEscape = useCallback((e: KeyboardEvent) => {
-    if (e.key === 'Escape') onClose()
-  }, [onClose])
-
-  useEffect(() => {
-    if (isOpen) {
-      document.addEventListener('keydown', handleEscape)
-      document.body.style.overflow = 'hidden'
-    }
-    return () => {
-      document.removeEventListener('keydown', handleEscape)
-      document.body.style.overflow = ''
-    }
-  }, [isOpen, handleEscape])
+  const dialogRef = useModalDialog(isOpen, onClose)
 
   // Reset form when closed
   useEffect(() => {
@@ -147,30 +134,28 @@ export function SignupModal({ locale, isOpen, onClose, onLoginClick }: SignupMod
 
     setIsLoading(true)
 
-    const { error } = await signUp(email, password, fullName, locale)
-
-    if (error) {
+    try {
+      const { error } = await signUp(email, password, fullName, locale)
+      if (error) toast.error(t.error)
+      else { setConfirmationSent(true); toast.success(t.success) }
+    } catch {
       toast.error(t.error)
-      setIsLoading(false)
-    } else {
-      setConfirmationSent(true)
-      toast.success(t.success)
+    } finally {
       setIsLoading(false)
     }
   }
 
   const handleResend = async () => {
     setResending(true)
-    const { error } = await resendSignupConfirmation(email, locale)
-    setResending(false)
-    if (error) {
-      const message = error.message.toLowerCase().includes('rate')
-        ? 'Please wait before requesting another email.'
-        : t.error
-      toast.error(message)
-      return
+    try {
+      const { error } = await resendSignupConfirmation(email, locale)
+      if (error) { toast.error(t.error); return }
+      toast.success(t.success)
+    } catch {
+      toast.error(t.error)
+    } finally {
+      setResending(false)
     }
-    toast.success(t.success)
   }
 
   if (!isOpen) return null
@@ -184,7 +169,7 @@ export function SignupModal({ locale, isOpen, onClose, onLoginClick }: SignupMod
       />
 
       {/* Modal */}
-      <div className="relative w-full max-w-md animate-scale-in max-h-[90vh] overflow-y-auto">
+      <div ref={dialogRef} role="dialog" aria-modal="true" aria-labelledby="signup-title" aria-describedby="signup-description" tabIndex={-1} className="relative w-full max-w-md animate-scale-in max-h-[90vh] overflow-y-auto">
         {/* Glow effect */}
         <div className="absolute -inset-1 bg-gradient-to-r from-lago-gold/20 via-lago-gold/10 to-lago-gold/20 rounded-2xl blur-xl" />
 
@@ -206,8 +191,8 @@ export function SignupModal({ locale, isOpen, onClose, onLoginClick }: SignupMod
 
           {/* Header */}
           <div className="text-center mb-8">
-            <h2 className="text-2xl font-heading text-white mb-2">{t.title}</h2>
-            <p className="text-lago-muted text-sm">{t.subtitle}</p>
+            <h2 id="signup-title" className="text-2xl font-heading text-white mb-2">{t.title}</h2>
+            <p id="signup-description" className="text-lago-muted text-sm">{t.subtitle}</p>
           </div>
 
           {confirmationSent ? (
